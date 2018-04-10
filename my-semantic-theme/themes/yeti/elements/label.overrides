@@ -1,0 +1,8 @@
+.ui.label {
+  font-size: 12px;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-radius: 0;
+  font-weight: 300;
+  color: @gray-dark;
+}

@@ -1,0 +1,5 @@
+@focusBorderColor: #fff;
+@placeholderColor: @gray-light;
+@lineHeight: (@line-height-computed + (@padding-base-vertical * 2) + 4);
+@borderWidth: 0;
+@focusColor: black;

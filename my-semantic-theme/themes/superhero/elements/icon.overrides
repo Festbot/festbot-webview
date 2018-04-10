@@ -1,0 +1,13 @@
+.close {
+    color: @textColor;
+    opacity: 0.4;
+
+    &:hover,
+    &:focus {
+        opacity: 1;
+    }
+}
+
+i.code.icon {
+    color: @textColor !important;
+}

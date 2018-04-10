@@ -1,0 +1,13 @@
+.ui.segment {
+    &.piled {
+        &::after, &::before {
+            background-color: lighten(@background, 5%);
+        }
+    }
+    &.stacked {
+        &::after {
+            background-color: lighten(@background, 5%);
+            border: none;
+        }
+    }
+}

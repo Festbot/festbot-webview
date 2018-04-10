@@ -1,0 +1,16 @@
+.ui.button {
+    border: 1px solid #ddd;
+    &.primary {
+        border: @primaryColor;
+    }
+    &.positive {
+        border: @positiveColor;
+    }
+    &.negative {
+        border: @negativeColor;
+    }
+}
+
+.ui.buttons .button:first-child {
+    border-left: 1px solid #ddd;
+}

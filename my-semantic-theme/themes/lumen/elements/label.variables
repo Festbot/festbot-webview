@@ -1,0 +1,3 @@
+@backgroundColor: @primaryColor;
+@fontWeight: normal;
+@ribbonShadowColor: @primaryColor;

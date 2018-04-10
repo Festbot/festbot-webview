@@ -1,0 +1,5 @@
+@tooltipBackground: lighten(@pageBackground, 15%);
+@background: @gray;
+@arrowColor: white;
+@arrowBackground: @gray;
+@color: white;

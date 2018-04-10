@@ -1,0 +1,20 @@
+.sandstone {
+    font-size: 11px;
+    line-height: 22px;
+    font-weight: 500;
+}
+
+.ui.segment {
+    .box-shadow(none);
+
+    > .header,
+    > .footer {
+        .sandstone;
+        color: #fff;
+    }
+}
+
+.box-shadow(@shadow) {
+    -webkit-box-shadow: @shadow; // iOS <4.3 & Android <4.1
+    box-shadow: @shadow;
+}

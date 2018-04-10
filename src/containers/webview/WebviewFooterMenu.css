@@ -1,0 +1,26 @@
+.show {
+  z-index: 2;
+  transition: all 0.3s ease-in;
+  opacity: 1;
+}
+
+.hide {
+  z-index: 1;
+  transition: all 0.3s ease-in;
+  opacity: 0.01 !important;
+}
+
+.tab {
+  background-color: black !important;
+  box-shadow: 0px -3px 10px 0px rgba(0,0,0,0.3) !important;
+  font-size: 10px !important;
+  height:70px;
+ 
+}
+.tabs {
+  position: fixed;
+  bottom: 100px;
+  left:0;
+  width:100%;
+
+}

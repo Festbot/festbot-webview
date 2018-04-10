@@ -1,0 +1,4 @@
+.header {
+    color: @gray-dark;
+    font-weight: 500;
+}

@@ -1,0 +1,31 @@
+
+
+.listHeader {
+  margin:0px;
+  padding:0px;
+  
+  color: black;
+ 
+ 
+  display: inline-block;
+}
+
+.subheader {
+  margin-top:20px;
+}
+
+
+.center {
+
+  display: flex;
+  height:500px;
+
+}
+
+
+.headerP{
+  float: right;
+  font-weight: 100;
+  line-height: 49px;
+}
+

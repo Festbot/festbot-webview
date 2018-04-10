@@ -1,0 +1,2 @@
+@backgroundColor: @gray-light;
+@ribbonShadowColor: @gray-light;

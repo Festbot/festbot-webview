@@ -1,0 +1,7 @@
+.icon, i {
+  color: #c8c8c8;
+}
+
+i.code.icon {
+    color: @textColor !important;
+}

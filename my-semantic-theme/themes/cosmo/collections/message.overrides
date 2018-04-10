@@ -1,0 +1,33 @@
+.ui.message {
+    border: none;
+    box-shadow: none !important;
+
+    a {
+        text-decoration: underline;
+        color: #fff;
+    }
+
+    &.warning {
+        .header {
+            color: darken(@warningColor, 30%);
+        }
+    }
+
+    &.info {
+        .header {
+            color: darken(@infoColor, 30%);
+        }
+    }
+
+    &.error {
+        .header {
+            color: darken(@negativeColor, 30%);
+        }
+    }
+
+    &.success {
+        .header {
+            color: darken(@positiveColor, 30%);
+        }
+    }
+}

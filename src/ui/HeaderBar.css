@@ -1,0 +1,36 @@
+.mainHeader {
+  position:fixed;
+  top:0;
+  left:0px;
+  z-index: 1;
+  width: 100%;
+  display:flex;
+  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.5) ;
+
+}
+
+.tab {
+  background-color: black !important;
+  font-size: 10px !important;
+  height:45px;
+  width:45px;
+
+}
+
+.headerTitle {
+  background-color: #37474F;
+  color:white;
+
+  display: inline-block;
+  display:flex;
+  flex:1;
+  align-items: center;
+  
+  text-align: center !important;
+}
+
+.headerTitle h1{
+
+  width:100%;
+
+}
