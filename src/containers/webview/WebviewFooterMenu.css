@@ -19,8 +19,19 @@
 }
 .tabs {
   position: fixed;
-  bottom: 100px;
+  bottom: 0px;
   left:0;
   width:100%;
 
+}
+
+.tabToggle {
+  background-color: white !important;
+  
+  font-size: 10px !important;
+  color: #444 !important;
+ 
+
+  height:70px;
+ 
 }

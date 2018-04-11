@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import axios from 'axios';
 import 'babel-polyfill';
 
@@ -37,6 +38,7 @@ export class FestivalBrowserContainer extends Component {
 	};
 
 	async componentDidMount() {
+		this.props.onViewChange('festbot')
 	
 		let { data } = await axios.get(
 			'http://159.65.198.31:5984/festivals/_design/default/_list/all-data/default-view'
@@ -120,6 +122,30 @@ export class FestivalBrowserContainer extends Component {
 	}
 }
 
-export default FestivalBrowserContainer;
+const mapStateToProps = state => {
+ 
+  return{
+    webviewMenu:state.webviewMenu,
+    isActive:{
+      Trending: state.isActiveTrending,
+      Filter: state.isActiveFilter,
+      Favourite: state.isActiveFavourite
+      
+    }
+
+  };
+};
+
+const mapDispatchToProps =  dispatch => {
+  return {
+    onTrendingToggle: () => dispatch({type: 'UPD_TRENDING' }),
+    onFilterToggle: () => dispatch({type: 'UPD_FILTER' }),
+		onFavouriteToggle: () => dispatch({type: 'UPD_FAVOURITE'}),
+		onToggle: (toggleName) => dispatch({type: 'UPD_TOGGLE', value: toggleName}),
+    onViewChange: (actualViewMenu) => dispatch({type: 'UPD_MENU', value: actualViewMenu})
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(FestivalBrowserContainer);
 
 

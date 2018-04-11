@@ -45,7 +45,7 @@ export class App extends Component {
 						<MusicFestivalWebViewLayout>
 							
 							<Route path='/' exact component={FestbotBrowserContainer}/>
-							<Route path='/festbot/program_browser' exact component={FestivalProgramContainer}/>
+							<Route path='/festival/:festival_name' exact component={FestivalProgramContainer}/>
 							<Route path='/artist/:artist_name' exact render={(data) => {console.log(data);return <h1>hello</h1>}} />
 						</MusicFestivalWebViewLayout>
 

@@ -151,7 +151,7 @@ const FestivalListItem = props => {
 						</div>
 						<div className={classes.flexColumn}>
               <RaisedButton
-                containerElement={<Link to={"/festivals/" + props.festival.name}/>}
+                containerElement={<Link to={"/festival/" + props.festival.name}/>}
                 onClick={props.webviewMenuChange}
 								label="Browse"
 								primary={true}

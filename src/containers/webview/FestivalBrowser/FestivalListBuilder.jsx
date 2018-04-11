@@ -130,10 +130,5 @@ const mapStateToProps = state => {
     webviewMenu:state.webviewMenu,
 };
 }
-const mapDispatchToProps =  dispatch => {
-  return {
-    onViewChange: () => dispatch({type: 'UPD_MENU', value:'program_list'})
-  }
-}
 
-export default connect(mapStateToProps,mapDispatchToProps)(FestivalListBuilder);
+export default connect(mapStateToProps)(FestivalListBuilder);

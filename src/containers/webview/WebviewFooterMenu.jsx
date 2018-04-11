@@ -6,43 +6,79 @@ import { Link } from 'react-router-dom'
 import Aux from '../../hoc/Aux/Aux.jsx'
 import classes from './WebviewFooterMenu.css'
 import FontIcon from 'material-ui/FontIcon';
+import IconWithToggle from '../../helpers/IconWithToggle.jsx'
 
+import FestbotLogo from '../../ui/FestbotLogo.jsx'
 import {Tabs, Tab} from 'material-ui/Tabs';
 
 
 const menuItems = {
-  "FestivalProgramContainer": [
+  "program_list": [
     {
       "name": "Car Sharing",    
-      "linkTo": "/car_sharing",
+      "route": "/car_sharing",
+      "iconName": "directions_car",
+    
+
+    },
+    {
+      "name": "Discover",
+      "route": "/discover",
+      "iconName": "headset",
+     
+    },
+    {
+      "name": "Trending",
+      "route": "",
+      "iconName": "trending_up",
+      "toggleItem": "Trending"
+    },
+    {
+      "name": "Filter",
+      "route": "",
+      "iconName": "filter_list",
+      "toggleItem": "Filter"
+    },
+    {
+      "name": "Favourite",
+      "route": "",
+      "iconName": "star",
+      "toggleItem": "Favourite"
+    }
+  ],
+  "festbot": [
+    {
+      "name": "Festbot",    
+      "route": "",
       "iconName": "muidocs-icon-directions-car",
-      "label": "Car Sharing"
+     
     },
     {
       "name": "I\"am free to",
-      "linkTo": "/i_am_free_to",
-      "iconName": "muidocs-icon-record-voice-over",
-      "label": "I\"am free to"
+      "route": "/i_am_free_to",
+      "iconName": "record_voice_over",
+     
     },
     {
-      "name": "Fest Match",
-      "linkTo": "/fest_match",
-      "iconName": "muidocs-icon-flash_on",
-      "label": "Fest Match"
+      "name": "Match",
+      "route": "/fest_match",
+      "iconName": "flash_on",
+     
     },
     {
       "name": "Notifications",
-      "linkTo": "/notifications",
-      "iconName": "muidocs-icon-notifications",
-      "label": "Notifications"
+      "route": "/notifications",
+      "iconName": "notifications",
+     
     },
     {
       "name": "Settings",
-      "linkTo": "<Link to='/'/>",
-      "iconName": "muidocs-icon-settings",
-      "label": "Settings"
+      "route": "/settings'/>",
+      "iconName": "settings",
+     
     }
   ]
+
 
 }
 
@@ -57,115 +93,55 @@ class WebviewFooterMenu extends Component {
   
 
   handleItemClick = (e) =>  {
-    switch (e.currentTarget.title) {
-      case "Trending":
-        return onTrendingToggle()
-      
-      case "Filter":
-        return this.props.onFilterToggle()
-      
-      case "Favourites":
-        return this.props.onFavouriteToggle()
-      
-      default:
-        break;
-      
-    }
+    this.props.onToggle(e.currentTarget.title)
+
     return (
       this.setState({ activeItem: e.currentTarget.title })
      // () => dispatch({type: 'UPD_MENU', value:'car sharing'}
       
     )
-  } 
+  }
+
 
   render() {
     const { activeItem } = this.state
-    console.log('footer activeItem',this.state.activeItem)
+   
     console.log('props at navigation:', this.props)
-    const visibility = ''
-    const toggleItem='Favourite'
+    
+    const festbotlogo = <FestbotLogo width='24px'/>
+
+    const viewNameFromRouter=this.props.webviewMenu 
+
+    const tabBuilder = menuItems[viewNameFromRouter].map(item =>{
+      let iconElement = <FontIcon title={item.name} onClick={this.handleItemClick} className="material-icons">{item.iconName}</FontIcon>
+    
+      if (item.toggleItem) {
+        iconElement = <IconWithToggle isToggled={this.props.isActive[item.toggleItem]} handleItemClick={this.handleItemClick} title={item.name} iconName={item.iconName} />
+      }
+
+      (item.name=="Festbot") ? iconElement=<FestbotLogo width='24px'/> :null;
+     
+
+      return (
+        <Tab 
+          className={ item.toggleItem ? classes.tabToggle :classes.tab }
+          icon={iconElement}
+          label={item.name}
+          containerElement={!item.route == ""? <Link to={item.route}/> :<div></div>}
+
+      />
+      )});
+
 
     return (
       <Aux>
       {console.log('footer view from redux',this.props.webviewMenu)} 
-      <Tabs className={classes.tabs} >
+      
+      <Tabs className={classes.tabs} inkBarStyle={{backgroundColor: 'white'}}>
 
-        <Tab className={classes.tab}
-          icon={<FontIcon title="Car Sharing" onClick={this.handleItemClick}  className="material-icons">directions_car</FontIcon>}
-          label="Car Sharing"
-          containerElement={<Link to="/car_sharing"/>}
-          
+      {tabBuilder}
 
-        />
-
-        <Tab className={classes.tab}
-          icon={<FontIcon title="Trending" onClick={this.handleItemClick} className="material-icons">trending_up</FontIcon>}
-          label="Trending"
-          
-
-        />
-
-        <Tab className={classes.tab}
-          icon={<FontIcon title="Filter" onClick={this.handleItemClick}  className="material-icons">filter_list</FontIcon>}
-          label="Filter"
-          
-          containerElement={<Link to="/"/>}
-        />
-
-        <Tab className={classes.tab}
-          icon={<FontIcon title="Favourites" onClick={this.handleItemClick} style={{color: this.props.isActive[toggleItem] ? '#E65100': '#fff'  }} className="material-icons">star</FontIcon>}
-          label="Favourites"
-          
-          
-        />
-
-        <Tab className={classes.tab}
-        icon={<FontIcon title="Discover" onClick={this.props.onViewChange}  className="material-icons">headset</FontIcon>}
-        label="Discover"
-        
-        containerElement={<Link to="/discover"/>}
-      />
       </Tabs>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <Menu size='huge' inverted  fixed='bottom' className={classes[visibility]}>
-      <Menu.Item name='FestivalProgramContainer' active={activeItem === 'FestivalProgramContainer'} onClick={this.handleItemClick}>
-      <Link to={'/festbot/program_browser'}>
-      <Icon size='large' name='home'/>
-      </Link>
-      </Menu.Item>
-
-      <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick}>
-      <Link to={'/artist/tiesto'}>
-      <Icon size='large' name='comments'/>
-      </Link>
-      <Label color='teal'  floating >22</Label>
-
-      </Menu.Item>
-      <Menu.Item name='friends' active={activeItem === 'friends'} onClick={this.handleItemClick}>
-      <Icon size='large' name='bell'/>
-      <Label color='teal'  floating >4</Label>
-      </Menu.Item>
-
-      <Menu.Item name='settings' active={activeItem === 'settings'} onClick={this.handleItemClick}>
-      <Icon size='large'  name='setting'/>
-      </Menu.Item>
-    </Menu>
       </Aux>
       
     )
@@ -173,22 +149,24 @@ class WebviewFooterMenu extends Component {
 }
 
 const mapStateToProps = state => {
-  return{
+ 
+  let stateMap={
     webviewMenu:state.webviewMenu,
-    isActive:{
-      Trending: state.isActiveTrending,
-      Filter: state.isActiveFilter,
-      Favourite: state.isActiveFavourite
-    }
+    isActive:{}
+  }
 
-  };
+  menuItems[state.webviewMenu].forEach((item) => {
+    if (item.toggleItem ) {
+       stateMap.isActive[item.toggleItem] = state["isActive"+item.toggleItem]
+    }
+  })
+
+  return stateMap
 };
 
 const mapDispatchToProps =  dispatch => {
   return {
-    onTrendingToggle: () => dispatch({type: 'UPD_TRENDING' }),
-    onFilterToggle: () => dispatch({type: 'UPD_FILTER' }),
-    onFavouriteToggle: () => dispatch({type: 'UPD_FAVOURITE'}),
+    onToggle: (toggleName) => dispatch({type: 'UPD_TOGGLE', value: toggleName}),
     onViewChange: () => dispatch({type: 'UPD_MENU', value:'discover'})
   }
 }

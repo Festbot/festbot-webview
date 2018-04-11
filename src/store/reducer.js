@@ -27,6 +27,11 @@ const reducer = (state = initialState,action) => {
       ...state,
       isActiveFavourite: !state.isActiveFavourite
     }
+    case 'UPD_TOGGLE':
+    return {
+      ...state,
+      ["isActive"+action.value]: !state["isActive"+action.value]
+    }
     
   }
   return state;
