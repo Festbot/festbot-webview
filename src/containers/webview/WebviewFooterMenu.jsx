@@ -21,10 +21,11 @@ const menuItems = {
     
 
     },
+    
     {
-      "name": "Discover",
-      "route": "/discover",
-      "iconName": "headset",
+      "name": "I\"am free to",
+      "route": "/i_am_free_to",
+      "iconName": "record_voice_over",
      
     },
     {
@@ -34,13 +35,13 @@ const menuItems = {
       "toggleItem": "Trending"
     },
     {
-      "name": "Filter",
+      "name": "My Filter",
       "route": "",
       "iconName": "filter_list",
       "toggleItem": "Filter"
     },
     {
-      "name": "Favourite",
+      "name": "My Favourite",
       "route": "",
       "iconName": "star",
       "toggleItem": "Favourite"
@@ -54,10 +55,9 @@ const menuItems = {
      
     },
     {
-      "name": "I\"am free to",
-      "route": "/i_am_free_to",
-      "iconName": "record_voice_over",
-     
+      "name": "Discover",
+      "route": "/discover",
+      "iconName": "headset",
     },
     {
       "name": "Match",
@@ -116,7 +116,7 @@ class WebviewFooterMenu extends Component {
       let iconElement = <FontIcon title={item.name} onClick={this.handleItemClick} className="material-icons">{item.iconName}</FontIcon>
     
       if (item.toggleItem) {
-        iconElement = <IconWithToggle isToggled={this.props.isActive[item.toggleItem]} handleItemClick={this.handleItemClick} title={item.name} iconName={item.iconName} />
+        iconElement = <IconWithToggle isToggled={this.props.isActive[item.toggleItem]} handleItemClick={this.handleItemClick} title={item.toggleItem} iconName={item.iconName} />
       }
 
       (item.name=="Festbot") ? iconElement=<FestbotLogo width='24px'/> :null;

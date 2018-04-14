@@ -106,7 +106,7 @@ const FestivalListItem = props => {
 				<div className={classes.column}>
 					<div>
 						<h2>Description: </h2>
-						{props.festival.description}
+						<p>{props.festival.description}</p>
 					</div>
 
 					<div className={classes.flexRow}>
@@ -115,7 +115,7 @@ const FestivalListItem = props => {
 							<div>
 								<h2>Ticket: </h2>
 								<a href={props.festival.website}>
-									{props.festival.website}
+									<p>{props.festival.website}</p>
 								</a>
 							</div>
 						</div>

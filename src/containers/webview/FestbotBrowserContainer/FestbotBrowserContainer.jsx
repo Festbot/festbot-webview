@@ -44,10 +44,10 @@ export class FestivalBrowserContainer extends Component {
 			'http://159.65.198.31:5984/festivals/_design/default/_list/all-data/default-view'
 		);
 		//console.log(data)
-		data = [...data, ...data, ...data];
-		data = data.map((item, key) => {
-			return { ...item, ...{ name: item.name + key } };
-		});
+		// data = [...data, ...data, ...data];
+		// data = data.map((item, key) => {
+		// 	return { ...item, ...{ name: item.name + key } };
+		// });
 	
 
     this.setState({ searchResults: data, data: data });
@@ -105,7 +105,7 @@ export class FestivalBrowserContainer extends Component {
 					<title>Festbot - Festivals</title>
 				</Helmet>
 				<GridList cols={2} cellHeight="auto" padding={1}>
-        <HeaderBar />
+        <HeaderBar title='Festbot Activation' />
 				</GridList>
 				<p />
 				<SearchBar searchQueryChanged={this.festivalListFilter} />
@@ -141,7 +141,6 @@ const mapDispatchToProps =  dispatch => {
     onTrendingToggle: () => dispatch({type: 'UPD_TRENDING' }),
     onFilterToggle: () => dispatch({type: 'UPD_FILTER' }),
 		onFavouriteToggle: () => dispatch({type: 'UPD_FAVOURITE'}),
-		onToggle: (toggleName) => dispatch({type: 'UPD_TOGGLE', value: toggleName}),
     onViewChange: (actualViewMenu) => dispatch({type: 'UPD_MENU', value: actualViewMenu})
   }
 }

@@ -22,7 +22,28 @@
   font-size: large;
 }
 
+h1 { 
+  font-weight: 100;
+  font-size: 140% !important;
+  line-height: 0;
+
+}
+
+h2 { 
+  font-weight: 100;
+  font-size: 120% !important;
+  line-height: 0;
+
+}
+
+p  {
+  font-weight: 100!important;
+  font-size: 80% !important;
+  line-height: 170%;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+

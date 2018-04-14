@@ -1,0 +1,58 @@
+
+.inverse{
+ 
+  background-color: #78909C;
+  color: white;
+  border-radius: 2px;
+  padding:2px 5px;
+
+}
+
+
+.center {
+
+  display: flex;
+  height:500px;
+
+}
+
+.rating {
+  padding:0px !important;
+
+}
+
+.detailsContainer {
+  background-color: #78909C!important;
+  color: white;
+  
+  padding:0px 10px; 
+ 
+  overflow: hidden;
+  transition: all 0.3s ease-in;
+
+}
+
+.flexBox {
+  border-radius: 2px;
+  display: flex!important;
+  justify-content: space-between!important;
+}
+
+.flexRow {
+  display: flex!important;
+  justify-content: space-between!important;
+  flex:1 !important;
+  margin:20px auto;
+
+}
+
+.flexColumn {
+  flex:1 !important;
+  
+}
+
+a {
+  text-decoration: none;
+  color: #FFB74D;
+  cursor: pointer;
+}

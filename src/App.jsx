@@ -5,7 +5,7 @@ import Aux from './hoc/Aux/Aux.jsx';
 import Layout from './hoc/Layout/Layout.jsx';
 import MusicFestivalWebViewLayout from './hoc/Layout/MusicFestivalWebviewLayout.jsx';
 import MainBrowser from './containers/webview/MainBrowser/MainBrowser.jsx';
-import { Container } from 'semantic-ui-react';
+//import { Container } from 'semantic-ui-react';
 import classes from './App.css';
 import FestbotBrowserContainer from './containers/webview/FestbotBrowserContainer/FestbotBrowserContainer.jsx';
 
@@ -17,7 +17,6 @@ import FestivalProgramContainer from './containers/webview/FestivalProgramContai
 
 
 
-import semanticLess from '../my-semantic-theme/semantic.less';
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -39,7 +38,7 @@ export class App extends Component {
 		return (
 			<BrowserRouter>
 			<MuiThemeProvider muiTheme={muiTheme}>
-				<Container>
+
 					<Switch>
 							
 						<MusicFestivalWebViewLayout>
@@ -52,7 +51,7 @@ export class App extends Component {
 						<Layout />
 
 					</Switch>
-				</Container>
+
 			</MuiThemeProvider>
 			</BrowserRouter>
 		);

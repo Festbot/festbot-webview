@@ -14,10 +14,11 @@ export class headerBar extends Component {
       <div className={classes.mainHeader} >
       <Tab className={classes.tab}
       icon={<NavigationBackIcon/>}
+      onClick={() => window.history.back()}
 
     />
     <div className={classes.headerTitle}>
-    <h1>Festbot activation</h1>
+    <h1>{this.props.title}</h1>
     </div>
       
 			</div>
