@@ -4,10 +4,11 @@ const WebpackDevServer = require('webpack-dev-server'),
 	path = require('path'),
 	compiler = webpack(config),
 	devServer = {
-		host: 'localhost',
+		host: '0.0.0.0',
 		port: 3000,
-		historyApiFallback: false,
+		historyApiFallback: true,
 		hot: true,
+		hotOnly: true,
 		contentBase: path.resolve(path.resolve(__dirname), 'out'),
 		publicPath: '/'
 	},

@@ -2,10 +2,7 @@ const path = require('path'),
 	HtmlWebPackPlugin = require('html-webpack-plugin'),
 	MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-
-
 module.exports = {
-	
 	entry: {
 		app: ['./src/index.jsx']
 	},
@@ -20,16 +17,11 @@ module.exports = {
 		chunkFilename: '[id].bundle.js',
 		publicPath: '/'
 	},
-	resolve: {
-		alias: {
-		   '../../theme.config$': path.join(__dirname, 'my-semantic-theme/theme.config')
-		}
-	},
 	module: {
 		rules: [
 			{
 				test: /\.css$/,
-				loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' 
+				loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
 			},
 			{
 				test: /\.jsx$/,
@@ -37,11 +29,13 @@ module.exports = {
 				loader: 'babel-loader',
 				options: {
 					presets: ['env', 'react'],
+					cacheDirectory: true,
 					plugins: [
 						'transform-object-rest-spread',
 						'transform-react-jsx',
 						'transform-class-properties',
-						'transform-async-to-generator'
+						'transform-async-to-generator',
+						'react-hot-loader/babel'
 					]
 				}
 			},

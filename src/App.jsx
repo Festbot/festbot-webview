@@ -5,7 +5,6 @@ import Aux from './hoc/Aux/Aux.jsx';
 import Layout from './hoc/Layout/Layout.jsx';
 import MusicFestivalWebViewLayout from './hoc/Layout/MusicFestivalWebviewLayout.jsx';
 import MainBrowser from './containers/webview/MainBrowser/MainBrowser.jsx';
-//import { Container } from 'semantic-ui-react';
 import classes from './App.css';
 import FestbotBrowserContainer from './containers/webview/FestbotBrowserContainer/FestbotBrowserContainer.jsx';
 
@@ -17,6 +16,7 @@ import FestivalProgramContainer from './containers/webview/FestivalProgramContai
 
 
 
+import { hot } from 'react-hot-loader';
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -30,10 +30,7 @@ const muiTheme = getMuiTheme({
   },
 });
 
-
-export class App extends Component {
-
-	
+class App extends Component {
 	render() {
 		return (
 			<BrowserRouter>
@@ -58,4 +55,4 @@ export class App extends Component {
 	}
 }
 
-export default App;
+export default hot(module)(App);
