@@ -41,6 +41,88 @@ const propsEventRating= 4.5;
 const propsEventLocation = 'Main Stage';
 
 const FestivalProgramListItem = props => {
+  let renderingDetails=''
+  if (props.isOpenDetails) {
+    renderingDetails = <div>
+    <div className={classes.flexRow}>
+    <div className={classes.flexColumn}>
+      <h2>Start time: </h2>
+      <p>{moment(props.event.startDate).format('LT')}</p>
+    </div>
+    <div className={classes.flexColumn}>
+      <h2>End time:</h2>
+      <p>
+        {moment(props.event.endDate).format('LT')}
+      </p>
+    </div>
+
+    <Avatar icon={<DetailsIcon />} />
+  </div>
+  <p />
+  <div className={classes.column}>
+    <div>
+      <h2>Description: </h2>
+      <p>{props.event.artist}</p>
+    </div>
+
+    <div className={classes.flexRow}>
+      <p />
+      <div className={classes.flexColumn}>
+        <div>
+          <h2>Ticket: </h2>
+          <a href='ticketlink'>
+            <p>{props.event.festival_slug}</p>
+          </a>
+        </div>
+      </div>
+      <div className={classes.flexColumn}>
+        <div>
+          <h2>
+            Rating: {propsEventRating}
+            <Rating
+              itemStyle={{
+                width: '25px',
+                padding: '0',
+                margin: '0'
+              }}
+              value={propsEventRating}
+            />
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p />
+
+  <div className={classes.column}>
+    <div className={classes.flexRow}>
+      <div className={classes.flexColumn}>
+        <RaisedButton
+        
+          label="Close"
+          title={props.event.artist}
+          onClick={props.detailsIsOpenHandler}
+          style={{ float: 'right' }}
+        />
+      </div>
+      <div className={classes.flexColumn}>
+        <RaisedButton
+          containerElement={<Link to={"/artist/" + props.event.artist}/>}
+          onClick={props.webviewMenuChange}
+          label="Artist Profile"
+          primary={true}
+          style={{ float: 'right' }}
+        />
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  }
+      
+       
+
+
  
 	return (
 		<div>
@@ -82,7 +164,6 @@ const FestivalProgramListItem = props => {
 				}
 			/>
       <Divider />
-      
 
 			<div
 				style={{
@@ -90,80 +171,7 @@ const FestivalProgramListItem = props => {
 				}}
 				className={classes.detailsContainer}
 			>
-        
-      <div className={classes.flexRow}>
-      <div className={classes.flexColumn}>
-        <h2>Start time: </h2>
-        <p>{moment(props.event.startDate).format('LT')}</p>
-      </div>
-      <div className={classes.flexColumn}>
-        <h2>End time:</h2>
-        <p>
-          {moment(props.event.endDate).format('LT')}
-        </p>
-      </div>
-
-      <Avatar icon={<DetailsIcon />} />
-    </div>
-    <p />
-    <div className={classes.column}>
-      <div>
-        <h2>Description: </h2>
-        <p>{props.event.artist}</p>
-      </div>
-
-      <div className={classes.flexRow}>
-        <p />
-        <div className={classes.flexColumn}>
-          <div>
-            <h2>Ticket: </h2>
-            <a href='ticketlink'>
-              <p>{props.event.festival_slug}</p>
-            </a>
-          </div>
-        </div>
-        <div className={classes.flexColumn}>
-          <div>
-            <h2>
-              Rating: {propsEventRating}
-              <Rating
-                itemStyle={{
-                  width: '25px',
-                  padding: '0',
-                  margin: '0'
-                }}
-                value={propsEventRating}
-              />
-            </h2>
-          </div>
-        </div>
-      </div>
-    </div>
-    <p />
-
-    <div className={classes.column}>
-      <div className={classes.flexRow}>
-        <div className={classes.flexColumn}>
-          <RaisedButton
-           
-            label="Close"
-            title={props.event.artist}
-            onClick={props.detailsIsOpenHandler}
-            style={{ float: 'right' }}
-          />
-        </div>
-        <div className={classes.flexColumn}>
-          <RaisedButton
-            containerElement={<Link to={"/artist/" + props.event.artist}/>}
-            onClick={props.webviewMenuChange}
-            label="Artist Profile"
-            primary={true}
-            style={{ float: 'right' }}
-          />
-        </div>
-      </div>
-    </div>
-
+        {renderingDetails}
 			</div>
 		</div>
 	);

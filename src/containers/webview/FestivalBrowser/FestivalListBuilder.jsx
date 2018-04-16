@@ -39,6 +39,8 @@ class FestivalListBuilder extends Component {
 		});
 	};
 
+
+	
 	detailsIsOpenHandler = e => {
 		if (this.state.activeDetails === e.currentTarget.title) {
 			this.setState({ activeDetails: '' });

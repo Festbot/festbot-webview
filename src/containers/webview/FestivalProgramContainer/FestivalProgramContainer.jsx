@@ -24,7 +24,8 @@ import IconToday from 'material-ui/svg-icons/action/today';
 import IconLocation from 'material-ui/svg-icons/maps/add-location';
 
 import FestivalProgramListItem from './FestivalProgramListItem.jsx'
-import FilterElements from './FilterElements.jsx'
+//import FilterElements from './FilterElements.jsx'
+import DaySwitcher from '../../../components/DaySwitcher.jsx'
 
 
 
@@ -45,9 +46,10 @@ export class festivalProgramContainer extends Component {
     data: [],
     activeEvent: '',
     activeDetails: '',
-    selectedDays:[0],
+    selectedDay:'',
     eventDays:[],
     yListOffset:0,
+
     
   };
   
@@ -84,7 +86,7 @@ export class festivalProgramContainer extends Component {
     //window.removeEventListener("scroll", this.onScroll)
   }
 
-  onScroll = () =>{
+  onScroll = () =>{  
     console.log('document scroll height: ',document.body.scrollHeight,'document body height: ',document.body.clientHeight ,window.scrollY)
     let docHeight= document.body.scrollHeight-document.body.clientHeight
     let trigger= docHeight-window.scrollY
@@ -105,21 +107,8 @@ export class festivalProgramContainer extends Component {
     let grouppedFestivalPrograms = this.groupByDays(Programs)
     let eventDays = Object.keys(grouppedFestivalPrograms).sort()
 
-   
-    const eventDaysMenuItem = eventDays.map((e,i) =>{
-      return <MenuItem
-      value={i}
-      key={i}
-      primaryText={moment(e).format('LL')+' Day '+(i+1)}
-    />
-    });    
+    this.props.eventDays(eventDays)
 
-
-    this.setState(function(prevState) {
-      return {
-        eventDays: eventDaysMenuItem
-      };
-    });
   }
 
 
@@ -140,9 +129,24 @@ export class festivalProgramContainer extends Component {
 		this.setState({ selectedLocation: value });
   };
   
+  
+
   festivalEventFilter=()=>{
+    if (this.props.activeDay !=='ALL') {
+      const eventsFilteredByDay = this.state.searchResults.filter(eventDay => {
+				return (
+					(moment(eventDay.startDate).format('L').toLowerCase().indexOf(this.props.activeDay.toLowerCase()) > -1 )
+				) 
+      })
+      console.log('events filtered by day: ',eventsFilteredByDay) 
+      return eventsFilteredByDay
+    } else {
+      return this.state.searchResults
+    }
+
 
   }
+
 
   groupByDays = (events) => {
     const days = Ramda.groupBy(events => {
@@ -159,22 +163,37 @@ export class festivalProgramContainer extends Component {
 			this.setState({ activeDetails: e.currentTarget.title });
 			console.log(this.state.activeDetails);
 		}
-	};
+  };
+  
+  isActiveFavouriteItem = item =>{
+		
+		const filteredResults = this.props.favouriteArtists
+			.filter(artist => {
+				return (
+					(artist.toLowerCase().indexOf(item.toLowerCase()) > -1 )
+				) 
+      })
+    return filteredResults.length >0
+
+	}
 
 
-    compare =(a,b)=>{
-       // Use toUpperCase() to ignore character casing
-      const startA = a.startDate.toUpperCase();
-      const startB = b.startDate.toUpperCase();
-
-      let comparison = 0;
-      if (startA > startB) {
-        comparison = 1;
-      } else if (startA < startB) {
-        comparison = -1;
-      }
-      return comparison;
+  favouriteItemToggle=(item)=>{
+    console.log(item.currentTarget.name)
+    if (this.isActiveFavouriteItem(item.currentTarget.name)) {
+      this.props.removeFromFavourites(item.currentTarget.name)
+      console.log('torles')
+    } else {
+      this.props.addToFavourites(item.currentTarget.name)
+      console.log('hozza adas')
     }
+    
+    console.log(this.props.favouriteArtists)
+
+	}
+
+
+
 
     showMore = () =>{
       this.setState(function(prevState) {
@@ -199,12 +218,11 @@ export class festivalProgramContainer extends Component {
 			);
 		}
 
-   
     
-    const Programs = this.state.searchResults
-    // const sortList = Programs.sort(this.compare)
-    // console.log('sorted: ',sortList)
-    const sliceOfPrograms = Programs.slice(this.state.yListOffset,this.state.yListOffset+50)
+    
+    const Programs = this.festivalEventFilter()
+   
+    const sliceOfPrograms = Programs.slice(this.state.yListOffset,this.state.yListOffset+300)
     const grouppedFestivalPrograms = this.groupByDays(sliceOfPrograms)
 
     const eventDays = Object.keys(grouppedFestivalPrograms).sort()
@@ -228,10 +246,9 @@ export class festivalProgramContainer extends Component {
 										}
 										webviewMenuChange={this.props.onViewChange}
 										event={event}
-										addToFavourite={this.addToFavourite}
+										addToFavourite={this.favouriteItemToggle}
 										isActiveItem={
-											this.state.activeEvent ===
-											event.artist
+											this.isActiveFavouriteItem(event.artist)
 										}
 										isOpenDetails={
 											this.state.activeDetails ===
@@ -252,18 +269,9 @@ export class festivalProgramContainer extends Component {
 
 		return (
 			<div className={classes.container}>
-				<HeaderBar title={this.props.match.params.festival_name} />
-        <FilterElements
-          DateValue={this.state.controlledDate}
-          DateOnChange={this.handleChange}
-          LocationValue={this.state.selectedLocation}
-          LocationOnChange={this.onChangeLocationHandler}
-          LocationItems={items}
-          isActiveFilter={this.props.isActive.Filter}
-          EventDays={this.state.eventDays}
-          SelectedDays={this.state.SelectedDays}
-    
-        />
+        <HeaderBar title={this.props.match.params.festival_name} />
+        <DaySwitcher activeDayClicked={this.festivalEventDayFilterHandler}/>
+     
         <SearchBar searchQueryChanged={this.festivalEventFilter} />
 				<div style={{paddingBottom: '100px',paddingTop:this.state.paddingTop+'px'}}>
           {programListByDay}
@@ -277,7 +285,10 @@ export class festivalProgramContainer extends Component {
 
 const mapStateToProps = state => {
 	return {
-		webviewMenu: state.webviewMenu,
+    activeDay: state.activeDay,
+    eventDays: state.eventDays,
+    webviewMenu: state.webviewMenu,
+    favouriteArtists: state.favouriteArtists,
 		isActive: {
 			Trending: state.isActiveTrending,
 			Filter: state.isActiveFilter,
@@ -292,7 +303,10 @@ const mapDispatchToProps = dispatch => {
 		onFilterToggle: () => dispatch({ type: 'UPD_FILTER' }),
 		onFavouriteToggle: () => dispatch({ type: 'UPD_FAVOURITE' }),
 		onViewChange: actualViewMenu =>
-			dispatch({ type: 'UPD_MENU', value: actualViewMenu })
+      dispatch({ type: 'UPD_MENU', value: actualViewMenu }),
+    addToFavourites:(artist) => dispatch({type: 'ADD_FAVOURITE', value: artist}),
+    removeFromFavourites:(artist) => dispatch({type: 'REMOVE_FAVOURITE', value: artist}),
+    eventDays:(daysArray) => dispatch({type: 'UPD_EVENTDAYS', value: daysArray}),
 	};
 };
 

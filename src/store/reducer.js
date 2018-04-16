@@ -3,6 +3,9 @@ const initialState ={
   isActiveTrending: false,
   isActiveFilter: false,
   isActiveFavourite: false,
+  favouriteArtists:[],
+  eventDays:[],
+  activeDay:'ALL',
 }
 
 const reducer = (state = initialState,action) => {
@@ -32,7 +35,27 @@ const reducer = (state = initialState,action) => {
       ...state,
       ["isActive"+action.value]: !state["isActive"+action.value]
     }
-    
+    case 'ADD_FAVOURITE':
+    return {
+      ...state,
+      favouriteArtists: state.favouriteArtists.concat(action.value)
+    }
+    case 'REMOVE_FAVOURITE':
+    const updatedArray = state.favouriteArtists.filter(artist => artist !== action.value  )
+    return {
+      ...state,
+      favouriteArtists: updatedArray
+    }
+    case 'UPD_EVENTDAYS':
+    return {
+      ...state,
+      eventDays: action.value
+    }
+    case 'UPD_ACTIVEDAY':
+    return {
+      ...state,
+      activeDay: action.value
+    }
   }
   return state;
 }
