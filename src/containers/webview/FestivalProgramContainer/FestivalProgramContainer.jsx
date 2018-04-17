@@ -138,6 +138,27 @@ export class festivalProgramContainer extends Component {
   };
   
   
+  festivalEventKeywordFilter = keyword => {
+	
+
+		const filteredResults = this.state.data
+			.filter(event => {
+				return (
+					(event.artist
+						.toLowerCase()
+						.indexOf(keyword.toLowerCase()) > -1 )||
+          (event.place
+            .toLowerCase()
+            .indexOf(keyword.toLowerCase()) > -1)
+				) 
+			})
+
+		console.log('filtered Results', filteredResults);
+		if (filteredResults.length == 0) return
+		this.setState({ searchResults: filteredResults });
+
+	};
+
 
   festivalEventFilter=()=>{
     // STAGE 1
@@ -313,7 +334,7 @@ export class festivalProgramContainer extends Component {
         <DaySwitcher activeDayClicked={this.festivalEventDayFilterHandler}/>
         <StageSwitcher activeStageClicked={this.festivalEventStageFilterHandler}/>
      
-        <SearchBar searchQueryChanged={this.festivalEventFilter} />
+        <SearchBar searchQueryChanged={this.festivalEventKeywordFilter} />
 				<div style={{paddingBottom: '100px',paddingTop:this.state.paddingTop+'px'}}>
           {programListByDay}
           <button onClick={this.showMore}> show more </button>
