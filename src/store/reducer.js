@@ -6,6 +6,8 @@ const initialState ={
   favouriteArtists:[],
   eventDays:[],
   activeDay:'ALL',
+  eventStages:['Main Stage','Telekom Arena','Colosseum','Magic Mirror'],
+  activeStage:'ALL LOCATION',
 }
 
 const reducer = (state = initialState,action) => {
@@ -55,6 +57,16 @@ const reducer = (state = initialState,action) => {
     return {
       ...state,
       activeDay: action.value
+    }
+    case 'UPD_EVENTSTAGES':
+    return {
+      ...state,
+      eventStages: action.value
+    }
+    case 'UPD_ACTIVESTAGE':
+    return {
+      ...state,
+      activeStage: action.value
     }
   }
   return state;

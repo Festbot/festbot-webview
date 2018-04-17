@@ -1,0 +1,115 @@
+.container {
+  position:fixed;
+  top:0px;
+  overflow:hidden;
+  width:100%;
+  z-index: 2;
+  font-weight: 100;
+  background-color: #eee;
+  font-size: 80%;
+  transition: all 0.3s ease-in-out;
+  -webkit-overflow-scrolling: touch;
+  display:flex;
+  align-content: space-between;
+}
+
+.dropDownContainer {
+  position:fixed;
+  top:44px;
+  overflow-x:scroll;
+  max-height: 300px;
+  width:100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.3) ;
+  transition: all 0.3s ease-in-out;
+  -webkit-overflow-scrolling: touch;
+  display:flex;
+  flex:1;
+  margin:0 auto;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+
+}
+
+
+.dropDownContainer li {
+  color:black;
+  list-style-type: none;
+  width:60%;
+  z-index: 1;
+  text-align:center;
+  background-color: white;
+  padding: 15px 15px;
+  margin: 2px auto;
+  border-radius: 2px;
+  flex:1;
+  font-weight: 100;
+  
+}
+
+.activeSelection {
+  background-color: #78909C !important;
+  color:white!important;
+  display: inline-block;
+  margin: 2px 1px;
+  padding: 15px 15px;
+
+  border-radius: 2px;
+}
+
+
+
+.navigation {
+  width:16%;
+  margin:1px 1px;
+  background-color: white;
+  display:flex;
+}
+
+
+
+
+.item {
+  display: inline-block;
+  
+  background-color: white;
+  padding: 15px 15px;
+  margin: 0 1px;
+  border-radius: 2px;
+}
+
+.active {
+  text-align: center;
+  background-color: #EF6C00;
+  color:white;
+  display: inline-block;
+  margin: 1px;
+  padding: 15px 15px;
+  
+  width:60%;
+  margin: 0 auto;
+  margin-bottom: 1px;
+  border-radius: 2px;
+  overflow:hidden;
+  
+
+}
+
+.slideinDisabled {
+  animation: slidein .5s linear 1s  alternate;
+}
+
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 300%; 
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+
+}

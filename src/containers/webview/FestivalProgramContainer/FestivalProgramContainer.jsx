@@ -26,7 +26,7 @@ import IconLocation from 'material-ui/svg-icons/maps/add-location';
 import FestivalProgramListItem from './FestivalProgramListItem.jsx'
 //import FilterElements from './FilterElements.jsx'
 import DaySwitcher from '../../../components/DaySwitcher.jsx'
-
+import StageSwitcher from '../../../components/StageSwitcher.jsx'
 
 
 const items = Array(15).fill(null).map((e,i) =>{
@@ -76,7 +76,8 @@ export class festivalProgramContainer extends Component {
 		console.log('this festival program data:', data);
     console.log('state search results:', this.state.searchResults);
 
-    this.updateEventDays()
+    this.updateEventDays(this.state.searchResults)
+    this.updateEventLocations(this.state.searchResults)
 
     //window.addEventListener("scroll", this.onScroll)
 
@@ -102,14 +103,21 @@ export class festivalProgramContainer extends Component {
 
   }
 
-  updateEventDays = () => {
-    let Programs = this.state.searchResults
+  updateEventDays = (data) => {
+    let Programs = data
     let grouppedFestivalPrograms = this.groupByDays(Programs)
     let eventDays = Object.keys(grouppedFestivalPrograms).sort()
 
     this.props.eventDays(eventDays)
-
   }
+
+  updateEventLocations = (data) => {
+    let Programs = data
+    let grouppedFestivalPrograms = this.groupByStages(Programs)
+    let eventStages = Object.keys(grouppedFestivalPrograms).sort()
+    this.props.eventStages(eventStages)
+  }
+
 
 
   addToFavourite = e => {
@@ -132,18 +140,43 @@ export class festivalProgramContainer extends Component {
   
 
   festivalEventFilter=()=>{
+    // STAGE 1
+    let filterStage= this.state.searchResults
     if (this.props.activeDay !=='ALL') {
       const eventsFilteredByDay = this.state.searchResults.filter(eventDay => {
 				return (
 					(moment(eventDay.startDate).format('L').toLowerCase().indexOf(this.props.activeDay.toLowerCase()) > -1 )
 				) 
       })
-      console.log('events filtered by day: ',eventsFilteredByDay) 
-      return eventsFilteredByDay
-    } else {
-      return this.state.searchResults
+      filterStage = eventsFilteredByDay
+    } 
+    
+    // STAGE 2
+    if (this.props.activeStage !=='ALL LOCATION') {
+      const eventsFilteredByStage = filterStage.filter(event => {
+				return (
+					event.place.toLowerCase().indexOf(this.props.activeStage.toLowerCase()) > -1 
+				) 
+      })
+      filterStage = eventsFilteredByStage
     }
 
+    // STAGE 3
+    if (this.props.isActive.Favourite) {
+      const eventsFilteredByfavourite = filterStage.filter(event => {
+				return (
+					this.isActiveFavouriteItem(event.artist) 
+				) 
+      })
+      return eventsFilteredByfavourite
+      
+      // this.updateEventDays(eventsFilteredByfavourite)
+      // this.updateEventLocations(eventsFilteredByfavourite)
+      
+    } else {
+      return filterStage
+
+    } 
 
   }
 
@@ -153,6 +186,13 @@ export class festivalProgramContainer extends Component {
       return moment(events.startDate).format('L')
     })
     return days(events)
+  };
+
+  groupByStages = (events) => {
+    const Stages = Ramda.groupBy(events => {
+      return events.place
+    })
+    return Stages(events)
   };
 
 
@@ -271,6 +311,7 @@ export class festivalProgramContainer extends Component {
 			<div className={classes.container}>
         <HeaderBar title={this.props.match.params.festival_name} />
         <DaySwitcher activeDayClicked={this.festivalEventDayFilterHandler}/>
+        <StageSwitcher activeStageClicked={this.festivalEventStageFilterHandler}/>
      
         <SearchBar searchQueryChanged={this.festivalEventFilter} />
 				<div style={{paddingBottom: '100px',paddingTop:this.state.paddingTop+'px'}}>
@@ -285,6 +326,8 @@ export class festivalProgramContainer extends Component {
 
 const mapStateToProps = state => {
 	return {
+    eventStages: state.eventStages,
+    activeStage: state.activeStage,
     activeDay: state.activeDay,
     eventDays: state.eventDays,
     webviewMenu: state.webviewMenu,
@@ -307,6 +350,7 @@ const mapDispatchToProps = dispatch => {
     addToFavourites:(artist) => dispatch({type: 'ADD_FAVOURITE', value: artist}),
     removeFromFavourites:(artist) => dispatch({type: 'REMOVE_FAVOURITE', value: artist}),
     eventDays:(daysArray) => dispatch({type: 'UPD_EVENTDAYS', value: daysArray}),
+    eventStages:(stagesArray) => dispatch({type: 'UPD_EVENTSTAGES', value: stagesArray}),
 	};
 };
 

@@ -38,9 +38,16 @@ const styles = {
 	}
 };
 const propsEventRating= 4.5;
-const propsEventLocation = 'Main Stage';
+
+
 
 const FestivalProgramListItem = props => {
+  
+  let propsEventLocation= 'Not announced yet'
+  if (props.event.place!=='') {
+    propsEventLocation = props.event.place;
+  }
+
   let renderingDetails=''
   if (props.isOpenDetails) {
     renderingDetails = <div>
