@@ -30,10 +30,11 @@ class SearchBar extends Component {
 					}}
 				/>
         <TextField
-          inputStyle={{ borderColor: 'black' }}
-					hintText="Search by Festival Name"
+          inputStyle={{ borderColor: 'black'}}
+					hintText="Type your search"
 					onChange={this.debounce}
 					fullWidth={true}
+					
 				/>
 			</div>
 		);

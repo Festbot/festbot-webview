@@ -161,44 +161,14 @@ export class festivalProgramContainer extends Component {
 
 
   festivalEventFilter=()=>{
-    // STAGE 1
-    let filterStage= this.state.searchResults
-    if (this.props.activeDay !=='ALL') {
-      const eventsFilteredByDay = this.state.searchResults.filter(eventDay => {
-				return (
-					(moment(eventDay.startDate).format('L').toLowerCase().indexOf(this.props.activeDay.toLowerCase()) > -1 )
-				) 
-      })
-      filterStage = eventsFilteredByDay
-    } 
     
-    // STAGE 2
-    if (this.props.activeStage !=='ALL LOCATION') {
-      const eventsFilteredByStage = filterStage.filter(event => {
-				return (
-					event.place.toLowerCase().indexOf(this.props.activeStage.toLowerCase()) > -1 
-				) 
-      })
-      filterStage = eventsFilteredByStage
-    }
+    return this.state.searchResults.filter(event => {
+      return (
+        ((this.props.activeDay =='ALL')||(moment(event.startDate).format('L').toLowerCase().indexOf(this.props.activeDay.toLowerCase()) > -1 )) &&
+        ((this.props.activeStage =='ALL LOCATION')||(event.place.toLowerCase().indexOf(this.props.activeStage.toLowerCase()) > -1)) &&
+        ((!this.props.isActive.Favourite)||(this.isActiveFavouriteItem(event.artist) ))
 
-    // STAGE 3
-    if (this.props.isActive.Favourite) {
-      const eventsFilteredByfavourite = filterStage.filter(event => {
-				return (
-					this.isActiveFavouriteItem(event.artist) 
-				) 
-      })
-      return eventsFilteredByfavourite
-      
-      // this.updateEventDays(eventsFilteredByfavourite)
-      // this.updateEventLocations(eventsFilteredByfavourite)
-      
-    } else {
-      return filterStage
-
-    } 
-
+      )})
   }
 
 

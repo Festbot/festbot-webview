@@ -13,7 +13,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import * as colors from 'material-ui/styles/colors';
 import { BrowserRouter } from 'react-router-dom';
 import FestivalProgramContainer from './containers/webview/FestivalProgramContainer/FestivalProgramContainer.jsx'
-
+import DiscoverContainer from './containers/webview/Discover/DiscoverContainer.jsx'
 
 
 import { hot } from 'react-hot-loader';
@@ -38,11 +38,12 @@ class App extends Component {
 
 					<Switch>
 							
-						<MusicFestivalWebViewLayout>
+						<MusicFestivalWebViewLayout className={classes.App}>
 							
 							<Route path='/' exact component={FestbotBrowserContainer}/>
 							<Route path='/festival/:festival_name' exact component={FestivalProgramContainer}/>
 							<Route path='/artist/:artist_name' exact render={(data) => {console.log(data);return <h1>hello</h1>}} />
+							<Route path='/discover/:artist_name?' exact component={DiscoverContainer}/>
 						</MusicFestivalWebViewLayout>
 
 						<Layout />
