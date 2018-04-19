@@ -9,6 +9,7 @@ import IconHeadset from 'material-ui/svg-icons/hardware/headset';
 import IconInfo from 'material-ui/svg-icons/action/event';
 import Star from 'material-ui/svg-icons/toggle/star';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import { IconButton } from 'material-ui';
 
 import { Tabs, Tab } from 'material-ui/Tabs';
 // From https://github.com/oliviertassinari/react-swipeable-views
@@ -48,12 +49,7 @@ export class Details extends Component {
 		
 		console.log('program details ',this.state.events)
 		
-		const rect = this.activeDetailsDiv.getBoundingClientRect();
-		console.log('DETAILS POSITION:' ,rect)
-
-		if (rect.height >0 ) {
-			this.props.setDetailsPanelHeight(rect.height)
-		}
+		
 		//window.scrollTo( 0, rect.top )
 }
 
@@ -64,6 +60,42 @@ handleChange = value => {
     slideIndex: value
   });
 };
+
+
+
+addToFavourite = e => {
+	this.setState({
+		activeEvent: e.currentTarget.name
+	});
+};
+
+isActiveFavouriteItem = item =>{
+	
+	const filteredResults = this.props.favouriteArtists
+		.filter(artist => {
+			return (
+				(artist.toLowerCase().indexOf(item.toLowerCase()) > -1 )
+			) 
+		})
+	return filteredResults.length >0
+
+}
+
+
+favouriteItemToggle=(item)=>{
+	console.log(item.currentTarget.name)
+	if (this.isActiveFavouriteItem(item.currentTarget.name)) {
+		this.props.removeFromFavourites(item.currentTarget.name)
+		console.log('torles')
+	} else {
+		this.props.addToFavourites(item.currentTarget.name)
+		console.log('hozza adas')
+	}
+	
+	console.log(this.props.favouriteArtists)
+
+}
+
 
 
   render() {
@@ -77,7 +109,12 @@ handleChange = value => {
 						<div className={classes.CalendarRow}>{moment(event.startDate).format('Do')}</div>
 					</div>
 					<div className={classes.venueName}>{event.festival}</div>
-					<div className={classes.saveIcon}><StarBorder color={colors.blueGrey300} /></div>
+					
+					<div className={classes.saveIcon}>
+        		<IconButton iconStyle={{width:'35',height: '35'}} style={{width:'40',height:'40'}} name={event._id}  onClick={this.favouriteItemToggle} > {this.isActiveFavouriteItem(event._id) ? (<Star color={colors.orange900} />) : (<StarBorder color={colors.blueGrey300} />)}</IconButton>
+      		</div>
+				
+
 				</li>
 			)
 		})
@@ -146,17 +183,24 @@ handleChange = value => {
   }
 }
 
-
+const mapStateToProps = state => {
+	return {
+   
+    favouriteArtists: state.favouriteArtists,
+	
+	};
+};
 
 const mapDispatchToProps = dispatch => {
 	return {
 
-    setDetailsPanelHeight:height => dispatch({type: 'UPD_DETAILSHEIGHT', value: height}),
-
+    addToFavourites:(artist) => dispatch({type: 'ADD_FAVOURITE', value: artist}),
+    removeFromFavourites:(artist) => dispatch({type: 'REMOVE_FAVOURITE', value: artist}),
 	};
 };
 
-export default connect(null,mapDispatchToProps)(Details);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Details);
 
 
 

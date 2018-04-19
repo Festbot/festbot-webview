@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 
+
 import classes from './DiscoverContainer.css';
 
 import Details from './Details.jsx'
 
 import IconDetails from 'material-ui/svg-icons/navigation/expand-more';
 import IconClose from 'material-ui/svg-icons/navigation/close';
+
 
 export class DiscoverArtistItem extends Component {
 
@@ -28,6 +30,8 @@ export class DiscoverArtistItem extends Component {
     this.props.detailsIsOpenHandler(e)
   }
   
+
+
   
   render() {
 
@@ -36,7 +40,8 @@ export class DiscoverArtistItem extends Component {
     let renderingDetails = '';
     if (isActiveDetails) {
 
-      renderingDetails = <Details artist={this.props.artist.slug} />
+      renderingDetails = <Details 
+        artist={this.props.artist.slug} />
     }
 
     return (
@@ -99,4 +104,8 @@ export class DiscoverArtistItem extends Component {
   }
 }
 
-export default DiscoverArtistItem
+
+
+export default DiscoverArtistItem;
+
+

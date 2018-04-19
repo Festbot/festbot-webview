@@ -285,7 +285,7 @@ export class festivalProgramContainer extends Component {
 										event={event}
 										addToFavourite={this.favouriteItemToggle}
 										isActiveItem={
-											this.isActiveFavouriteItem(event.artist)
+											this.isActiveFavouriteItem(event._id)
 										}
 										isOpenDetails={
 											this.state.activeDetails ===
