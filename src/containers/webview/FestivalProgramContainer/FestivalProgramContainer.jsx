@@ -49,6 +49,7 @@ export class festivalProgramContainer extends Component {
     selectedDay:'',
     eventDays:[],
     yListOffset:0,
+    artist:[],
 
     
   };
@@ -56,7 +57,12 @@ export class festivalProgramContainer extends Component {
 
   async componentDidMount() {
 		this.props.onViewChange('program_list');
-	
+    
+    const {data:artist} = await axios.get("http://159.65.198.31:5984/artists/_design/default/_list/json/default-view")
+    console.log('artist details ',artist)
+    this.setState({artist: artist})
+
+
 		let { data } = await axios.get(
 			'http://159.65.198.31:5984/shows/_design/default/_list/all-data/order-by-date'
 		);
@@ -188,10 +194,10 @@ export class festivalProgramContainer extends Component {
 
 
   detailsIsOpenHandler = e => {
-		if (this.state.activeDetails === e.currentTarget.title) {
+		if (this.state.activeDetails === e.currentTarget.id) {
 			this.setState({ activeDetails: '' });
 		} else {
-			this.setState({ activeDetails: e.currentTarget.title });
+			this.setState({ activeDetails: e.currentTarget.id });
 			console.log(this.state.activeDetails);
 		}
   };
@@ -253,7 +259,7 @@ export class festivalProgramContainer extends Component {
     
     const Programs = this.festivalEventFilter()
    
-    const sliceOfPrograms = Programs.slice(this.state.yListOffset,this.state.yListOffset+300)
+    const sliceOfPrograms = Programs.slice(this.state.yListOffset,this.state.yListOffset+100)
     const grouppedFestivalPrograms = this.groupByDays(sliceOfPrograms)
 
     const eventDays = Object.keys(grouppedFestivalPrograms).sort()

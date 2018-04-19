@@ -24,7 +24,7 @@
   position: absolute;
   top: 8px;
   left: 16px;
-
+  width:80%;
   font-size: 120%;
 }
 
@@ -39,18 +39,21 @@
 
 .details {
   color:white;
-  position: absolute;
-  bottom: 30px;
+  position: relative;
+  bottom: 0px;
+  margin-top:125px;
+  margin-bottom:50px;
   left:0px;
   overflow: hidden;
   width:100%;
   transition: all 0.3s ease-in-out;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.6);
 ;}
 
 .detailsHeader{
 
-  font-size: 120%;
+  font-size: 140%;
+  padding:15px 5px;
 
 }
 
@@ -65,6 +68,7 @@
 
 .detailsIcon {
   color:white;
+  cursor: pointer;
   position: absolute;
   bottom: 8px;
   right: 16px;
@@ -79,4 +83,44 @@
   height:100%;
   top:0;
 
+}
+
+li {
+  margin:10px 0;
+  padding:5px 0;
+  display: flex;
+  align-items: center;
+  width:100%;
+  justify-content: space-between;
+  background-color: rgba(110, 79, 32, 0.5);
+  background-color: rgba(55, 71, 79, 0.5);
+  
+}
+
+
+.CalendarContainer{
+  float: left;
+  display:inline-block;
+  background-color: rgba(245,245,245,0.8);
+  margin-left: 5px;
+  padding:5px 10px;
+  text-align: center;
+}
+.CalendarRow{
+  width: 100%;
+  color: black;
+  font-weight: 500;
+  font-size: 110%;
+  border-radius: 2px;
+
+}
+.venueName{
+  float: left;
+  display:inline-block;
+  font-size: 140%;
+}
+.saveIcon{
+  float: right;
+  display:inline-block;
+  padding:0 10px;
 }

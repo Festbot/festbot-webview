@@ -8,6 +8,7 @@ const initialState ={
   activeDay:'ALL',
   eventStages:['Main Stage','Telekom Arena','Colosseum','Magic Mirror'],
   activeStage:'ALL LOCATION',
+  detailsPanelHeight:0,
 }
 
 const reducer = (state = initialState,action) => {
@@ -67,6 +68,11 @@ const reducer = (state = initialState,action) => {
     return {
       ...state,
       activeStage: action.value
+    }
+    case 'UPD_DETAILSHEIGHT':
+    return {
+      ...state,
+      detailsPanelHeight: action.value
     }
   }
   return state;

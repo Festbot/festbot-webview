@@ -1,0 +1,21 @@
+li {
+  padding:10px;
+}
+
+.CalendarContainer{
+  float: left;
+  display:inline-block;
+  background-color: #eee;
+}
+.CalendarRow{
+  width: 100%;
+  color:black;
+}
+.venueName{
+  float: left;
+  display:inline-block;
+}
+.saveIcon{
+  float: right;
+  display:inline-block;
+}
