@@ -99,7 +99,7 @@ favouriteItemToggle=(item)=>{
 
 
   render() {
-		const [,spotifyId] = this.state.artist.spotify.split(':');
+		const spotifyId = this.state.artist.spotify;
 		
 		const eventList = this.state.events.map((event,index)=>{
 			return (
@@ -111,7 +111,7 @@ favouriteItemToggle=(item)=>{
 					<div className={classes.venueName}>{event.festival}</div>
 					
 					<div className={classes.saveIcon}>
-        		<IconButton iconStyle={{width:'35',height: '35'}} style={{width:'40',height:'40'}} name={event._id}  onClick={this.favouriteItemToggle} > {this.isActiveFavouriteItem(event._id) ? (<Star color={colors.orange900} />) : (<StarBorder color={colors.blueGrey300} />)}</IconButton>
+        		<IconButton iconStyle={{width:'30',height: '30'}} style={{width:'35',height:'35'}} name={event._id}  onClick={this.favouriteItemToggle} > {this.isActiveFavouriteItem(event._id) ? (<Star color={colors.orange900} />) : (<StarBorder color={colors.blueGrey300} />)}</IconButton>
       		</div>
 				
 
@@ -147,7 +147,7 @@ favouriteItemToggle=(item)=>{
 								</div>
 
 								<div className={classes.detailsHeader}>
-									Details
+									
 								</div>
 								<div className={classes.detailsContent} style={{margin: '5px'}}>
 									<p />
@@ -156,7 +156,11 @@ favouriteItemToggle=(item)=>{
 									<p />
 									Website: {this.state.artist.website}
 									<p />
-									Genre: {this.state.artist.genres.join(', ')}
+									<div className={classes.detailsContentGenre}>
+										{this.state.artist.genres.map((genre,index) =>{
+											return <div id={index} className={classes.inverse}>{genre}</div>
+										})}
+									</div>
 								</div>
 							</div>
 
@@ -174,8 +178,8 @@ favouriteItemToggle=(item)=>{
 								/>
 							</div>
 
-							<div>
-								<h1>Map, Navigation</h1>
+							<div className={classes.centerCenter}>
+							<p>Map and Navigation will be available once the Location of the event has been confirmed by the organizer.</p>
 							</div>
 						</SwipeableViews>
 					</div>

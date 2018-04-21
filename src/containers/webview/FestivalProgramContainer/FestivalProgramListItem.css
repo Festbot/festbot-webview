@@ -19,6 +19,15 @@
 
 }
 
+.centerCenter{
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height:100%;
+  text-align: center;
+  font-size: 130%;
+}
+
 .rating {
   padding:0px !important;
 
@@ -94,7 +103,7 @@ body {
   top: 8px;
   left: 16px;
 
-  font-size: 120%;
+  font-size: 110%;
   width:80%;
 }
 
@@ -104,7 +113,7 @@ body {
   top: 8px;
   right: 16px;
   
-  font-size: 120%;
+  font-size: 110%;
 }
 
 .stage {
@@ -112,16 +121,18 @@ body {
   color: white;
   border-radius: 2px;
   position: absolute;
-  top: 84px;
+  top: 88px;
   left: 16px;
-  padding:4px;
+  padding:2px 4px;
+  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.5) ;
   
-  font-size: 100%;
+  font-size: 90%;
 }
 .iconButtonRoot{
   padding:0!important;
   width: 35px;
   height: 35px;
+  
 }
 .starIcon {
   color:white;
@@ -131,17 +142,18 @@ body {
   opacity:0.9;
 }
 
+
 .details {
   color:white;
   position: relative;
   bottom: 0px;
-  margin-top:125px;
-  margin-bottom:50px;
+  margin-top:105px;
+  margin-bottom:42px;
   left:0px;
   overflow: hidden;
   width:100%;
   transition: all 0.3s ease-in-out;
-  background-color: rgba(160, 7, 7, 0.4);
+  background-color: rgba(0, 0, 0, 0.6);
 ;}
 
 .detailsHeader{
@@ -156,6 +168,7 @@ body {
   padding:16px;
   display:flex;
   justify-content: space-evenly;
+  font-size: 90%;
 
 
 }
@@ -168,7 +181,7 @@ body {
   display:flex;
   justify-content: space-evenly;
   flex-flow: row wrap;
-
+  font-size: 90%;
 
 }
   
@@ -176,7 +189,7 @@ body {
 .detailsIcon {
   color:white;
   position: absolute;
-  bottom: 8px;
+  bottom: 5px;
   right: 16px;
   font-weight: 100;
   font-size: 120%;

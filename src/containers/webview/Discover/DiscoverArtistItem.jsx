@@ -24,8 +24,8 @@ export class DiscoverArtistItem extends Component {
     
     if (!this.props.isActiveDetails) {
       setTimeout(() => {
-        window.scrollTo(0,this.offset(this.activeDetailsDiv)+80)
-      }, 300);
+        window.scrollTo(0,this.offset(this.activeDetailsDiv)-45)
+      }, 450);
     }
     this.props.detailsIsOpenHandler(e)
   }

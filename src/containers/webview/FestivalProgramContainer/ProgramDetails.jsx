@@ -49,7 +49,7 @@ handleChange = value => {
 
 
   render() {
-		const [,spotifyId] = this.state.artist.spotify.split(':');
+		const spotifyId = this.state.artist.spotify;
 		
 		const eventList = this.state.events.map((event,index)=>{
 			return (
@@ -112,14 +112,10 @@ handleChange = value => {
           </div> 
         </div>         
 
-        
-
-
         <div className={classes.detailsContentGenre}>
         {this.state.artist.genres.map((genre,index) =>{
           return <div id={index} className={classes.inverse}>{genre}</div>
         })}
-         
         </div>
         
       </div>
@@ -138,7 +134,7 @@ handleChange = value => {
       />
     </div>
 
-							<div>
+              <div className={classes.centerCenter}>
 								<p>Map and Navigation will be available once the Location of the event has been confirmed by the organizer.</p>
 							</div>
 						</SwipeableViews>

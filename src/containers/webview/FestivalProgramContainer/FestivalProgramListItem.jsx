@@ -107,13 +107,13 @@ render() {
     return (
     <div >
 
-    <div ref={element => (this.activeDetailsDiv = element)} className={classes.listItemContainer}  style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px' , backgroundImage: 'url(http://festbot.com/assets/img/artist/'+this.props.event.artistId+'.jpg)'}} >
+    <div ref={element => (this.activeDetailsDiv = element)} className={classes.listItemContainer}  style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px' , backgroundImage: 'url(http://festbot.com/assets/img/artist/'+this.props.event.artist_id+'.jpg)'}} >
     <div id={this.props.event.artist} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper} >
       
       <div className={classes.backdropLayer} ></div>
       <div className={classes.title}>{this.props.event.artist}</div> 
       <div className={classes.starIcon} onClick={(e)=>{e.stopPropagation()}} >
-        <IconButton className={classes.iconButtonRoot} iconStyle={{width:'35',height: '35'}} style={{width:'40',height:'40'}} name={this.props.event._id} primary={this.props.isActiveItem} onClick={this.props.addToFavourite} > {this.props.isActiveItem ? (<Star color={colors.orange900} />) : (<StarBorder color={colors.blueGrey300} />)}</IconButton>
+        <IconButton className={classes.iconButtonRoot} iconStyle={{width:'30',height: '30'}} style={{width:'35',height:'35'}} name={this.props.event._id} primary={this.props.isActiveItem} onClick={this.props.addToFavourite} > {this.props.isActiveItem ? (<Star color={colors.orange900} />) : (<StarBorder color={colors.blueGrey50} />)}</IconButton>
       </div>
       <div className={classes.detailsIcon}>  {!this.props.isOpenDetails ? (<IconDetails color="white"/>) : (<IconClose color="white"/>)}</div> 
       <div className={classes.country}>{moment(this.props.event.startDate).format('LT')}</div>
