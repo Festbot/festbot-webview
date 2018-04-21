@@ -94,15 +94,7 @@ class WebviewFooterMenu extends Component {
 
   handleItemClick = (e) =>  {
     this.props.onToggle(e.currentTarget.title)
-    MessengerExtensions.getUserID(function success(user_ids) {
-      // User ID was successfully obtained. 
-      let psid = user_ids.psid;
-      alert(psid)
-    
-    }, function error(err, errorMessage) {      
-      // Error handling code
-      alert(err)
-    });
+  
     return (
       this.setState({ activeItem: e.currentTarget.title })
      // () => dispatch({type: 'UPD_MENU', value:'car sharing'}

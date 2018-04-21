@@ -172,7 +172,7 @@ export class festivalProgramContainer extends Component {
       return (
         ((this.props.activeDay =='ALL')||(moment(event.startDate).format('L').toLowerCase().indexOf(this.props.activeDay.toLowerCase()) > -1 )) &&
         ((this.props.activeStage =='ALL LOCATION')||(event.place.toLowerCase().indexOf(this.props.activeStage.toLowerCase()) > -1)) &&
-        ((!this.props.isActive.Favourite)||(this.isActiveFavouriteItem(event.artist) ))
+        ((!this.props.isActive.Favourite)||(this.isActiveFavouriteItem(event._id) ))
 
       )})
   }
