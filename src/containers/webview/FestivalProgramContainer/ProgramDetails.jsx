@@ -86,11 +86,11 @@ handleChange = value => {
         <div className={classes.detailsContent}>
           <div style={{width:'50%'}}>
             <h2>Start time: </h2>
-            <p>{moment(this.props.event.startDate).format('LT')}</p>
+            <p>{moment(this.props.event.startDate).format('hh:mm')}<br/>{moment(this.props.event.startDate).format('MMM Do (dddd)')}</p>
           </div>
           <div style={{width:'50%'}}>
             <h2>End time:</h2>
-            <p>{moment(this.props.event.endDate).format('LT')}</p>
+            <p>{moment(this.props.event.endDate).format('hh:mm')}<br/>{moment(this.props.event.endDate).format('MMM Do (dddd)')}</p>
          </div> 
         </div> 
 

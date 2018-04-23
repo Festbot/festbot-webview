@@ -9,10 +9,16 @@ const initialState ={
   eventStages:['Main Stage','Telekom Arena','Colosseum','Magic Mirror'],
   activeStage:'ALL LOCATION',
   detailsPanelHeight:0,
+  userid:'',
 }
 
 const reducer = (state = initialState,action) => {
   switch (action.type) {
+    case 'UPD_USERID':
+    return {
+      ...state,
+      userid: action.value
+    }
     case 'UPD_MENU':
     return {
       ...state,

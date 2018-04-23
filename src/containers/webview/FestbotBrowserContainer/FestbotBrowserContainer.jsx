@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import 'babel-polyfill';
+import qs from 'query-string';
 
 
 import Aux from '../../../hoc/Aux/Aux.jsx';
@@ -86,7 +87,13 @@ export class FestivalBrowserContainer extends Component {
 	};
 
 	render() {
-		
+		console.log(this.props)
+		const {userId} = qs.parse(this.props.location.search)
+		console.log(userId)
+
+		//@TODO: GET /users/{userId}
+		//storeba menteni a user infot
+
 		if (this.state.data.length ===0) {
 			return (
 				<div className={classes.center}>
@@ -129,7 +136,8 @@ const mapStateToProps = state => {
     isActive:{
       Trending: state.isActiveTrending,
       Filter: state.isActiveFilter,
-      Favourite: state.isActiveFavourite
+			Favourite: state.isActiveFavourite,
+			userid: state.userid,
       
     }
 
@@ -138,6 +146,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps =  dispatch => {
   return {
+		setUserId: (user) => dispatch({type: 'UPD_USERID', value: user}),
     onTrendingToggle: () => dispatch({type: 'UPD_TRENDING' }),
     onFilterToggle: () => dispatch({type: 'UPD_FILTER' }),
 		onFavouriteToggle: () => dispatch({type: 'UPD_FAVOURITE'}),

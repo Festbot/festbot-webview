@@ -75,7 +75,6 @@ const menuItems = {
       "name": "Settings",
       "route": "/settings",
       "iconName": "settings",
-      "toggleItem": "Settings"
     }
   ]
 

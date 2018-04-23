@@ -82,6 +82,7 @@ isActiveFavouriteItem = item =>{
 }
 
 
+
 favouriteItemToggle=(item)=>{
 	console.log(item.currentTarget.name)
 	if (this.isActiveFavouriteItem(item.currentTarget.name)) {
@@ -198,8 +199,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 
-    addToFavourites:(artist) => dispatch({type: 'ADD_FAVOURITE', value: artist}),
-    removeFromFavourites:(artist) => dispatch({type: 'REMOVE_FAVOURITE', value: artist}),
+    addToFavourites:(event) => dispatch({type: 'ADD_FAVOURITE', value: event}),
+    removeFromFavourites:(event) => dispatch({type: 'REMOVE_FAVOURITE', value: event}),
 	};
 };
 

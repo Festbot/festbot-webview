@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {saveActiveFestbot} from '../../../components/apiHelper.js'
 
 import Aux from '../../../hoc/Aux/Aux.jsx';
 import classes from './FestivalListBuilder.css';
@@ -24,7 +25,7 @@ class FestivalListBuilder extends Component {
 	handleOpen = e => {
 		this.setState({
 			isModalOpen: true,
-			selectedItem: e.currentTarget.name
+			selectedItem: e.currentTarget.id
 		});
 	};
 
@@ -32,23 +33,33 @@ class FestivalListBuilder extends Component {
 		this.setState({ isModalOpen: false, selectedItem: '' });
 	};
 
-	submitHandler = () => {
+	submitHandler = async () => {
+		
+		const userId='f442bee64bb034de9a00e5b3bd496e66'
+		try {
+			await saveActiveFestbot(userId,this.state.selectedItem)
+			this.setState({
+				activeFestival: this.state.selectedItem
+			});
+		}
+		catch (error) {
+			alert('Network Error')
+		}
 		this.setState({
 			isModalOpen: false,
-			activeFestival: this.state.selectedItem
 		});
 	};
 
 
 	
 	detailsIsOpenHandler = e => {
-		if (this.state.activeDetails === e.currentTarget.title) {
+		if (this.state.activeDetails === e.currentTarget.id) {
 			this.setState({ activeDetails: '' });
 		} else {
-			this.setState({ activeDetails: e.currentTarget.title });
+			this.setState({ activeDetails: e.currentTarget.id });
 			console.log(this.state.activeDetails);
 		}
-	};
+	}; 
 
 
   groupByCountry = (festivals) => {
@@ -104,11 +115,11 @@ class FestivalListBuilder extends Component {
 										handleOpen={this.handleOpen}
 										isActiveItem={
 											this.state.activeFestival ===
-											festival.name
+											festival._id
 										}
 										isOpenDetails={
 											this.state.activeDetails ===
-											festival.name
+											festival._id
 										}
 									/>
 								</Aux>

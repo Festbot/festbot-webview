@@ -7,6 +7,7 @@ import axios from 'axios';
 import 'babel-polyfill';
 import * as Ramda from 'ramda';
 import moment from 'moment'
+import {saveFavouriteEvent,removeFavouriteEvent} from '../../../components/apiHelper.js'
 
 import HeaderBar from '../../../ui/HeaderBar.jsx';
 import SearchBar from '../../../ui/SearchBar.jsx';
@@ -220,9 +221,14 @@ export class festivalProgramContainer extends Component {
     if (this.isActiveFavouriteItem(item.currentTarget.name)) {
       this.props.removeFromFavourites(item.currentTarget.name)
       console.log('torles')
+      const userId='f442bee64bb034de9a00e5b3bd496e66'
+      removeFavouriteEvent(userId,item.currentTarget.name)
     } else {
       this.props.addToFavourites(item.currentTarget.name)
       console.log('hozza adas')
+      //apiHelper
+      const userId='f442bee64bb034de9a00e5b3bd496e66'
+      saveFavouriteEvent(userId,item.currentTarget.name)
     }
     
     console.log(this.props.favouriteArtists)
@@ -323,6 +329,7 @@ export class festivalProgramContainer extends Component {
 
 const mapStateToProps = state => {
 	return {
+    userid: state.userid,
     eventStages: state.eventStages,
     activeStage: state.activeStage,
     activeDay: state.activeDay,
@@ -344,8 +351,8 @@ const mapDispatchToProps = dispatch => {
 		onFavouriteToggle: () => dispatch({ type: 'UPD_FAVOURITE' }),
 		onViewChange: actualViewMenu =>
       dispatch({ type: 'UPD_MENU', value: actualViewMenu }),
-    addToFavourites:(artist) => dispatch({type: 'ADD_FAVOURITE', value: artist}),
-    removeFromFavourites:(artist) => dispatch({type: 'REMOVE_FAVOURITE', value: artist}),
+    addToFavourites:(event) => dispatch({type: 'ADD_FAVOURITE', value: event}),
+    removeFromFavourites:(event) => dispatch({type: 'REMOVE_FAVOURITE', value: event}),
     eventDays:(daysArray) => dispatch({type: 'UPD_EVENTDAYS', value: daysArray}),
     eventStages:(stagesArray) => dispatch({type: 'UPD_EVENTSTAGES', value: stagesArray}),
 	};
