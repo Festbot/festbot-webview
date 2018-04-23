@@ -4,6 +4,7 @@ import classes from './DiscoverContainer.css';
 import * as colors from 'material-ui/styles/colors';
 import axios from 'axios';
 
+import {saveFavouriteEvent,removeFavouriteEvent} from '../../../components/apiHelper.js'
 
 import IconHeadset from 'material-ui/svg-icons/hardware/headset';
 import IconInfo from 'material-ui/svg-icons/action/event';
@@ -48,7 +49,9 @@ export class Details extends Component {
 		})})
 		
 		console.log('program details ',this.state.events)
+
 		
+	
 		
 		//window.scrollTo( 0, rect.top )
 }
@@ -71,7 +74,7 @@ addToFavourite = e => {
 
 isActiveFavouriteItem = item =>{
 	
-	const filteredResults = this.props.favouriteArtists
+	const filteredResults = this.props.savedShows
 		.filter(artist => {
 			return (
 				(artist.toLowerCase().indexOf(item.toLowerCase()) > -1 )
@@ -88,18 +91,23 @@ favouriteItemToggle=(item)=>{
 	if (this.isActiveFavouriteItem(item.currentTarget.name)) {
 		this.props.removeFromFavourites(item.currentTarget.name)
 		console.log('torles')
+		const userId=this.props.userId
+		removeFavouriteEvent(userId,item.currentTarget.name)
 	} else {
 		this.props.addToFavourites(item.currentTarget.name)
 		console.log('hozza adas')
+		const userId=this.props.userId
+		saveFavouriteEvent(userId,item.currentTarget.name)
 	}
 	
-	console.log(this.props.favouriteArtists)
+	console.log(this.props.savedShows)
 
 }
 
 
 
   render() {
+		
 		const spotifyId = this.state.artist.spotify;
 		
 		const eventList = this.state.events.map((event,index)=>{
@@ -190,8 +198,8 @@ favouriteItemToggle=(item)=>{
 
 const mapStateToProps = state => {
 	return {
-   
-    favouriteArtists: state.favouriteArtists,
+		userId: state.userId,
+    savedShows: state.savedShows,
 	
 	};
 };

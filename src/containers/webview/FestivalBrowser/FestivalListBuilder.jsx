@@ -16,7 +16,7 @@ import ConfirmationDialog from './ConfirmationDialog.jsx';
 
 class FestivalListBuilder extends Component {
 	state = {
-		activeFestival: '',
+		savedShows: '',
 		activeDetails: '',
 		isModalOpen: false,
 		selectedItem: ''
@@ -39,7 +39,7 @@ class FestivalListBuilder extends Component {
 		try {
 			await saveActiveFestbot(userId,this.state.selectedItem)
 			this.setState({
-				activeFestival: this.state.selectedItem
+				savedShows: this.state.selectedItem
 			});
 		}
 		catch (error) {
@@ -114,7 +114,7 @@ class FestivalListBuilder extends Component {
 										festival={festival}
 										handleOpen={this.handleOpen}
 										isActiveItem={
-											this.state.activeFestival ===
+											this.state.savedShows ===
 											festival._id
 										}
 										isOpenDetails={
@@ -140,7 +140,8 @@ class FestivalListBuilder extends Component {
 
 const mapStateToProps = state => {
   return{
-    webviewMenu:state.webviewMenu,
+		webviewMenu:state.webviewMenu,
+		
 };
 }
 

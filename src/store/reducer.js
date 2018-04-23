@@ -1,23 +1,29 @@
+
+
 const initialState ={
   webviewMenu:'festbot',
   isActiveTrending: false,
   isActiveFilter: false,
   isActiveFavourite: false,
-  favouriteArtists:[],
+  savedShows:[],
   eventDays:[],
   activeDay:'ALL',
   eventStages:['Main Stage','Telekom Arena','Colosseum','Magic Mirror'],
   activeStage:'ALL LOCATION',
   detailsPanelHeight:0,
-  userid:'',
 }
 
 const reducer = (state = initialState,action) => {
   switch (action.type) {
-    case 'UPD_USERID':
+    case 'SET_USER':
     return {
       ...state,
-      userid: action.value
+      userId: action.value._id,
+      activeFestival: action.value.activeFestival,
+      savedArtists: [...action.value.savedArtists],
+      savedShows: [...action.value.savedShows],
+      topArtists: [...action.value.topArtists],
+      topGenres: [...action.value.topGenres]
     }
     case 'UPD_MENU':
     return {
@@ -47,18 +53,18 @@ const reducer = (state = initialState,action) => {
     case 'ADD_FAVOURITE':
     return {
       ...state,
-      favouriteArtists: state.favouriteArtists.concat(action.value)
+      savedShows: state.savedShows.concat(action.value)
     }
     case 'REMOVE_FAVOURITE':
-    const updatedArray = state.favouriteArtists.filter(artist => artist !== action.value  )
+    const updatedArray = state.savedShows.filter(artist => artist !== action.value  )
     return {
       ...state,
-      favouriteArtists: updatedArray
+      savedShows: updatedArray
     }
     case 'UPD_EVENTDAYS':
     return {
       ...state,
-      eventDays: action.value
+      eventDays: [...action.value]
     }
     case 'UPD_ACTIVEDAY':
     return {

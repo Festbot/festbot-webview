@@ -44,4 +44,16 @@ export function saveActiveFestbot(userId,festival){
   return axios(options);
 }
 
+export function getUserId(userId){
+  const options = {
+    method: 'GET',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    data: qs.stringify({
+        userId: userId
+    }),
+    url: 'http://159.65.198.31:5984/users/'+userId
+};
+
+  return axios(options);
+}
 

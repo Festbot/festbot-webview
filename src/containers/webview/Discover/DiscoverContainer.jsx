@@ -7,6 +7,8 @@ import axios from 'axios';
 import 'babel-polyfill';
 import * as Ramda from 'ramda';
 import moment from 'moment';
+import {getUserId} from '../../../components/apiHelper.js'
+import qs from 'query-string';
 
 import HeaderBar from '../../../ui/HeaderBar.jsx';
 import SearchBar from '../../../ui/SearchBar.jsx';
@@ -55,6 +57,22 @@ export class DiscoverContainer extends Component {
 		if (!this.props.match.params.artist_name == '') {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
+
+		const {userId} = qs.parse(this.props.location.search)
+
+		if (!userId=='') {
+			try {
+				const {data} = await getUserId(userId)
+				console.log(data)
+				this.props.setUser(data)
+			}
+			catch (error) {
+				alert('Network Error')
+			}
+	
+		}
+
+
 	}
 
 	detailsIsOpenHandler = e => {
@@ -105,6 +123,8 @@ export class DiscoverContainer extends Component {
 
 
 	render() {
+		console.log(this.props)
+
 		const sliceOfArtist = this.state.searchResults.slice(
 			this.state.yListOffset,
 			this.state.yListOffset + 400
@@ -139,9 +159,13 @@ const mapStateToProps = state => {
 	};
 };
 
+const mapDispatchToProps =  dispatch => {
+  return {
+		setUser: (userData) => dispatch ({type: 'SET_USER',value: userData}),
+  }
+}
 
-
-export default connect(mapStateToProps)(
+export default connect(mapStateToProps,mapDispatchToProps)(
 	DiscoverContainer
 );
 

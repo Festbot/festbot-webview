@@ -205,7 +205,7 @@ export class festivalProgramContainer extends Component {
   
   isActiveFavouriteItem = item =>{
 		
-		const filteredResults = this.props.favouriteArtists
+		const filteredResults = this.props.savedShows
 			.filter(artist => {
 				return (
 					(artist.toLowerCase().indexOf(item.toLowerCase()) > -1 )
@@ -221,17 +221,17 @@ export class festivalProgramContainer extends Component {
     if (this.isActiveFavouriteItem(item.currentTarget.name)) {
       this.props.removeFromFavourites(item.currentTarget.name)
       console.log('torles')
-      const userId='f442bee64bb034de9a00e5b3bd496e66'
+      const userId=this.props.userId
       removeFavouriteEvent(userId,item.currentTarget.name)
     } else {
       this.props.addToFavourites(item.currentTarget.name)
       console.log('hozza adas')
       //apiHelper
-      const userId='f442bee64bb034de9a00e5b3bd496e66'
+      const userId=this.props.userId
       saveFavouriteEvent(userId,item.currentTarget.name)
     }
     
-    console.log(this.props.favouriteArtists)
+    console.log(this.props.savedShows)
 
 	}
 
@@ -329,13 +329,13 @@ export class festivalProgramContainer extends Component {
 
 const mapStateToProps = state => {
 	return {
-    userid: state.userid,
+    userId: state.userId,
     eventStages: state.eventStages,
     activeStage: state.activeStage,
     activeDay: state.activeDay,
     eventDays: state.eventDays,
     webviewMenu: state.webviewMenu,
-    favouriteArtists: state.favouriteArtists,
+    savedShows: state.savedShows,
 		isActive: {
 			Trending: state.isActiveTrending,
 			Filter: state.isActiveFilter,
