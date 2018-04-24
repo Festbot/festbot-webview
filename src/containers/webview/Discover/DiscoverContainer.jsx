@@ -7,15 +7,15 @@ import axios from 'axios';
 import 'babel-polyfill';
 import * as Ramda from 'ramda';
 import moment from 'moment';
-import {getUserId} from '../../../components/apiHelper.js'
+import { getUserId } from '../../../components/apiHelper.js';
 import qs from 'query-string';
 
 import HeaderBar from '../../../ui/HeaderBar.jsx';
 import SearchBar from '../../../ui/SearchBar.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
 import Subheader from 'material-ui/Subheader';
-import Details from './Details.jsx'
-import DiscoverArtistItem from './DiscoverArtistItem.jsx'
+import Details from './Details.jsx';
+import DiscoverArtistItem from './DiscoverArtistItem.jsx';
 
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -32,13 +32,12 @@ import SwipeableViews from 'react-swipeable-views';
 export class DiscoverContainer extends Component {
 	state = {
 		searchResults: [],
+		matchingArtists: [],
 		data: [],
 		yListOffset: 0,
 		activeDetails: '',
 		slideIndex: 0
 	};
-
-
 
 	async componentDidMount() {
 		//this.props.onViewChange('program_list');
@@ -50,7 +49,7 @@ export class DiscoverContainer extends Component {
 
 		this.setState({ searchResults: data, data: data });
 
-		console.log('artist data:', data);
+		skyconsole.log('artist data:', data);
 		console.log('state search results:', this.state.searchResults);
 
 		//window.addEventListener("scroll", this.onScroll)
@@ -58,38 +57,76 @@ export class DiscoverContainer extends Component {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
 
-		const {userId} = qs.parse(this.props.location.search)
-
-		if (!userId=='') {
+		const { userId } = qs.parse(this.props.location.search);
+		if (!userId == '') {
 			try {
-				const {data} = await getUserId(userId)
-				console.log(data)
-				this.props.setUser(data)
+				const { data } = await getUserId(userId);
+				console.log(data);
+				this.props.setUser(data);
+			} catch (error) {
+				alert('Network Error');
 			}
-			catch (error) {
-				alert('Network Error')
-			}
-	
 		}
 
-
+		this.matchingArtists();
 	}
 
+	matchingArtists = () => {
+		const filteredResults = this.state.data.filter(artist => {
+			return (
+				Ramda.intersection(this.props.userData.topGenres, artist.genres)
+					.length > 0
+			);
+		});
+
+		console.log('Match GENRES LIST:', filteredResults);
+
+		console.log('TOP ARTISTS:', this.props.userData.topArtists);
+
+		const topArtists = this.state.data.filter(artist => {
+			return (
+				this.props.userData.topArtists.filter(topArtist => {
+					return (
+						topArtist
+							.toLowerCase()
+							.indexOf(artist.name.toLowerCase()) > -1
+					);
+				}).length > 0
+			);
+		});
+
+		console.log('Artist results of TOP ARTISTS:', topArtists);
+
+		const exceptTopArtists = filteredResults.filter(artist => {
+			return (
+				this.props.userData.topArtists.filter(topArtist => {
+					return (
+						topArtist
+							.toLowerCase()
+							.indexOf(artist.name.toLowerCase()) > -1
+					);
+				}).length == 0
+			);
+		});
+
+		console.log('Artist results EXCEPT of TOP ARTISTS:', exceptTopArtists);
+
+		const listOfPersonalPreferences = topArtists.concat(exceptTopArtists);
+
+		this.setState({
+			searchResults: listOfPersonalPreferences,
+			matchingArtists: listOfPersonalPreferences
+		});
+	};
+
 	detailsIsOpenHandler = e => {
-    
-
-
-    //const rect = this.activeDetailsDiv.getBoundingClientRect();
-    //console.log('DETAILS POSITION:' ,rect,"height:", this.props.detailsPanelHeight)
-    //console.log('client height:' ,document.body.clientHeight)
-    //window.scrollTo( 0, document.body.clientHeight-rect.top-100 );
-
-    
 		if (this.state.activeDetails === e.currentTarget.id) {
-      
-			this.setState({ activeDetails: '',isOpenDetails: false  });
+			this.setState({ activeDetails: '', isOpenDetails: false });
 		} else {
-			this.setState({ activeDetails: e.currentTarget.id,isOpenDetails: true  });
+			this.setState({
+				activeDetails: e.currentTarget.id,
+				isOpenDetails: true
+			});
 		}
 	};
 
@@ -119,24 +156,27 @@ export class DiscoverContainer extends Component {
 				searchResults: filteredResults
 			});
 		}
+
+		if (keyword == '') {
+			this.setState({ searchResults: this.state.matchingArtists });
+		}
 	};
 
-
 	render() {
-		console.log(this.props)
-
 		const sliceOfArtist = this.state.searchResults.slice(
 			this.state.yListOffset,
 			this.state.yListOffset + 400
 		);
-		const artistList = sliceOfArtist.map(artist => {
-        return <DiscoverArtistItem 
-        isActiveDetails = {this.state.activeDetails === artist.name}
-        isOpenDetails={this.state.isOpenDetails}
-        artist={artist}
-        detailsIsOpenHandler={this.detailsIsOpenHandler}
-      />
-
+		const artistList = sliceOfArtist.map((artist, index) => {
+			return (
+				<DiscoverArtistItem
+					key={index}
+					isActiveDetails={this.state.activeDetails === artist.name}
+					isOpenDetails={this.state.isOpenDetails}
+					artist={artist}
+					detailsIsOpenHandler={this.detailsIsOpenHandler}
+				/>
+			);
 		});
 
 		return (
@@ -155,18 +195,22 @@ export class DiscoverContainer extends Component {
 
 const mapStateToProps = state => {
 	return {
-    detailsPanelHeight: state.detailsPanelHeight,
+		detailsPanelHeight: state.detailsPanelHeight,
+		userData: {
+			userId: state.userId,
+			activeFestival: state.activeFestival,
+			savedArtists: state.savedArtists,
+			savedShows: state.savedShows,
+			topArtists: state.topArtists,
+			topGenres: state.topGenres
+		}
 	};
 };
 
-const mapDispatchToProps =  dispatch => {
-  return {
-		setUser: (userData) => dispatch ({type: 'SET_USER',value: userData}),
-  }
-}
+const mapDispatchToProps = dispatch => {
+	return {
+		setUser: userData => dispatch({ type: 'SET_USER', value: userData })
+	};
+};
 
-export default connect(mapStateToProps,mapDispatchToProps)(
-	DiscoverContainer
-);
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoverContainer);

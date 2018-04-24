@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FestivalBrowser from '../FestivalBrowser/FestivalBrowser.jsx';
+//import FestivalBrowser from '../FestivalBrowser/FestivalBrowser.jsx';
 import { Button, Grid, Container } from 'semantic-ui-react';
 import WebviewFooterMenu from '../WebviewFooterMenu.jsx'
 import Search from '../../../components/Search/Search.jsx';
