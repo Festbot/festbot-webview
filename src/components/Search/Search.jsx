@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import faker from 'faker'
 import React, { Component } from 'react'
-import { Search, Grid, Header  } from 'semantic-ui-react'
 
 const source = _.times(5, () => ({
   title: faker.company.companyName(),
@@ -39,9 +38,9 @@ export default class SearchExampleStandard extends Component {
     const { isLoading, value, results } = this.state
 
     return (
-      
 
-      <Search 
+
+      <Search
       loading={isLoading}
       onResultSelect={this.handleResultSelect}
       onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
@@ -50,10 +49,10 @@ export default class SearchExampleStandard extends Component {
       {...this.props}
     />
 
-  
-   
-       
-    
+
+
+
+
     )
   }
 }

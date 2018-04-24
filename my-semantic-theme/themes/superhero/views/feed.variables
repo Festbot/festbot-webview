@@ -1,2 +1,0 @@
-@metadataActionColor: darken(@gray-lighter, 5%);
-@iconLabelColor: darken(@gray-lighter, 10%);

@@ -1,3 +1,0 @@
-@inputColor: @gray-dark;
-@inputPlaceholderColor: @gray;
-@inputPlaceholderColor: @gray-light;

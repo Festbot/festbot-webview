@@ -1,3 +1,0 @@
-@itemLinkColor: @textColor;
-@itemHeaderLinkColor: #fff;
-@itemDescriptionColor: @gray-light;

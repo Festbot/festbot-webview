@@ -1,3 +1,0 @@
-@itemLinkColor: @textColor;
-@itemHeaderLinkColor: @textColor;
-@itemDescriptionColor: lighten(@gray-light, 30%);

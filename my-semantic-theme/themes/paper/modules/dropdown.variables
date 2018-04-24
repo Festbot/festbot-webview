@@ -1,2 +1,0 @@
-@itemColor: @textColor;
-@selectionTextUnderlayColor: darken(@textColor, 10%);

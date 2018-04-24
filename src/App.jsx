@@ -4,7 +4,6 @@ import { Switch, Route, Link } from 'react-router-dom'
 import Aux from './hoc/Aux/Aux.jsx';
 import Layout from './hoc/Layout/Layout.jsx';
 import MusicFestivalWebViewLayout from './hoc/Layout/MusicFestivalWebviewLayout.jsx';
-import MainBrowser from './containers/webview/MainBrowser/MainBrowser.jsx';
 import classes from './App.css';
 import FestbotBrowserContainer from './containers/webview/FestbotBrowserContainer/FestbotBrowserContainer.jsx';
 
@@ -15,7 +14,6 @@ import { BrowserRouter } from 'react-router-dom';
 import FestivalProgramContainer from './containers/webview/FestivalProgramContainer/FestivalProgramContainer.jsx'
 import DiscoverContainer from './containers/webview/Discover/DiscoverContainer.jsx'
 
-
 import { hot } from 'react-hot-loader';
 
 const muiTheme = getMuiTheme({
@@ -23,7 +21,7 @@ const muiTheme = getMuiTheme({
     primary1Color: colors.orange700,
     primary2Color: colors.orange900,
 		primary3Color: colors.grey400,
-		
+
   },
   appBar: {
     height: 50,
@@ -32,15 +30,15 @@ const muiTheme = getMuiTheme({
 
 class App extends Component {
 	render() {
-		
+
 		return (
 			<BrowserRouter>
 			<MuiThemeProvider muiTheme={muiTheme}>
 
 					<Switch>
-							
+
 						<MusicFestivalWebViewLayout className={classes.App}>
-							
+
 							<Route path='/' exact component={FestbotBrowserContainer}/>
 							<Route path='/festival/:festival_name' exact component={FestivalProgramContainer}/>
 							<Route path='/artist/:artist_name' exact render={(data) => {console.log(data);return <h1>hello</h1>}} />
