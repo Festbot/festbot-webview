@@ -83,7 +83,7 @@ class FestivalListItem extends Component {
 	
 	
 			<div ref={element => (this.activeDetailsDiv = element)} className={classes.listItemContainer}  style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px'}} >
-			<div className={classes.backgroundContainer} style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px' , backgroundImage: 'url(http://festbot.com/assets/img/venue/'+this.props.festival._id+'.jpg)'}} />
+			<div className={classes.backgroundContainer} style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px' , backgroundImage: 'url(https://chatbot.festbot.com/assets/img/venue/'+this.props.festival._id+'.jpg)'}} />
 			<div id={this.props.festival._id} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper} >
 				
 				<div className={classes.backdropLayer} ></div>

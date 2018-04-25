@@ -57,7 +57,7 @@ export class DiscoverArtistItem extends Component {
               ? '300px'
               : '120px',
           backgroundImage:
-            artist.hasPhoto? 'url(http://festbot.com/assets/img/artist/' +
+            artist.hasPhoto? 'url(https://chatbot.festbot.com/assets/img/artist/' +
             artist._id +
             '.jpg)':'none'
         }}

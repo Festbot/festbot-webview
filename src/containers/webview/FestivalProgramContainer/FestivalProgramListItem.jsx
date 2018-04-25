@@ -107,7 +107,7 @@ render() {
     return (
     <div >
 
-    <div ref={element => (this.activeDetailsDiv = element)} className={classes.listItemContainer}  style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px' , backgroundImage: 'url(http://festbot.com/assets/img/artist/'+this.props.event.artist_id+'.jpg)'}} >
+    <div ref={element => (this.activeDetailsDiv = element)} className={classes.listItemContainer}  style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px' , backgroundImage: 'url(https://chatbot.festbot.com/assets/img/artist/'+this.props.event.artist_id+'.jpg)'}} >
     <div id={this.props.event.artist} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper} >
       
       <div className={classes.backdropLayer} ></div>
