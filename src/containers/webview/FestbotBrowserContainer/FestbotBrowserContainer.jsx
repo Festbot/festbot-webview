@@ -43,7 +43,7 @@ export class FestivalBrowserContainer extends Component {
 		this.props.onViewChange('festbot')
 	
 		let { data } = await axios.get(
-			'http://159.65.198.31:5984/festivals/_design/default/_list/all-data/default-view'
+			'https://api.festbot.com/festivals/_design/default/_list/all-data/default-view'
 		);
 		//console.log(data)
 		// data = [...data, ...data, ...data];

@@ -97,19 +97,3 @@
 
 }
 
-.slideinDisabled {
-  animation: slidein .5s linear 1s  alternate;
-}
-
-@keyframes slidein {
-  from {
-    margin-left: 100%;
-    width: 300%; 
-  }
-
-  to {
-    margin-left: 0%;
-    width: 100%;
-  }
-
-}

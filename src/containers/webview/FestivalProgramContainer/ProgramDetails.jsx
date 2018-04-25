@@ -32,7 +32,7 @@ export class ProgramDetails extends Component {
 
   async componentDidMount()  {
     
-  const {data} = await axios.post("http://159.65.198.31:5984/artists/_find",{selector:{slug: this.props.artist}})
+  const {data} = await axios.post("https://api.festbot.com/artists/_find",{selector:{slug: this.props.artist}})
 	console.log('artist details ',data)
 	this.setState({artist: data.docs[0]})
 

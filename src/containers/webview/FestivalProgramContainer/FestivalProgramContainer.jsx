@@ -59,13 +59,13 @@ export class festivalProgramContainer extends Component {
   async componentDidMount() {
 		this.props.onViewChange('program_list');
     
-    const {data:artist} = await axios.get("http://159.65.198.31:5984/artists/_design/default/_list/json/default-view")
+    const {data:artist} = await axios.get("https://api.festbot.com/artists/_design/default/_list/json/default-view")
     console.log('artist details ',artist)
     this.setState({artist: artist})
 
 
 		let { data } = await axios.get(
-			'http://159.65.198.31:5984/shows/_design/default/_list/all-data/order-by-date'
+			'https://api.festbot.com/shows/_design/default/_list/all-data/order-by-date'
 		);
 		//console.log(data)
     
@@ -171,8 +171,8 @@ export class festivalProgramContainer extends Component {
     
     return this.state.searchResults.filter(event => {
       return (
-        ((this.props.activeDay =='ALL')||(moment(event.startDate).format('L').toLowerCase().indexOf(this.props.activeDay.toLowerCase()) > -1 )) &&
-        ((this.props.activeStage =='ALL LOCATION')||(event.place.toLowerCase().indexOf(this.props.activeStage.toLowerCase()) > -1)) &&
+        (((!this.props.isActive.Filter)||(this.props.activeDay =='ALL'))||(moment(event.startDate).format('L').toLowerCase().indexOf(this.props.activeDay.toLowerCase()) > -1 )) &&
+        (((!this.props.isActive.Filter)||(this.props.activeStage =='ALL LOCATION'))||(event.place.toLowerCase().indexOf(this.props.activeStage.toLowerCase()) > -1)) &&
         ((!this.props.isActive.Favourite)||(this.isActiveFavouriteItem(event._id) ))
 
       )})

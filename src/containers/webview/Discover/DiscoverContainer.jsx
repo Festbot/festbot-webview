@@ -17,9 +17,6 @@ import Subheader from 'material-ui/Subheader';
 import Details from './Details.jsx';
 import DiscoverArtistItem from './DiscoverArtistItem.jsx';
 
-import { List, ListItem } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-
 import IconDetails from 'material-ui/svg-icons/navigation/expand-more';
 import IconClose from 'material-ui/svg-icons/navigation/close';
 import IconHeadset from 'material-ui/svg-icons/hardware/headset';
@@ -43,13 +40,13 @@ export class DiscoverContainer extends Component {
 		//this.props.onViewChange('program_list');
 
 		let { data } = await axios.get(
-			'http://159.65.198.31:5984/artists/_design/default/_list/json/default-view'
+			'https://api.festbot.com/artists/_design/default/_list/json/default-view'
 		);
 		//console.log(data)
 
 		this.setState({ searchResults: data, data: data });
 
-		skyconsole.log('artist data:', data);
+		console.log('artist data:', data);
 		console.log('state search results:', this.state.searchResults);
 
 		//window.addEventListener("scroll", this.onScroll)
@@ -71,6 +68,14 @@ export class DiscoverContainer extends Component {
 		this.matchingArtists();
 	}
 
+	// groupByArtist = (artists) => {
+	// 	const artistNames = Ramda.groupBy(artist=>{
+	// 		return artist.name
+	// 	})
+	// 	return artistNames(artists)
+	// };
+ 
+
 	matchingArtists = () => {
 		const filteredResults = this.state.data.filter(artist => {
 			return (
@@ -85,33 +90,32 @@ export class DiscoverContainer extends Component {
 
 		const topArtists = this.state.data.filter(artist => {
 			return (
-				this.props.userData.topArtists.filter(topArtist => {
-					return (
-						topArtist
-							.toLowerCase()
-							.indexOf(artist.name.toLowerCase()) > -1
-					);
-				}).length > 0
+				Ramda.contains(artist.name,this.props.userData.topArtists)
 			);
 		});
+
 
 		console.log('Artist results of TOP ARTISTS:', topArtists);
 
 		const exceptTopArtists = filteredResults.filter(artist => {
 			return (
-				this.props.userData.topArtists.filter(topArtist => {
-					return (
-						topArtist
-							.toLowerCase()
-							.indexOf(artist.name.toLowerCase()) > -1
-					);
-				}).length == 0
+				!Ramda.contains(artist.name,this.props.userData.topArtists)
 			);
 		});
 
+		// const grouppedArtistNames = this.groupByArtist(filteredResults)
+		// const grouppedTopArtistNames =this.groupByArtist(topArtists)
+
+		// const exceptTopArtists = Ramda.difference(Object.keys(this.groupByArtist(filteredResults)),Object.keys(this.groupByArtist(topArtists))).map(artist =>{
+		// 	return 
+		// })
+		//const exceptTopArtists = Object.keys(grouppedTopArtistNames)
+		
 		console.log('Artist results EXCEPT of TOP ARTISTS:', exceptTopArtists);
 
 		const listOfPersonalPreferences = topArtists.concat(exceptTopArtists);
+
+		//const listOfPersonalPreferences = Ramda.symmetricDifference(topArtists,filteredResults)
 
 		this.setState({
 			searchResults: listOfPersonalPreferences,
@@ -157,7 +161,7 @@ export class DiscoverContainer extends Component {
 			});
 		}
 
-		if (keyword == '') {
+		if (keyword == '' && !this.props.userData.userId=='') {
 			this.setState({ searchResults: this.state.matchingArtists });
 		}
 	};

@@ -12,7 +12,7 @@ import qs from 'query-string';
       data: qs.stringify({
           showId: event
       }),
-      url: 'http://159.65.198.31:5984/users/_design/default/_update/save-show/'+userId
+      url: 'https://api.festbot.com/users/_design/default/_update/save-show/'+userId
   };
   
     return  axios(options);
@@ -25,7 +25,7 @@ export function removeFavouriteEvent(userId,event) {
     data: qs.stringify({
       showId: event
     }),
-    url: 'http://159.65.198.31:5984/users/_design/default/_update/remove-show/'+userId
+    url: 'https://api.festbot.com/users/_design/default/_update/remove-show/'+userId
 };
 
   return  axios(options);
@@ -38,7 +38,7 @@ export function saveActiveFestbot(userId,festival){
     data: qs.stringify({
         festivalId: festival
     }),
-    url: 'http://159.65.198.31:5984/users/_design/default/_update/set-active-festival/'+userId
+    url: 'https://api.festbot.com/users/_design/default/_update/set-active-festival/'+userId
 };
 
   return axios(options);
@@ -51,7 +51,7 @@ export function getUserId(userId){
     data: qs.stringify({
         userId: userId
     }),
-    url: 'http://159.65.198.31:5984/users/'+userId
+    url: 'https://api.festbot.com/users/'+userId
 };
 
   return axios(options);
