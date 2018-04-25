@@ -17,7 +17,6 @@ const menuItems = {
       "route": "/car_sharing",
       "iconName": "directions_car",
 
-
     },
 
     {
@@ -74,6 +73,9 @@ const menuItems = {
       "route": "/settings",
       "iconName": "settings",
     }
+  ],
+  "hide": [
+    {}
   ]
 
 
@@ -101,6 +103,11 @@ class WebviewFooterMenu extends Component {
 
 
   render() {
+
+    if (this.props.webviewMenu == 'hide') {
+      return null
+    }
+
     const { activeItem } = this.state
 
     console.log('props at navigation:', this.props)

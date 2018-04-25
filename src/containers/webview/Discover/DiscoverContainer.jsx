@@ -37,7 +37,7 @@ export class DiscoverContainer extends Component {
 	};
 
 	async componentDidMount() {
-		//this.props.onViewChange('program_list');
+		this.props.onViewChange('hide');
 
 		let { data } = await axios.get(
 			'https://api.festbot.com/artists/_design/default/_list/json/default-view'
@@ -185,7 +185,7 @@ export class DiscoverContainer extends Component {
 
 		return (
 			<div className={classes.container}>
-				<HeaderBar title="Discover" />
+				
 
 				<SearchBar
 					defaultValue={this.props.match.params.artist_name}
@@ -213,7 +213,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		setUser: userData => dispatch({ type: 'SET_USER', value: userData })
+		setUser: userData => dispatch({ type: 'SET_USER', value: userData }),
+		onViewChange: actualViewMenu =>
+      dispatch({ type: 'UPD_MENU', value: actualViewMenu }),
 	};
 };
 
