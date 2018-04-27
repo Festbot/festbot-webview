@@ -61,7 +61,7 @@ export class FestivalBrowserContainer extends Component {
 		const {userId} = qs.parse(this.props.location.search)
 
 		MessengerExtensions.getContext('817793415088295',
-  			function success({psid}) {
+  			async function success({psid}) {
 				const userId = md5(psid);
 				const {data} = await getUserId(userId);
 				this.props.setUser(data);
