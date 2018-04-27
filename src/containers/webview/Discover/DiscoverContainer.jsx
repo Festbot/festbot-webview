@@ -22,6 +22,8 @@ import IconClose from 'material-ui/svg-icons/navigation/close';
 import IconHeadset from 'material-ui/svg-icons/hardware/headset';
 import IconInfo from 'material-ui/svg-icons/action/event';
 
+import md5 from 'md5';
+
 import { Tabs, Tab } from 'material-ui/Tabs';
 // From https://github.com/oliviertassinari/react-swipeable-views
 import SwipeableViews from 'react-swipeable-views';
@@ -54,16 +56,20 @@ export class DiscoverContainer extends Component {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
 
-		const { userId } = qs.parse(this.props.location.search);
-		if (!userId == '') {
-			try {
-				const { data } = await getUserId(userId);
-				console.log(data);
-				this.props.setUser(data);
-			} catch (error) {
-				alert('Network Error');
-			}
-		}
+		MessengerExtensions.getContext('817793415088295',
+  			function success({psid}) {
+				try {
+					const userId = md5(psid);
+					const { data } = await getUserId(userId);
+					this.props.setUser(data);
+				} catch (error) {
+					alert('Network Error');
+				}
+  			},
+  			function error(err){
+	    		console.warn('no psid :(');
+  			}
+		);
 
 		this.matchingArtists();
 	}
@@ -74,7 +80,7 @@ export class DiscoverContainer extends Component {
 	// 	})
 	// 	return artistNames(artists)
 	// };
- 
+
 
 	matchingArtists = () => {
 		const filteredResults = this.state.data.filter(artist => {
@@ -107,10 +113,10 @@ export class DiscoverContainer extends Component {
 		// const grouppedTopArtistNames =this.groupByArtist(topArtists)
 
 		// const exceptTopArtists = Ramda.difference(Object.keys(this.groupByArtist(filteredResults)),Object.keys(this.groupByArtist(topArtists))).map(artist =>{
-		// 	return 
+		// 	return
 		// })
 		//const exceptTopArtists = Object.keys(grouppedTopArtistNames)
-		
+
 		console.log('Artist results EXCEPT of TOP ARTISTS:', exceptTopArtists);
 
 		const listOfPersonalPreferences = topArtists.concat(exceptTopArtists);
@@ -185,7 +191,7 @@ export class DiscoverContainer extends Component {
 
 		return (
 			<div className={classes.container}>
-				
+
 
 				<SearchBar
 					defaultValue={this.props.match.params.artist_name}
