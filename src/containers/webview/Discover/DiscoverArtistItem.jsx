@@ -38,7 +38,7 @@ export class DiscoverArtistItem extends Component {
     let yOffset = window.pageYOffset || document.documentElement.scrollTop;
     let frameOffset = fromTop/20;
     (frameOffset<1)?frameOffset=1:frameOffset;
-    let scrollTo= yOffset+frameOffset+this.state.cardHeight
+    let scrollTo= yOffset+frameOffset
     window.scrollTo(0,scrollTo)
   }
 

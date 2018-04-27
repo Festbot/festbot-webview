@@ -47,11 +47,7 @@ export class FestivalBrowserContainer extends Component {
 		let { data } = await axios.get(
 			'https://api.festbot.com/festivals/_design/default/_list/all-data/default-view'
 		);
-		//console.log(data)
-		// data = [...data, ...data, ...data];
-		// data = data.map((item, key) => {
-		// 	return { ...item, ...{ name: item.name + key } };
-		// });
+
 
     	this.setState({ searchResults: data, data: data });
 		console.log('fest data:', data);
