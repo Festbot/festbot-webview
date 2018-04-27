@@ -41,7 +41,7 @@ export class FestivalBrowserContainer extends Component {
 
 	async componentDidMount() {
 		this.props.onViewChange('festbot')
-	
+
 		let { data } = await axios.get(
 			'https://api.festbot.com/festivals/_design/default/_list/all-data/default-view'
 		);
@@ -50,7 +50,7 @@ export class FestivalBrowserContainer extends Component {
 		// data = data.map((item, key) => {
 		// 	return { ...item, ...{ name: item.name + key } };
 		// });
-	
+
 
     this.setState({ searchResults: data, data: data });
 
@@ -62,6 +62,15 @@ export class FestivalBrowserContainer extends Component {
 		console.log(this.props)
 		const {userId} = qs.parse(this.props.location.search)
 
+		MessengerExtensions.getContext('817793415088295',
+  			function success(thread_context){
+    			alert(thread_context.psid);
+  			},
+  			function error(err){
+	    		alert('error');
+  			}
+		);
+
 		if (!userId=='') {
 			try {
 				const {data} = await getUserId(userId)
@@ -71,9 +80,9 @@ export class FestivalBrowserContainer extends Component {
 			catch (error) {
 				alert('Network Error')
 			}
-	
+
 		}
-		
+
 
 
 	}
@@ -97,7 +106,7 @@ export class FestivalBrowserContainer extends Component {
           (festival.description
             .toLowerCase()
             .indexOf(keyword.toLowerCase()) > -1)
-				) 
+				)
 			})
 
 		console.log('filtered Results', filteredResults);
@@ -136,7 +145,7 @@ export class FestivalBrowserContainer extends Component {
 					<FestivalListBuilder
 						festivals={this.state.searchResults}
             handleOpen={this.handleOpen}
-            
+
 					/>
 				</List>
 			</div>
@@ -145,7 +154,7 @@ export class FestivalBrowserContainer extends Component {
 }
 
 const mapStateToProps = state => {
- 
+
   return{
     webviewMenu:state.webviewMenu,
     isActive:{
