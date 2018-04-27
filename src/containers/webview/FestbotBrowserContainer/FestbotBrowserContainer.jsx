@@ -22,7 +22,6 @@ import { GridList, GridTile } from 'material-ui/GridList';
 import SearchBar from '../../../ui/SearchBar.jsx';
 
 import FestivalListBuilder from '../FestivalBrowser/FestivalListBuilder.jsx';
-import HeaderBar from '../../../ui/HeaderBar.jsx'
 
 import {Helmet} from "react-helmet";
 
@@ -47,11 +46,7 @@ export class FestivalBrowserContainer extends Component {
 		let { data } = await axios.get(
 			'https://api.festbot.com/festivals/_design/default/_list/all-data/default-view'
 		);
-		//console.log(data)
-		// data = [...data, ...data, ...data];
-		// data = data.map((item, key) => {
-		// 	return { ...item, ...{ name: item.name + key } };
-		// });
+
 
     	this.setState({ searchResults: data, data: data });
 		console.log('fest data:', data);
@@ -117,14 +112,10 @@ export class FestivalBrowserContainer extends Component {
 		}
 
 		return (
-			<div style={{ paddingBottom: '80px' ,paddingTop: '80px'}}>
+			<div style={{ paddingBottom: '80px' ,paddingTop: '20px'}}>
 				<Helmet>
-					<title>Festbot - Festivals</title>
+					<title>Festbot - Activation</title>
 				</Helmet>
-				<GridList cols={2} cellHeight="auto" padding={1}>
-        <HeaderBar title='Festbot Activation' />
-				</GridList>
-				<p />
 				<SearchBar searchQueryChanged={this.festivalListFilter} />
 
 				<List>

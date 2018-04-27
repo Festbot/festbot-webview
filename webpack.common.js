@@ -13,9 +13,9 @@ module.exports = {
 	},
 	output: {
 		path: path.join(__dirname, './out/'),
-		filename: '[name].[chunkhash].js',
-		chunkFilename: '[id].[chunkhash].js',
-		sourceMapFilename: '[file]-[chunkhash].map',
+		filename: '[name].[hash].js',
+		chunkFilename: '[id].[hash].js',
+		sourceMapFilename: '[file]-[hash].map',
 		publicPath: '/'
 	},
 	module: {

@@ -16,7 +16,7 @@ import ConfirmationDialog from './ConfirmationDialog.jsx';
 
 class FestivalListBuilder extends Component {
 	state = {
-		savedShows: '',
+	 	// savedShows: '',
 		activeDetails: '',
 		isModalOpen: false,
 		selectedItem: ''
@@ -35,12 +35,12 @@ class FestivalListBuilder extends Component {
 
 	submitHandler = async () => {
 		
-		const userId='f442bee64bb034de9a00e5b3bd496e66'
+		const userId=this.props.userData.userId
 		try {
 			await saveActiveFestbot(userId,this.state.selectedItem)
-			this.setState({
-				savedShows: this.state.selectedItem
-			});
+			// this.setState({
+			// 	savedShows: this.state.selectedItem
+			// });
 		}
 		catch (error) {
 			alert('Network Error')
@@ -114,7 +114,7 @@ class FestivalListBuilder extends Component {
 										festival={festival}
 										handleOpen={this.handleOpen}
 										isActiveItem={
-											this.state.savedShows ===
+											this.props.userData.activeFestival ===
 											festival._id
 										}
 										isOpenDetails={
@@ -141,6 +141,10 @@ class FestivalListBuilder extends Component {
 const mapStateToProps = state => {
   return{
 		webviewMenu:state.webviewMenu,
+		userData:{
+			userId: state.userId,
+			activeFestival: state.activeFestival,
+		}
 		
 };
 }
