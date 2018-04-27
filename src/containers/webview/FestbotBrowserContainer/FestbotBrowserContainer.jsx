@@ -26,6 +26,8 @@ import HeaderBar from '../../../ui/HeaderBar.jsx'
 
 import {Helmet} from "react-helmet";
 
+import md5 from 'md5';
+
 const styles = {
 	button: {
 		margin: 0,
@@ -51,44 +53,24 @@ export class FestivalBrowserContainer extends Component {
 		// 	return { ...item, ...{ name: item.name + key } };
 		// });
 
-
-    this.setState({ searchResults: data, data: data });
-
-
+    	this.setState({ searchResults: data, data: data });
 		console.log('fest data:', data);
 		console.log('state search results:', this.state.searchResults);
-
 
 		console.log(this.props)
 		const {userId} = qs.parse(this.props.location.search)
 
 		MessengerExtensions.getContext('817793415088295',
-  			function success(thread_context){
-    			alert(thread_context.psid);
+  			function success({psid}) {
+				const userId = md5(psid);
+				const {data} = await getUserId(userId);
+				this.props.setUser(data);
   			},
   			function error(err){
-	    		alert('error');
+	    		console.warn('no psid :(');
   			}
 		);
-
-		if (!userId=='') {
-			try {
-				const {data} = await getUserId(userId)
-				console.log(data)
-				this.props.setUser(data)
-			}
-			catch (error) {
-				alert('Network Error')
-			}
-
-		}
-
-
-
 	}
-
-
-
 
 	festivalListFilter = keyword => {
 		console.log(keyword);
