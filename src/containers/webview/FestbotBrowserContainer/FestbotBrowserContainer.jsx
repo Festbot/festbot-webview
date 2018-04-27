@@ -60,7 +60,7 @@ export class FestivalBrowserContainer extends Component {
 		console.log(this.props)
 
 		MessengerExtensions.getContext('817793415088295',
-  			async function success({psid}) {
+  			async ({psid}) => {
 				try {
 					const userId = md5(psid);
 					const { data } = await getUserId(userId);
