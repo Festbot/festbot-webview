@@ -10,21 +10,51 @@ import IconClose from 'material-ui/svg-icons/navigation/close';
 
 
 export class DiscoverArtistItem extends Component {
-
+  state={
+    cardHeight:0,
+  }
 
   offset(el) {
     var rect = el.getBoundingClientRect(),
     scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    console.log('scrolltop:', scrollTop,' pageYOffset:', window.pageYOffset,' documentElement.scrollTop:', document.documentElement.scrollTop,' recttop:', rect.top,)
+
     return rect.top + scrollTop
+
   }
 
-  
+  smoothScroll=(el) =>{
+    let fromTop = el.getBoundingClientRect();
+    fromTop = el.getBoundingClientRect().top;
+
+    if (fromTop<2 ) {
+      clearInterval(this.intervalId)
+      const cardHeight = el.getBoundingClientRect().height
+      this.setState({cardHeight: cardHeight});
+      return
+    }
+
+    let yOffset = window.pageYOffset || document.documentElement.scrollTop;
+    let frameOffset = fromTop/20;
+    (frameOffset<1)?frameOffset=1:frameOffset;
+    let scrollTo= yOffset+frameOffset+this.state.cardHeight
+    window.scrollTo(0,scrollTo)
+  }
+
+  componentWillUnmount() {
+    
+  }
 
   detailsContentOpenHandler = (e) => {
     
+    
+
     if (!this.props.isActiveDetails) {
+
       setTimeout(() => {
-        window.scrollTo(0,this.offset(this.activeDetailsDiv)-45)
+        this.intervalId = setInterval(() => this.smoothScroll(this.activeDetailsDiv),10)
+        //window.scrollTo(0,this.offset(this.activeDetailsDiv))
       }, 450);
     }
     this.props.detailsIsOpenHandler(e)
