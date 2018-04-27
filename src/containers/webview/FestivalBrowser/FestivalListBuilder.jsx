@@ -16,7 +16,7 @@ import ConfirmationDialog from './ConfirmationDialog.jsx';
 
 class FestivalListBuilder extends Component {
 	state = {
-	 	// savedShows: '',
+	 	savedShows: '',
 		activeDetails: '',
 		isModalOpen: false,
 		selectedItem: ''
@@ -38,9 +38,9 @@ class FestivalListBuilder extends Component {
 		const userId=this.props.userData.userId
 		try {
 			await saveActiveFestbot(userId,this.state.selectedItem)
-			// this.setState({
-			// 	savedShows: this.state.selectedItem
-			// });
+			this.setState({
+				savedShows: this.state.selectedItem
+			});
 		}
 		catch (error) {
 			alert('Network Error')

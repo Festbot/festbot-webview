@@ -54,22 +54,37 @@ export class FestivalBrowserContainer extends Component {
 
 		console.log(this.props)
 
-		MessengerExtensions.getContext('817793415088295',
+//Developer
+
+			// try {
+			// 	const userId = '6a25c382f59ef02407e723a092ba062b'
+			// 	const { data } = await getUserId(userId);
+			// 	this.props.setUser(data);
+			// } catch (error) {
+			// 	console.warn('get user data error', error);
+			// 	alert('Network Error');
+			// }
+
+//live
+MessengerExtensions.getContext('817793415088295',
   			async ({psid}) => {
-				try {
-					const userId = md5(psid);
-					const { data } = await getUserId(userId);
-					this.props.setUser(data);
-				} catch (error) {
-					console.warn('get user data error', error);
-					alert('Network Error');
-				}
-  			},
-  			function error(err){
-	    		console.warn('no psid :(');
-  			}
-		);
-	}
+			try {
+				const userId = md5(psid)
+				const { data } = await getUserId(userId);
+				this.props.setUser(data);
+			} catch (error) {
+				console.warn('get user data error', error);
+				alert('Network Error');
+			}
+			},
+			function error(err){
+				console.warn('no psid :(');
+			}
+	);
+
+
+
+		}
 
 	festivalListFilter = keyword => {
 		console.log(keyword);

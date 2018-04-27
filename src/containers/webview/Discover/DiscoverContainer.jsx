@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Aux from '../../../hoc/Aux/Aux.jsx';
 import { connect } from 'react-redux';
-import {Helmet} from "react-helmet";
+import { Helmet } from 'react-helmet';
 import classes from './DiscoverContainer.css';
 import * as colors from 'material-ui/styles/colors';
 import axios from 'axios';
@@ -57,8 +57,21 @@ export class DiscoverContainer extends Component {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
 
-		MessengerExtensions.getContext('817793415088295',
-  			async ({psid}) => {
+		//Developer
+
+		// try {
+		// 	const userId = '6a25c382f59ef02407e723a092ba062b'
+		// 	const { data } = await getUserId(userId);
+		// 	this.props.setUser(data);
+		// } catch (error) {
+		// 	console.warn('get user data error', error);
+		// 	alert('Network Error');
+		// }
+
+		//live
+		MessengerExtensions.getContext(
+			'817793415088295',
+			async ({ psid }) => {
 				try {
 					const userId = md5(psid);
 					const { data } = await getUserId(userId);
@@ -67,10 +80,10 @@ export class DiscoverContainer extends Component {
 					console.warn('get user data error', error);
 					alert('Network Error');
 				}
-  			},
-  			function error(err){
-	    		console.warn('no psid :(');
-  			}
+			},
+			function error(err) {
+				console.warn('no psid :(');
+			}
 		);
 
 		this.matchingArtists();
@@ -82,7 +95,6 @@ export class DiscoverContainer extends Component {
 	// 	})
 	// 	return artistNames(artists)
 	// };
-
 
 	matchingArtists = () => {
 		const filteredResults = this.state.data.filter(artist => {
@@ -97,24 +109,18 @@ export class DiscoverContainer extends Component {
 		console.log('TOP ARTISTS:', this.props.userData.topArtists);
 
 		const topArtists = this.state.data.filter(artist => {
-			return (
-				Ramda.contains(artist.name,this.props.userData.topArtists)
-			);
+			return Ramda.contains(artist.name, this.props.userData.topArtists);
 		});
-
 
 		console.log('Artist results of TOP ARTISTS:', topArtists);
 
 		const exceptTopArtists = filteredResults.filter(artist => {
-			return (
-				!Ramda.contains(artist.name,this.props.userData.topArtists)
-			);
+			return !Ramda.contains(artist.name, this.props.userData.topArtists);
 		});
 
 		console.log('Artist results EXCEPT of TOP ARTISTS:', exceptTopArtists);
 
 		const listOfPersonalPreferences = topArtists.concat(exceptTopArtists);
-
 
 		this.setState({
 			searchResults: listOfPersonalPreferences,
@@ -160,7 +166,7 @@ export class DiscoverContainer extends Component {
 			});
 		}
 
-		if (keyword == '' && !this.props.userData.userId=='') {
+		if (keyword == '' && !this.props.userData.userId == '') {
 			this.setState({ searchResults: this.state.matchingArtists });
 		}
 	};
@@ -184,9 +190,9 @@ export class DiscoverContainer extends Component {
 
 		return (
 			<div className={classes.container}>
-			<Helmet>
-				<title>Discover Artist</title>
-			</Helmet>
+				<Helmet>
+					<title>Discover Artist</title>
+				</Helmet>
 
 				<SearchBar
 					defaultValue={this.props.match.params.artist_name}
@@ -216,7 +222,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		setUser: userData => dispatch({ type: 'SET_USER', value: userData }),
 		onViewChange: actualViewMenu =>
-      dispatch({ type: 'UPD_MENU', value: actualViewMenu }),
+			dispatch({ type: 'UPD_MENU', value: actualViewMenu })
 	};
 };
 
