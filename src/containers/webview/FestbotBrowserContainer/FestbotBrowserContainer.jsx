@@ -58,13 +58,17 @@ export class FestivalBrowserContainer extends Component {
 		console.log('state search results:', this.state.searchResults);
 
 		console.log(this.props)
-		const {userId} = qs.parse(this.props.location.search)
 
 		MessengerExtensions.getContext('817793415088295',
   			async function success({psid}) {
-				const userId = md5(psid);
-				const {data} = await getUserId(userId);
-				this.props.setUser(data);
+				try {
+					const userId = md5(psid);
+					const { data } = await getUserId(userId);
+					this.props.setUser(data);
+				} catch (error) {
+					console.warn('get user data error', error);
+					alert('Network Error');
+				}
   			},
   			function error(err){
 	    		console.warn('no psid :(');

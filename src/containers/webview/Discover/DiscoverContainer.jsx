@@ -63,6 +63,7 @@ export class DiscoverContainer extends Component {
 					const { data } = await getUserId(userId);
 					this.props.setUser(data);
 				} catch (error) {
+					console.warn('get user data error', error);
 					alert('Network Error');
 				}
   			},
