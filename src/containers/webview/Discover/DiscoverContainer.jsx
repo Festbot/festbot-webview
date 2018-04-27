@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Aux from '../../../hoc/Aux/Aux.jsx';
 import { connect } from 'react-redux';
+import {Helmet} from "react-helmet";
 import classes from './DiscoverContainer.css';
 import * as colors from 'material-ui/styles/colors';
 import axios from 'axios';
@@ -110,19 +111,10 @@ export class DiscoverContainer extends Component {
 			);
 		});
 
-		// const grouppedArtistNames = this.groupByArtist(filteredResults)
-		// const grouppedTopArtistNames =this.groupByArtist(topArtists)
-
-		// const exceptTopArtists = Ramda.difference(Object.keys(this.groupByArtist(filteredResults)),Object.keys(this.groupByArtist(topArtists))).map(artist =>{
-		// 	return
-		// })
-		//const exceptTopArtists = Object.keys(grouppedTopArtistNames)
-
 		console.log('Artist results EXCEPT of TOP ARTISTS:', exceptTopArtists);
 
 		const listOfPersonalPreferences = topArtists.concat(exceptTopArtists);
 
-		//const listOfPersonalPreferences = Ramda.symmetricDifference(topArtists,filteredResults)
 
 		this.setState({
 			searchResults: listOfPersonalPreferences,
@@ -192,7 +184,9 @@ export class DiscoverContainer extends Component {
 
 		return (
 			<div className={classes.container}>
-
+			<Helmet>
+				<title>Discover Artist</title>
+			</Helmet>
 
 				<SearchBar
 					defaultValue={this.props.match.params.artist_name}

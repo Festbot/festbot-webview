@@ -22,7 +22,6 @@ import { GridList, GridTile } from 'material-ui/GridList';
 import SearchBar from '../../../ui/SearchBar.jsx';
 
 import FestivalListBuilder from '../FestivalBrowser/FestivalListBuilder.jsx';
-import HeaderBar from '../../../ui/HeaderBar.jsx'
 
 import {Helmet} from "react-helmet";
 
@@ -113,14 +112,10 @@ export class FestivalBrowserContainer extends Component {
 		}
 
 		return (
-			<div style={{ paddingBottom: '80px' ,paddingTop: '80px'}}>
+			<div style={{ paddingBottom: '80px' ,paddingTop: '20px'}}>
 				<Helmet>
-					<title>Festbot - Festivals</title>
+					<title>Festbot - Activation</title>
 				</Helmet>
-				<GridList cols={2} cellHeight="auto" padding={1}>
-        <HeaderBar title='Festbot Activation' />
-				</GridList>
-				<p />
 				<SearchBar searchQueryChanged={this.festivalListFilter} />
 
 				<List>
