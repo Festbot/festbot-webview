@@ -36,7 +36,9 @@ export class DiscoverContainer extends Component {
 		data: [],
 		yListOffset: 0,
 		activeDetails: '',
-		slideIndex: 0
+		slideIndex: 0,
+		lastOpenedDetailsHeight:0,
+		lastOpenedDetailsKey:0,
 	};
 
 	async componentDidMount() {
@@ -130,12 +132,18 @@ export class DiscoverContainer extends Component {
 
 	detailsIsOpenHandler = e => {
 		if (this.state.activeDetails === e.currentTarget.id) {
-			this.setState({ activeDetails: '', isOpenDetails: false });
+			this.setState({ activeDetails: '', isOpenDetails: false,lastOpenedDetailsHeight: 0 });
+			
 		} else {
 			this.setState({
 				activeDetails: e.currentTarget.id,
 				isOpenDetails: true
 			});
+			//document elmaszas nyitas csukas miatt
+			const lastOpenedDetaisWasBeforeThis = Number(this.state.lastOpenedDetailsKey)< Number(e.currentTarget.title)
+			this.initLastOpenedDetailsHeight(this.state.lastOpenedDetailsHeight, lastOpenedDetaisWasBeforeThis)
+			this.setState({lastOpenedDetailsKey:e.currentTarget.title});
+
 		}
 	};
 
@@ -171,7 +179,20 @@ export class DiscoverContainer extends Component {
 		}
 	};
 
+	setLastOpenedDetailsHeight = (e) => {
+		this.setState({lastOpenedDetailsHeight: e});
+	}
+
+	initLastOpenedDetailsHeight =(lastOpenedDetailsHeight,lastOpenedDetaisWasBeforeThis) =>{
+		if (lastOpenedDetailsHeight>0 && lastOpenedDetaisWasBeforeThis) {
+			window.scrollBy(0,-lastOpenedDetailsHeight)
+			this.setState({lastOpenedDetailsHeight: 0});
+		}
+	}
+
 	render() {
+		
+
 		const sliceOfArtist = this.state.searchResults.slice(
 			this.state.yListOffset,
 			this.state.yListOffset + 400
@@ -180,10 +201,12 @@ export class DiscoverContainer extends Component {
 			return (
 				<DiscoverArtistItem
 					key={index}
+					index={index}
 					isActiveDetails={this.state.activeDetails === artist.name}
 					isOpenDetails={this.state.isOpenDetails}
 					artist={artist}
 					detailsIsOpenHandler={this.detailsIsOpenHandler}
+					setLastOpenedDetailsHeight={this.setLastOpenedDetailsHeight}
 				/>
 			);
 		});

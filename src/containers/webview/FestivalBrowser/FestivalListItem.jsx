@@ -43,24 +43,50 @@ const styles = {
 class FestivalListItem extends Component {
 	
 
-	offset(el) {
-		var rect = el.getBoundingClientRect(),
-		scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-		return rect.top + scrollTop
-	}
+  offset(el) {
+    var rect = el.getBoundingClientRect(),
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    console.log('scrolltop:', scrollTop,' pageYOffset:', window.pageYOffset,' documentElement.scrollTop:', document.documentElement.scrollTop,' recttop:', rect.top,)
+
+    return rect.top + scrollTop
+
+  }
+
+  smoothScroll=(el) =>{
+    let fromTop = el.getBoundingClientRect();
+    fromTop = el.getBoundingClientRect().top;
+    
+    if (fromTop<2 && fromTop>-2) {
+      clearInterval(this.intervalId)
+      const cardHeight = el.getBoundingClientRect().height
+      this.props.setLastOpenedDetailsHeight(cardHeight-120)
+      return
+    }
+
+    let yOffset = window.pageYOffset || document.documentElement.scrollTop;
+    let frameOffset = fromTop/20;
+		(frameOffset<1 && frameOffset>0)?frameOffset=1:frameOffset;
+		(frameOffset<0 && frameOffset>-1)?frameOffset=-1:frameOffset;
+    let scrollTo= yOffset+frameOffset
+    window.scrollTo(0,scrollTo)
+  }
+
+  detailsContentOpenHandler = (e) => {
+
+   if (!this.props.isOpenDetails) {
+    
+      setTimeout(() => {
+        this.intervalId = setInterval(() => this.smoothScroll(this.activeDetailsDiv),10)
+
+      }, 0);
+   }
+    this.props.detailsIsOpenHandler(e)
+  }
+  
 
 
-
-	detailsContentOpenHandler = (e) => {
-		
-		if (!this.props.isOpenDetails) {
-			setTimeout(() => {
-				window.scrollTo(0,this.offset(this.activeDetailsDiv)-45)
-			}, 300);
-		}
-		this.props.detailsIsOpenHandler(e)
-	}
-
+	
 
 
 	render () {
@@ -83,8 +109,8 @@ class FestivalListItem extends Component {
 	
 	
 			<div ref={element => (this.activeDetailsDiv = element)} className={classes.listItemContainer}  style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px'}} >
-			<div className={classes.backgroundContainer} style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px' , backgroundImage: 'url(https://chatbot.festbot.com/assets/img/venue/'+this.props.festival._id+'.jpg)'}} />
-			<div id={this.props.festival._id} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper} >
+			<div className={classes.backgroundContainer} style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px' , backgroundImage: 'url(https://chatbot.festbot.com/assets/img/venue/'+this.props.festival._id+'.jpg)',transition: this.props.isOpenDetails ? 'all 0.3s ease-in-out':'none'}} />
+			<div id={this.props.festival._id} title={this.props.index} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper} >
 				
 				<div className={classes.backdropLayer} ></div>
 				<div className={classes.title}>{this.props.festival.name}</div> 

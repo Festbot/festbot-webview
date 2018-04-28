@@ -19,7 +19,9 @@ class FestivalListBuilder extends Component {
 	 	savedShows: '',
 		activeDetails: '',
 		isModalOpen: false,
-		selectedItem: ''
+		selectedItem: '',
+		lastOpenedDetailsHeight:0,
+		lastOpenedDetailsKey:0,
 	};
 
 	handleOpen = e => {
@@ -54,12 +56,26 @@ class FestivalListBuilder extends Component {
 	
 	detailsIsOpenHandler = e => {
 		if (this.state.activeDetails === e.currentTarget.id) {
-			this.setState({ activeDetails: '' });
+			this.setState({ activeDetails: '' ,lastOpenedDetailsHeight: 0 });
 		} else {
 			this.setState({ activeDetails: e.currentTarget.id });
 			console.log(this.state.activeDetails);
+			const lastOpenedDetaisWasBeforeThis = Number(this.state.lastOpenedDetailsKey)< Number(e.currentTarget.title)
+			this.initLastOpenedDetailsHeight(this.state.lastOpenedDetailsHeight, lastOpenedDetaisWasBeforeThis)
+			this.setState({lastOpenedDetailsKey:e.currentTarget.title});
 		}
 	}; 
+
+	setLastOpenedDetailsHeight = (e) => {
+		this.setState({lastOpenedDetailsHeight: e});
+	}
+
+	initLastOpenedDetailsHeight =(lastOpenedDetailsHeight,lastOpenedDetaisWasBeforeThis) =>{
+		if (lastOpenedDetailsHeight>0 && lastOpenedDetaisWasBeforeThis) {
+			window.scrollBy(0,-lastOpenedDetailsHeight)
+			this.setState({lastOpenedDetailsHeight: 0});
+		}
+	}
 
 
   groupByCountry = (festivals) => {
@@ -82,7 +98,7 @@ class FestivalListBuilder extends Component {
 
 		console.log(sortedCountries)
 		return [
-			sortedCountries.map(country => {
+			sortedCountries.map((country,countryIndex) => {
 				return (
 					<div style={{ paddingBottom: '40px' }}>
 						<Subheader className={classes.subheader}>
@@ -103,10 +119,12 @@ class FestivalListBuilder extends Component {
 						</Subheader>
 						<Divider />
 						<Divider />
-						{gruppedFestivals[country].map(festival => {
+						{gruppedFestivals[country].map((festival,index) => {
 							return (
 								<Aux>
 									<FestivalListItem
+									key={(countryIndex*1000)+index}
+									index={(countryIndex*1000)+index}
 										detailsIsOpenHandler={
 											this.detailsIsOpenHandler
 										}
@@ -121,6 +139,7 @@ class FestivalListBuilder extends Component {
 											this.state.activeDetails ===
 											festival._id
 										}
+										setLastOpenedDetailsHeight={this.setLastOpenedDetailsHeight}
 									/>
 								</Aux>
 							);

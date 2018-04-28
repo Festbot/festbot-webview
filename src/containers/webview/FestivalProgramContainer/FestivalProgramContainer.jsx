@@ -51,6 +51,8 @@ export class festivalProgramContainer extends Component {
     eventDays:[],
     yListOffset:0,
     artist:[],
+    lastOpenedDetailsHeight:0,
+		lastOpenedDetailsKey:0,
 
     
   };
@@ -193,16 +195,31 @@ export class festivalProgramContainer extends Component {
     return Stages(events)
   };
 
-
-  detailsIsOpenHandler = e => {
+	detailsIsOpenHandler = e => {
 		if (this.state.activeDetails === e.currentTarget.id) {
-			this.setState({ activeDetails: '' });
+			this.setState({ activeDetails: '' ,lastOpenedDetailsHeight: 0 });
 		} else {
 			this.setState({ activeDetails: e.currentTarget.id });
 			console.log(this.state.activeDetails);
+			const lastOpenedDetaisWasBeforeThis = Number(this.state.lastOpenedDetailsKey)< Number(e.currentTarget.title)
+			this.initLastOpenedDetailsHeight(this.state.lastOpenedDetailsHeight, lastOpenedDetaisWasBeforeThis)
+			this.setState({lastOpenedDetailsKey:e.currentTarget.title});
 		}
-  };
-  
+	}; 
+
+	setLastOpenedDetailsHeight = (e) => {
+		this.setState({lastOpenedDetailsHeight: e});
+	}
+
+	initLastOpenedDetailsHeight =(lastOpenedDetailsHeight,lastOpenedDetaisWasBeforeThis) =>{
+		if (lastOpenedDetailsHeight>0 && lastOpenedDetaisWasBeforeThis) {
+			window.scrollBy(0,-lastOpenedDetailsHeight)
+			this.setState({lastOpenedDetailsHeight: 0});
+		}
+	}
+
+
+
   isActiveFavouriteItem = item =>{
 		
 		const filteredResults = this.props.savedShows
@@ -271,19 +288,21 @@ export class festivalProgramContainer extends Component {
     const eventDays = Object.keys(grouppedFestivalPrograms).sort()
     console.log('napok: ',this.state.eventDays) 
   
-    const programListByDay = eventDays.map((days,index) =>{
+    const programListByDay = eventDays.map((days,daysIndex) =>{
       return (
         <div style={{ paddingBottom: '40px' }}>
 						<Subheader className={classes.subheader}>
 							<h1 className={classes.listHeader}>
 								{moment(days).format('LL')}
-							</h1><span className={classes.dayIndex}>Day {index+1}</span>
+							</h1><span className={classes.dayIndex}>Day {daysIndex+1}</span>
 						</Subheader>
 						<Divider />
             <Divider />
            { grouppedFestivalPrograms[days].map((event, index) =>{
               return (
                 <FestivalProgramListItem
+                    key={(daysIndex*1000)+index}
+										index={(daysIndex*1000)+index}
 										detailsIsOpenHandler={
 											this.detailsIsOpenHandler
 										}
@@ -295,8 +314,9 @@ export class festivalProgramContainer extends Component {
 										}
 										isOpenDetails={
 											this.state.activeDetails ===
-											event.artist
+											event._id
                     }
+                    setLastOpenedDetailsHeight={this.setLastOpenedDetailsHeight}
 									/>
 							
 							);

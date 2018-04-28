@@ -10,9 +10,7 @@ import IconClose from 'material-ui/svg-icons/navigation/close';
 
 
 export class DiscoverArtistItem extends Component {
-  state={
-    cardHeight:0,
-  }
+
 
   offset(el) {
     var rect = el.getBoundingClientRect(),
@@ -27,36 +25,33 @@ export class DiscoverArtistItem extends Component {
   smoothScroll=(el) =>{
     let fromTop = el.getBoundingClientRect();
     fromTop = el.getBoundingClientRect().top;
-
-    if (fromTop<2 ) {
+    
+    if (fromTop<2 && fromTop>-2) {
       clearInterval(this.intervalId)
       const cardHeight = el.getBoundingClientRect().height
-      this.setState({cardHeight: cardHeight});
+      this.props.setLastOpenedDetailsHeight(cardHeight-120)
       return
     }
 
     let yOffset = window.pageYOffset || document.documentElement.scrollTop;
     let frameOffset = fromTop/20;
-    (frameOffset<1)?frameOffset=1:frameOffset;
+		(frameOffset<1 && frameOffset>0)?frameOffset=1:frameOffset;
+		(frameOffset<0 && frameOffset>-1)?frameOffset=-1:frameOffset;
     let scrollTo= yOffset+frameOffset
     window.scrollTo(0,scrollTo)
   }
 
-  componentWillUnmount() {
-    
-  }
+
 
   detailsContentOpenHandler = (e) => {
-    
-    
 
-    if (!this.props.isActiveDetails) {
-
+   if (!this.props.isActiveDetails) {
+    
       setTimeout(() => {
         this.intervalId = setInterval(() => this.smoothScroll(this.activeDetailsDiv),10)
-        //window.scrollTo(0,this.offset(this.activeDetailsDiv))
-      }, 450);
-    }
+
+      }, 0);
+   }
     this.props.detailsIsOpenHandler(e)
   }
   
@@ -89,10 +84,12 @@ export class DiscoverArtistItem extends Component {
           backgroundImage:
             artist.hasPhoto? 'url(https://chatbot.festbot.com/assets/img/artist/' +
             artist._id +
-            '.jpg)':'none'
+            '.jpg)':'none',
+
+            transition: isActiveDetails ? 'all 0.3s ease-in-out':'none'
         }}
       >
-        <div id={this.props.artist.name} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper}>
+        <div id={this.props.artist.name} title={this.props.index} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper}>
           <div
             className={classes.backdropLayer}
 
