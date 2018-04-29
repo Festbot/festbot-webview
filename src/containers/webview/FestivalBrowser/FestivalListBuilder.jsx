@@ -40,9 +40,7 @@ class FestivalListBuilder extends Component {
 		const userId=this.props.userData.userId
 		try {
 			await saveActiveFestbot(userId,this.state.selectedItem)
-			this.setState({
-				savedShows: this.state.selectedItem
-			});
+			this.props.setActiveFestival(this.state.selectedItem)
 		}
 		catch (error) {
 			alert('Network Error')
@@ -133,7 +131,7 @@ class FestivalListBuilder extends Component {
 										handleOpen={this.handleOpen}
 										isActiveItem={
 											this.props.userData.activeFestival ===
-											festival._id
+											festival._id 
 										}
 										isOpenDetails={
 											this.state.activeDetails ===
@@ -163,9 +161,17 @@ const mapStateToProps = state => {
 		userData:{
 			userId: state.userId,
 			activeFestival: state.activeFestival,
-		}
-		
+		}	
 };
 }
 
-export default connect(mapStateToProps)(FestivalListBuilder);
+
+const mapDispatchToProps = dispatch => {
+	return {
+		setActiveFestival: festivalId => dispatch({ type: 'SET_ACTIVEFESTIVAL', value: festivalId }),
+	};
+};
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(FestivalListBuilder);

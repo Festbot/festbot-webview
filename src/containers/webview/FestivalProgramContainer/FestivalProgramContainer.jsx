@@ -29,6 +29,7 @@ import FestivalProgramListItem from './FestivalProgramListItem.jsx'
 //import FilterElements from './FilterElements.jsx'
 import DaySwitcher from '../../../components/DaySwitcher.jsx'
 import StageSwitcher from '../../../components/StageSwitcher.jsx'
+import ScrollToTop from 'react-scroll-up'
 
 
 const items = Array(15).fill(null).map((e,i) =>{
@@ -337,15 +338,19 @@ export class festivalProgramContainer extends Component {
         <Helmet>
           <title>{this.props.match.params.festival_name}</title>
         </Helmet>
+        
         <DaySwitcher activeDayClicked={this.festivalEventDayFilterHandler}/>
         <StageSwitcher activeStageClicked={this.festivalEventStageFilterHandler}/>
      
         <SearchBar searchQueryChanged={this.festivalEventKeywordFilter} />
+        
 				<div style={{paddingBottom: '100px',paddingTop:this.state.paddingTop+'px'}}>
           {programListByDay}
           <button onClick={this.showMore}> show more </button>
         </div>
-        
+        <ScrollToTop showUnder={1000}>
+          <span className={classes.scrollToTopButton}>UP</span>
+        </ScrollToTop>
 			</div>
 		);
 	}

@@ -28,6 +28,7 @@ import md5 from 'md5';
 import { Tabs, Tab } from 'material-ui/Tabs';
 // From https://github.com/oliviertassinari/react-swipeable-views
 import SwipeableViews from 'react-swipeable-views';
+import ScrollToTop from 'react-scroll-up'
 
 export class DiscoverContainer extends Component {
 	state = {
@@ -222,6 +223,9 @@ export class DiscoverContainer extends Component {
 					searchQueryChanged={this.artistKeywordFilter}
 				/>
 				{artistList}
+				<ScrollToTop showUnder={1000}>
+					<span className={classes.scrollToTopButton}>UP</span>
+				</ScrollToTop>
 			</div>
 		);
 	}

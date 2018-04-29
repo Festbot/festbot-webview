@@ -25,6 +25,11 @@ const reducer = (state = initialState,action) => {
       topArtists: [...action.value.topArtists],
       topGenres: [...action.value.topGenres]
     }
+    case 'SET_ACTIVEFESTIVAL':
+    return {
+      ...state,
+      activeFestival: action.value,
+    }
     case 'UPD_MENU':
     return {
       ...state,

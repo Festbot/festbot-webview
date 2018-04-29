@@ -20,6 +20,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import { GridList, GridTile } from 'material-ui/GridList';
 
 import SearchBar from '../../../ui/SearchBar.jsx';
+import ScrollToTop from 'react-scroll-up'
 
 import FestivalListBuilder from '../FestivalBrowser/FestivalListBuilder.jsx';
 
@@ -140,6 +141,9 @@ MessengerExtensions.getContext('817793415088295',
 
 					/>
 				</List>
+				<ScrollToTop showUnder={500}>
+					<span className={classes.scrollToTopButton}>UP</span>
+				</ScrollToTop>
 			</div>
 		);
 	}

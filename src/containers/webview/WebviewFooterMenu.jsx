@@ -92,10 +92,10 @@ class WebviewFooterMenu extends Component {
 
 
   handleItemClick = (e) =>  {
-    this.props.onToggle(e.currentTarget.title)
+    this.props.onToggle(e.props.title)
 
     return (
-      this.setState({ activeItem: e.currentTarget.title })
+      this.setState({ activeItem: e.props.title })
      // () => dispatch({type: 'UPD_MENU', value:'car sharing'}
 
     )
@@ -120,11 +120,10 @@ class WebviewFooterMenu extends Component {
       let iconElement = <FontIcon title={item.name} onClick={this.handleItemClick} className="material-icons">{item.iconName}</FontIcon>
 
       if (item.toggleItem) {
-        iconElement = <IconWithToggle isToggled={this.props.isActive[item.toggleItem]} handleItemClick={this.handleItemClick} title={item.toggleItem} iconName={item.iconName} />
+        iconElement = <IconWithToggle isToggled={this.props.isActive[item.toggleItem]}  iconName={item.iconName} />
       }
 
       (item.name=="Festbot") ? iconElement=<FestbotLogo width='24px'/> :null;
-
 
       return (
         <Tab
@@ -132,7 +131,8 @@ class WebviewFooterMenu extends Component {
           icon={iconElement}
           label={item.name}
           containerElement={!item.route == ""? <Link to={item.route}/> :<div></div>}
-
+          onActive={item.toggleItem ? this.handleItemClick :null}
+          title={item.toggleItem ? item.toggleItem :null}
       />
       )});
 

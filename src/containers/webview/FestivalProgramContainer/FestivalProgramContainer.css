@@ -65,3 +65,14 @@
   line-height: 49px;
 }
 
+.scrollToTopButton{
+  z-index: 100;
+  background-color: rgba(55, 71, 79, 0.6);
+  color:white;
+  border-radius: 50%;
+  padding: 15px;
+  position: fixed;
+  bottom: 100px !important;
+  right: 30px;
+
+}
