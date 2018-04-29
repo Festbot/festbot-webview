@@ -8,8 +8,9 @@ import 'babel-polyfill';
 import * as Ramda from 'ramda';
 import moment from 'moment'
 import {saveFavouriteEvent,removeFavouriteEvent} from '../../../components/apiHelper.js'
+import { Helmet } from 'react-helmet';
 
-import HeaderBar from '../../../ui/HeaderBar.jsx';
+//import HeaderBar from '../../../ui/HeaderBar.jsx';
 import SearchBar from '../../../ui/SearchBar.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
 import Subheader from 'material-ui/Subheader';
@@ -332,7 +333,10 @@ export class festivalProgramContainer extends Component {
 
 		return (
 			<div className={classes.container}>
-        <HeaderBar title={this.props.match.params.festival_name} />
+       
+        <Helmet>
+          <title>{this.props.match.params.festival_name}</title>
+        </Helmet>
         <DaySwitcher activeDayClicked={this.festivalEventDayFilterHandler}/>
         <StageSwitcher activeStageClicked={this.festivalEventStageFilterHandler}/>
      

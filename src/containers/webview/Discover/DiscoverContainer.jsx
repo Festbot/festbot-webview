@@ -11,7 +11,7 @@ import moment from 'moment';
 import { getUserId } from '../../../components/apiHelper.js';
 import qs from 'query-string';
 
-import HeaderBar from '../../../ui/HeaderBar.jsx';
+//import HeaderBar from '../../../ui/HeaderBar.jsx';
 import SearchBar from '../../../ui/SearchBar.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
 import Subheader from 'material-ui/Subheader';
