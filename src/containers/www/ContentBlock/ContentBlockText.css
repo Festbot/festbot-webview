@@ -1,0 +1,30 @@
+.container {
+  max-width: 390px;
+  max-height:560px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+
+}
+
+.title{
+  font-size: 350%;
+  line-height: 120%;
+  color:#0099E5;
+  //text-shadow: 3px 3px 10px #333333;
+  padding:20px;
+  order:1;
+  text-transform: uppercase;
+}
+
+.description{
+  font-size: 150%;
+  line-height: 150%;
+  color: #444444;
+  //text-shadow: 2px 2px 4px #000000;
+  font-style: italic;
+  padding:20px;
+  order:2;
+}

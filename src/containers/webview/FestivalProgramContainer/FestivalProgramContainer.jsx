@@ -327,11 +327,7 @@ export class festivalProgramContainer extends Component {
       )
     })
 
-
-
-
-  
-
+    
 		return (
 			<div className={classes.container}>
        

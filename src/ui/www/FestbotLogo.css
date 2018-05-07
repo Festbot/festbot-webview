@@ -1,0 +1,9 @@
+.container{
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .logoImg {
+      width: 50%;
+  }
+}

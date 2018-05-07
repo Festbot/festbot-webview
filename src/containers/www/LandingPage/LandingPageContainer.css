@@ -1,0 +1,10 @@
+.contentContainer{
+  padding-top: 70px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .contentContainer {
+    padding-top: 30px;
+  }
+}

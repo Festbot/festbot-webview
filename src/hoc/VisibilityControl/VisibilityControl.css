@@ -1,0 +1,9 @@
+.container {
+
+  transition: all 0.5s ease-in-out;
+
+}
+
+.fade {
+  transition: all 0.8s ease-in-out
+}

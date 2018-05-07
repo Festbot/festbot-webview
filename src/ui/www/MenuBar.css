@@ -1,0 +1,41 @@
+.menuContainer{
+  margin-right:15px;
+  transition:all 0.3s ease-in;
+}
+
+.menuItem {
+  display:inline-block;
+  margin: 0 10px;
+  color:black;
+  padding:5px 5px;
+}
+
+
+
+.menuItem:hover {
+  color:grey;
+  border-bottom: 3px solid #0099E5;
+  border-top:3px solid white;
+  padding:5px 5px;
+}
+
+.partner {
+  display:inline-block;
+  margin: 0 10px;
+  color:black;
+  font-weight: bold;
+  padding:5px 5px;
+}
+
+.partner:hover {
+  color:grey;
+  border-bottom: 3px solid #0099E5;
+  border-top:3px solid white;
+  padding:5px 5px;
+}
+
+@media (max-width: 768px) {
+  .menuItem,.partner {
+      display: none;
+  }
+}
