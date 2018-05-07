@@ -14,7 +14,7 @@ const menuItems = {
   "program_list": [
     {
       "name": "Car Sharing",
-      "route": "/car_sharing",
+      "route": "/webview/car_sharing",
       "iconName": "directions_car",
 
     },
@@ -47,30 +47,30 @@ const menuItems = {
   "festbot": [
     {
       "name": "Festbot",
-      "route": "/",
+      "route": "/webview/",
       "iconName": "muidocs-icon-directions-car",
 
     },
     {
       "name": "Discover",
-      "route": "/discover",
+      "route": "/webview/discover",
       "iconName": "headset",
     },
     {
       "name": "Match",
-      "route": "/fest_match",
+      "route": "/webview/fest_match",
       "iconName": "flash_on",
 
     },
     {
       "name": "Notifications",
-      "route": "/notifications",
+      "route": "/webview/notifications",
       "iconName": "notifications",
 
     },
     {
       "name": "Settings",
-      "route": "/settings",
+      "route": "/webview/settings",
       "iconName": "settings",
     }
   ],
