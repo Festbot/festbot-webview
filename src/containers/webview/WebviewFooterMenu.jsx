@@ -47,30 +47,30 @@ const menuItems = {
   "festbot": [
     {
       "name": "Festbot",
-      "route": "/webview/",
+      "route": "/",
       "iconName": "muidocs-icon-directions-car",
 
     },
     {
       "name": "Discover",
-      "route": "/webview/discover",
+      "route": "/discover",
       "iconName": "headset",
     },
     {
       "name": "Match",
-      "route": "/webview/fest_match",
+      "route": "/fest_match",
       "iconName": "flash_on",
 
     },
     {
       "name": "Notifications",
-      "route": "/webview/notifications",
+      "route": "/notifications",
       "iconName": "notifications",
 
     },
     {
       "name": "Settings",
-      "route": "/webview/settings",
+      "route": "/settings",
       "iconName": "settings",
     }
   ],

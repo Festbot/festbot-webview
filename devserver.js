@@ -6,7 +6,7 @@ const WebpackDevServer = require('webpack-dev-server'),
 	devServer = {
 		disableHostCheck: true,
 		host: '0.0.0.0',
-		port: 3000,
+		port: 3001,
 		historyApiFallback: true,
 		hot: true,
 		hotOnly: true,
@@ -15,4 +15,4 @@ const WebpackDevServer = require('webpack-dev-server'),
 	},
 	server = new WebpackDevServer(compiler, devServer);
 
-server.listen(3000);
+server.listen(3001);

@@ -7,7 +7,14 @@ export class ContentBlockContainer extends Component {
   render() {
 
     return (
-      <div className={classes.container} style={{backgroundColor:this.props.backgroundColor}} >
+      <div className={classes.container} 
+      style={{
+        backgroundColor:this.props.backgroundColor, 
+        backgroundImage: "url('"+ this.props.imageUrl +"')",
+        minHeight: this.props.height,
+        
+        backgroundPosition: this.props.backgroundPosition +" center"
+      }} >
         {this.props.children}
       </div>
     )

@@ -4,6 +4,7 @@ import {Helmet} from "react-helmet";
 //import classes from "./Layout.css";
 
 import NavBar from '../../ui/www/NavBar.jsx'
+import FooterContainer from '../../containers/www/FooterContainer/FooterContainer.jsx'
 
 const layout = props => {
 
@@ -20,9 +21,10 @@ const layout = props => {
         />
         <link rel="canonical" href="https://festbot.com/" />
       </Helmet>
+      
       <NavBar/>
       <main >{props.children}</main>
-      Footer
+      <FooterContainer backgroundColor="rgb(203, 217, 224)"/>
 
 
     </Aux>

@@ -8,7 +8,7 @@ module.exports = merge(common, {
 
 	entry: {
 		app: [
-			'webpack-dev-server/client?http://192.168.1.35:3000',
+			'webpack-dev-server/client?http://192.168.1.35:3001',
 			'webpack/hot/only-dev-server'
 		]
 	},
