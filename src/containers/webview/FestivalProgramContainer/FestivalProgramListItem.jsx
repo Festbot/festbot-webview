@@ -73,18 +73,18 @@ class FestivalProgramListItem extends Component {
     fromTop = el.getBoundingClientRect().top;
     
     if (fromTop<2 && fromTop>-2) {
-      clearInterval(this.intervalId)
       const cardHeight = el.getBoundingClientRect().height
       this.props.setLastOpenedDetailsHeight(cardHeight-120)
       return
     }
 
     let yOffset = window.pageYOffset || document.documentElement.scrollTop;
-    let frameOffset = fromTop/20;
+    let frameOffset = fromTop/5;
 		(frameOffset<1 && frameOffset>0)?frameOffset=2:frameOffset;
 		(frameOffset<0 && frameOffset>-1)?frameOffset=-2:frameOffset;
     let scrollTo= yOffset+frameOffset
     window.scrollTo(0,scrollTo)
+    window.requestAnimationFrame(()=>this.smoothScroll(el))
   }
 
 
@@ -92,11 +92,8 @@ class FestivalProgramListItem extends Component {
   detailsContentOpenHandler = (e) => {
 
    if (!this.props.isOpenDetails) {
-    
-      setTimeout(() => {
-        this.intervalId = setInterval(() => this.smoothScroll(this.activeDetailsDiv),10)
 
-      }, 0);
+    window.requestAnimationFrame(()=>this.smoothScroll(this.activeDetailsDiv))
    }
     this.props.detailsIsOpenHandler(e)
   }

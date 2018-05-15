@@ -141,7 +141,7 @@ favouriteItemToggle=(item)=>{
 						>
 							<Tab icon={<IconInfo />} label="" value={0} />
 							<Tab icon={<IconHeadset />} label="" value={1} />
-							<Tab label="Map" value={2} />
+							
 						</Tabs>
 						<SwipeableViews
 							index={this.state.slideIndex}
