@@ -149,7 +149,9 @@ export class DiscoverContainer extends Component {
 	};
 
 	artistKeywordFilter = keyword => {
+		console.log("this.state.data",this.state.data)
 		const filteredResults = this.state.data.filter(artist => {
+			console.log(artist.name.toLowerCase().indexOf(keyword.toLowerCase()));
 			return (
 				artist.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
 				artist.genres.filter(genres => {

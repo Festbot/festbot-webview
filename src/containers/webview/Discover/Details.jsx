@@ -152,7 +152,7 @@ favouriteItemToggle=(item)=>{
 									On tour
 								</div>
 								<div className={classes.detailsContent}>
-									{eventList}
+								{this.props.artist ? eventList :null}
 								</div>
 
 								<div className={classes.detailsHeader}>
@@ -166,9 +166,9 @@ favouriteItemToggle=(item)=>{
 									Website: {this.state.artist.website}
 									<p />
 									<div className={classes.detailsContentGenre}>
-										{this.state.artist.genres.map((genre,index) =>{
+										{this.state.artist.genres?this.state.artist.genres.map((genre,index) =>{
 											return <div id={index} className={classes.inverse}>{genre}</div>
-										})}
+										}):null}
 									</div>
 								</div>
 							</div>
