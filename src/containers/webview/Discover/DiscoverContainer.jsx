@@ -46,13 +46,13 @@ export class DiscoverContainer extends Component {
 		this.props.onViewChange('hide');
 
 		let { data } = await axios.get(
-			'https://api.festbot.com/artists/_design/default/_list/json/default-view'
+			'https://api.festbot.com/artists/_design/webview/_view/order-by-featured?descending=true'
 		);
 		//console.log(data)
 
-		this.setState({ searchResults: data, data: data });
+		this.setState({ searchResults: data.rows, data: data.rows });
 
-		console.log('artist data:', data);
+		console.log('artist data:', data.rows);
 		console.log('state search results:', this.state.searchResults);
 
 		//window.addEventListener("scroll", this.onScroll)
@@ -124,6 +124,8 @@ export class DiscoverContainer extends Component {
 		console.log('Artist results EXCEPT of TOP ARTISTS:', exceptTopArtists);
 
 		const listOfPersonalPreferences = topArtists.concat(exceptTopArtists);
+
+		// featured+listOfPersonalPreferences
 
 		this.setState({
 			searchResults: listOfPersonalPreferences,
@@ -200,7 +202,7 @@ export class DiscoverContainer extends Component {
 			this.state.yListOffset,
 			this.state.yListOffset + 400
 		);
-		const artistList = sliceOfArtist.map((artist, index) => {
+		const artistList = sliceOfArtist.map(({value:artist}, index) => {
 			return (
 				<DiscoverArtistItem
 					key={index}

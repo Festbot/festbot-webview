@@ -13,6 +13,7 @@ import * as colors from 'material-ui/styles/colors';
 import { BrowserRouter } from 'react-router-dom';
 import FestivalProgramContainer from './containers/webview/FestivalProgramContainer/FestivalProgramContainer.jsx';
 import DiscoverContainer from './containers/webview/Discover/DiscoverContainer.jsx';
+import ComingSoonPage from './containers/webview/ComingSoonPage.jsx'
 
 import VisibiltyControl from './hoc/VisibilityControl/VisibilityControl.jsx';
 
@@ -38,6 +39,7 @@ class App extends Component {
 						path="/"
 						render={() => (
 							<MusicFestivalWebViewLayout className={classes.App}>
+							<Switch>
 								<Route path="/" exact component={FestbotBrowserContainer} />
 								<Route path="/festival/:festival_name" exact component={FestivalProgramContainer} />
 								<Route
@@ -49,6 +51,8 @@ class App extends Component {
 									}}
 								/>
 								<Route path="/discover/:artist_name?" exact component={DiscoverContainer} />
+								<Route component={ComingSoonPage} />
+							</Switch>
 							</MusicFestivalWebViewLayout>
 						)}
 					/>

@@ -78,9 +78,9 @@ export class DiscoverArtistItem extends Component {
               ? '300px'
               : '120px',
           backgroundImage:
-            artist.hasPhoto? 'url(https://chatbot.festbot.com/assets/img/artist/' +
-            artist._id +
-            '.jpg)':'none',
+            artist.hasPhoto? 'url(https://ucarecdn.com/' +
+            artist.artistPhoto +
+            '/)':'none',
 
             transition: isActiveDetails ? 'all 0.3s ease-in-out':'none'
         }}
