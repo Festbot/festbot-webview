@@ -9,9 +9,9 @@ cache:
   directories:
   - node_modules
 addons:
-  ssh_known_hosts: chatbot.festbot.com
+  ssh_known_hosts: festbot.com
 env:
-- REMOTE_DIR_PROD=web/chatbot.festbot.com/public_html REMOTE_HOST=chatbot.festbot.com
+- REMOTE_DIR_PROD=web/webview.festbot.com/public_html REMOTE_HOST=festbot.com
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_1442971e22a8_key -iv $encrypted_1442971e22a8_iv
   -in deploy_rsa.enc -out /tmp/deploy_rsa -d
