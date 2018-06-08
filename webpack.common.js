@@ -25,28 +25,22 @@ module.exports = {
 				loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
 			},
 			{
+				test: /\.scss$/,
+				use: [
+					'style-loader', // creates style nodes from JS strings
+					'css-loader', // translates CSS into CommonJS
+					'sass-loader' // compiles Sass to CSS
+				]
+			},
+			{
 				test: /\.(jsx|js)$/,
 				exclude: /(node_modules)/,
 				loader: 'babel-loader',
 				options: {
 					presets: ['env', 'react'],
 					cacheDirectory: true,
-					plugins: [
-						'transform-object-rest-spread',
-						'transform-react-jsx',
-						'transform-class-properties',
-						'transform-async-to-generator',
-						'react-hot-loader/babel'
-					]
+					plugins: ['transform-object-rest-spread', 'transform-react-jsx', 'transform-class-properties', 'transform-async-to-generator', 'react-hot-loader/babel']
 				}
-			},
-			{
-				use: [
-					MiniCssExtractPlugin.loader,
-					'css-loader',
-					'less-loader'
-				],
-				test: /\.less$/
 			},
 			{
 				test: /\.jpe?g$|\.gif$|\.png$|\.ttf$|\.eot$|\.svg$/,
@@ -64,8 +58,8 @@ module.exports = {
 			filename: './index.html'
 		}),
 		new MiniCssExtractPlugin({
-			filename: "[name].css",
-			chunkFilename: "[id].css"
+			filename: '[name].css',
+			chunkFilename: '[id].css'
 		})
 	]
 };
