@@ -152,8 +152,10 @@ export class DiscoverContainer extends Component {
 
 	artistKeywordFilter = keyword => {
 		console.log("this.state.data",this.state.data)
-		const filteredResults = this.state.data.filter(artist => {
-			console.log(artist.name.toLowerCase().indexOf(keyword.toLowerCase()));
+		const filteredResults = this.state.data.filter(({value:artist}) => {
+			//console.log(artist.name.toLowerCase().indexOf(keyword.toLowerCase()));
+			// artist.name?artist.name:artist.name=""
+			// artist.genres?artist.genres:artist.genres=[]
 			return (
 				artist.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
 				artist.genres.filter(genres => {
@@ -173,7 +175,7 @@ export class DiscoverContainer extends Component {
 		});
 		if (filteredResults.length == 1) {
 			this.setState({
-				activeDetails: filteredResults[0].name,
+				activeDetails: filteredResults[0].value.name,
 				isOpenDetails: true,
 				searchResults: filteredResults
 			});
