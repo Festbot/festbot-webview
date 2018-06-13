@@ -12,19 +12,19 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 
 const menuItems = {
   "program_list": [
-    {
-      "name": "Car Sharing",
-      "route": "/webview/car_sharing",
-      "iconName": "directions_car",
+    // {
+    //   "name": "Car Sharing",
+    //   "route": "/webview/car_sharing",
+    //   "iconName": "directions_car",
 
-    },
+    // },
 
-    {
-      "name": "I\"am free to",
-      "route": "/i_am_free_to",
-      "iconName": "record_voice_over",
+    // {
+    //   "name": "I\"am free to",
+    //   "route": "/i_am_free_to",
+    //   "iconName": "record_voice_over",
 
-    },
+    // },
     {
       "name": "Trending",
       "route": "",
@@ -110,13 +110,13 @@ class WebviewFooterMenu extends Component {
 
     const { activeItem } = this.state
 
-    console.log('props at navigation:', this.props)
+
 
     const festbotlogo = <FestbotLogo width='24px'/>
 
     const viewNameFromRouter=this.props.webviewMenu
 
-    const tabBuilder = menuItems[viewNameFromRouter].map(item =>{
+    const tabBuilder = menuItems[viewNameFromRouter].map((item,i) =>{
       let iconElement = <FontIcon title={item.name} onClick={this.handleItemClick} className="material-icons">{item.iconName}</FontIcon>
 
       if (item.toggleItem) {
@@ -127,6 +127,7 @@ class WebviewFooterMenu extends Component {
 
       return (
         <Tab
+          key={i}
           className={ item.toggleItem ? classes.tabToggle :classes.tab }
           icon={iconElement}
           label={item.name}
@@ -139,7 +140,7 @@ class WebviewFooterMenu extends Component {
 
     return (
       <Aux>
-      {console.log('footer view from redux',this.props.webviewMenu)}
+
 
       <Tabs className={classes.tabs} inkBarStyle={{backgroundColor: 'white'}}>
 

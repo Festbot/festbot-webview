@@ -16,8 +16,7 @@ export class DiscoverArtistItem extends Component {
     var rect = el.getBoundingClientRect(),
     scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    console.log('scrolltop:', scrollTop,' pageYOffset:', window.pageYOffset,' documentElement.scrollTop:', document.documentElement.scrollTop,' recttop:', rect.top,)
-
+  
     return rect.top + scrollTop
 
   }
@@ -78,7 +77,7 @@ export class DiscoverArtistItem extends Component {
               ? '300px'
               : '120px',
           backgroundImage:
-            artist.hasPhoto? 'url(https://ucarecdn.com/' +
+            artist.artistPhoto? 'url(https://ucarecdn.com/' +
             artist.artistPhoto +
             '/)':'none',
 

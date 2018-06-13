@@ -44,12 +44,12 @@ const rootReducer = (state = initialState, action) => {
 //store
 const store = createStore(rootReducer);
 
-console.log(store.getState());
+
 
 
 // Subscription
 store.subscribe(()=> {
-  console.log('[subscription]', store.getState())
+
 })
 
 
@@ -58,4 +58,4 @@ store.dispatch({type: 'UPD_MENU', value:'festivals'});
 store.dispatch({type: 'UPD_POPULAR'});
 store.dispatch({type: 'UPD_FILTER'});
 store.dispatch({type: 'UPD_FAVOURITE'});
-console.log(store.getState());
+

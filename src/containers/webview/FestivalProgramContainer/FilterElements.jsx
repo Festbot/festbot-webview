@@ -6,7 +6,7 @@ import IconLocation from 'material-ui/svg-icons/maps/add-location';
 
 const FilterElements = (props) => {
   
-  console.log(props)
+
   let filterElements = '';
   if (props.isActiveFilter) {
     filterElements = (

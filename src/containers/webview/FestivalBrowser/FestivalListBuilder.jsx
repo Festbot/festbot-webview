@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,Fragment } from 'react';
 import {connect} from 'react-redux';
 import {saveActiveFestbot} from '../../../components/apiHelper.js'
 
@@ -57,7 +57,7 @@ class FestivalListBuilder extends Component {
 			this.setState({ activeDetails: '' ,lastOpenedDetailsHeight: 0 });
 		} else {
 			this.setState({ activeDetails: e.currentTarget.id });
-			console.log(this.state.activeDetails);
+
 			const lastOpenedDetaisWasBeforeThis = Number(this.state.lastOpenedDetailsKey)< Number(e.currentTarget.title)
 			this.initLastOpenedDetailsHeight(this.state.lastOpenedDetailsHeight, lastOpenedDetaisWasBeforeThis)
 			this.setState({lastOpenedDetailsKey:e.currentTarget.title});
@@ -86,19 +86,19 @@ class FestivalListBuilder extends Component {
 
 
 	render() {
-		console.log('[Redux at festbot activation]:', this.props.webviewMenu)
+
 		const gruppedFestivals = this.groupByCountry(this.props.festivals)
-		console.log(Object.keys(gruppedFestivals).sort())
+
 		let sortedCountries = Object.keys(gruppedFestivals).sort()
 
 		sortedCountries.splice(sortedCountries.indexOf('HU'),1)
 		sortedCountries = ['HU', ...sortedCountries]
 
-		console.log(sortedCountries)
-		return [
-			sortedCountries.map((country,countryIndex) => {
+
+		return <Fragment>
+			{sortedCountries.map((country,countryIndex) => {
 				return (
-					<div style={{ paddingBottom: '40px' }}>
+					<div key={countryIndex} style={{ paddingBottom: '40px' }}>
 						<Subheader className={classes.subheader}>
 							<h1 className={classes.listHeader}>
 								<div
@@ -119,10 +119,10 @@ class FestivalListBuilder extends Component {
 						<Divider />
 						{gruppedFestivals[country].map((festival,index) => {
 							return (
-								<Aux>
+					
 									<FestivalListItem
 									key={(countryIndex*1000)+index}
-									index={(countryIndex*1000)+index}
+					
 										detailsIsOpenHandler={
 											this.detailsIsOpenHandler
 										}
@@ -139,18 +139,18 @@ class FestivalListBuilder extends Component {
 										}
 										setLastOpenedDetailsHeight={this.setLastOpenedDetailsHeight}
 									/>
-								</Aux>
+							
 							);
 						})}
 					</div>
 				);
-			}),
+			})}
 			<ConfirmationDialog
 				onCancelClick={this.handleClose}
 				onEnableClick={this.submitHandler}
 				open={this.state.isModalOpen}
 			/>
-		];
+		</Fragment>
 	}
 }
 

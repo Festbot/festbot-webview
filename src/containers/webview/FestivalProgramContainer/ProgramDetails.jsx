@@ -33,7 +33,7 @@ export class ProgramDetails extends Component {
   async componentDidMount()  {
     
   const {data} = await axios.post("https://api.festbot.com/artists/_find",{selector:{slug: this.props.artist}})
-	console.log('artist details ',data)
+
 	this.setState({artist: data.docs[0]})
 
 
@@ -114,25 +114,24 @@ handleChange = value => {
 
         <div className={classes.detailsContentGenre}>
         {this.state.artist.genres.map((genre,index) =>{
-          return <div id={index} className={classes.inverse}>{genre}</div>
+          return <div id={index} key={index} className={classes.inverse}>{genre}</div>
         })}
         </div>
         
       </div>
 
-      <div >
-      <iframe
-        src={
-          'https://open.spotify.com/embed/artist/' +
-          spotifyId
-        }
-        width="100%"
-        height="300"
-        frameBorder={'0'}
-        seamless
-        allowtransparency="true"
-      />
-    </div>
+     
+
+      {spotifyId ? (
+        <div>
+          <iframe src={'https://open.spotify.com/embed/artist/' + spotifyId} width="100%" height="300" seamless frameBorder={'0'} seamless allowtransparency="true" />
+        </div>
+      ) : (
+        <div className={classes.centerCenter}>
+          <p >Sorry we couldn't find the artist on Spotify</p>
+        </div>
+      )}
+
 
               <div className={classes.centerCenter}>
 								<p>Map and Navigation will be available once the Location of the event has been confirmed by the organizer.</p>

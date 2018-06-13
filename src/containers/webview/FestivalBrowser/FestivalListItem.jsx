@@ -47,8 +47,6 @@ class FestivalListItem extends Component {
     var rect = el.getBoundingClientRect(),
     scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    console.log('scrolltop:', scrollTop,' pageYOffset:', window.pageYOffset,' documentElement.scrollTop:', document.documentElement.scrollTop,' recttop:', rect.top,)
-
     return rect.top + scrollTop
 
   }
@@ -105,7 +103,7 @@ class FestivalListItem extends Component {
 	
 	
 			<div ref={element => (this.activeDetailsDiv = element)} className={classes.listItemContainer}  style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px'}} >
-			<div className={classes.backgroundContainer} style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px' , backgroundImage: 'url(https://chatbot.festbot.com/assets/img/venue/'+this.props.festival._id+'.jpg)',transition: this.props.isOpenDetails ? 'all 0.3s ease-in-out':'none'}} />
+			<div className={classes.backgroundContainer} style={{maxHeight: (this.props.isOpenDetails) ? '1000px' : '120px',minHeight: (this.props.isOpenDetails) ? '300px' : '120px' , backgroundImage: 'url(https://ucarecdn.com/'+this.props.festival.coverPhoto+'/)',transition: this.props.isOpenDetails ? 'all 0.3s ease-in-out':'none'}} />
 			<div id={this.props.festival._id} title={this.props.index} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper} >
 				
 				<div className={classes.backdropLayer} ></div>

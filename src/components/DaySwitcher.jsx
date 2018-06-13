@@ -15,10 +15,9 @@ export class DaySwitcher extends Component {
 
 
   render() {
-    console.log('active Day',this.props.activeDay)
-    console.log('event Days',this.props.eventDays)
+
     const eventDaysSwitcherItem = this.props.eventDays.map((e,i) =>{
-      return <div id={i} onClick={this.festivalEventDayFilterHandler} className={(this.props.activeDay==this.props.eventDays[i]) ? classes.active : classes.item }>
+      return <div id={i} key={i} onClick={this.festivalEventDayFilterHandler} className={(this.props.activeDay==this.props.eventDays[i]) ? classes.active : classes.item }>
       {moment(e).format('dddd M[/]D')}
       </div>
  

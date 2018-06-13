@@ -1,7 +1,7 @@
 
 
 const initialState ={
-  webviewMenu:'festbot',
+  webviewMenu:'hide',
   isActiveTrending: false,
   isActiveFilter: false,
   isActiveFavourite: false,
@@ -11,6 +11,7 @@ const initialState ={
   eventStages:['Main Stage','Telekom Arena','Colosseum','Magic Mirror'],
   activeStage:'ALL LOCATION',
   detailsPanelHeight:0,
+  userId:'f442bee64bb034de9a00e5b3bd894f18',
 }
 
 const reducer = (state = initialState,action) => {
@@ -23,7 +24,8 @@ const reducer = (state = initialState,action) => {
       savedArtists: [...action.value.savedArtists],
       savedShows: [...action.value.savedShows],
       topArtists: [...action.value.topArtists],
-      topGenres: [...action.value.topGenres]
+      topGenres: [...action.value.topGenres],
+      userDataReceived: true
     }
     case 'SET_ACTIVEFESTIVAL':
     return {

@@ -13,7 +13,7 @@ export class StageSwitcher extends Component {
 
   festivalEventStageFilterHandler=(activeStage)=>{
     const stage = activeStage.currentTarget.id
-    console.log('active stage: ',stage)
+
     this.props.setActiveStage(stage) 
     if (activeStage.currentTarget.id=='ALL LOCATION') {this.props.setActiveStage('ALL LOCATION') }
     this.dropdownToggleHandler()
@@ -47,9 +47,9 @@ export class StageSwitcher extends Component {
   render() {
 
     let eventStageSwitcherItem = this.props.eventStages.map((e,i) =>{
-      <li id="ALL LOCATION" onClick={this.festivalEventStageFilterHandler} className={(this.props.activeStage==e) ? classes.activeSelection : classes.item }>ALL LOCATION</li>
+      <li  id="ALL LOCATION" onClick={this.festivalEventStageFilterHandler} className={(this.props.activeStage==e) ? classes.activeSelection : classes.item }>ALL LOCATION</li>
       if (this.props.eventStages.length >1 ) {
-        return <li id={e} onClick={this.festivalEventStageFilterHandler} className={(this.props.activeStage==e) ? classes.activeSelection : classes.item }>
+        return <li id={e} key={i} onClick={this.festivalEventStageFilterHandler} className={(this.props.activeStage==e) ? classes.activeSelection : classes.item }>
           {e}
         </li>}
       

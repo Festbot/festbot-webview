@@ -61,8 +61,6 @@ class FestivalProgramListItem extends Component {
     var rect = el.getBoundingClientRect(),
     scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    console.log('scrolltop:', scrollTop,' pageYOffset:', window.pageYOffset,' documentElement.scrollTop:', document.documentElement.scrollTop,' recttop:', rect.top,)
-
     return rect.top + scrollTop
 
   }

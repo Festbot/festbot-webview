@@ -46,7 +46,7 @@ class App extends Component {
 									path="/artist/:artist_name"
 									exact
 									render={data => {
-										console.log(data);
+
 										return <h1>hello</h1>;
 									}}
 								/>

@@ -64,14 +64,14 @@ export class festivalProgramContainer extends Component {
 		this.props.onViewChange('program_list');
     
     const {data:artist} = await axios.get("https://api.festbot.com/artists/_design/default/_list/json/default-view")
-    console.log('artist details ',artist)
+
     this.setState({artist: artist})
 
 
 		let { data } = await axios.get(
 			'https://api.festbot.com/shows/_design/default/_list/all-data/order-by-date'
 		);
-		//console.log(data)
+
     
     const festivalProgramResults = data
     .filter(event => {
@@ -84,8 +84,6 @@ export class festivalProgramContainer extends Component {
 
     this.setState({ searchResults: festivalProgramResults, data: festivalProgramResults });
 
-		console.log('this festival program data:', data);
-    console.log('state search results:', this.state.searchResults);
 
     this.updateEventDays(this.state.searchResults)
     this.updateEventLocations(this.state.searchResults)
@@ -99,7 +97,6 @@ export class festivalProgramContainer extends Component {
   }
 
   onScroll = () =>{  
-    console.log('document scroll height: ',document.body.scrollHeight,'document body height: ',document.body.clientHeight ,window.scrollY)
     let docHeight= document.body.scrollHeight-document.body.clientHeight
     let trigger= docHeight-window.scrollY
     if (trigger<80) {
@@ -164,7 +161,7 @@ export class festivalProgramContainer extends Component {
 				) 
 			})
 
-		console.log('filtered Results', filteredResults);
+
 		if (filteredResults.length == 0) return
 		this.setState({ searchResults: filteredResults });
 
@@ -202,7 +199,6 @@ export class festivalProgramContainer extends Component {
 			this.setState({ activeDetails: '' ,lastOpenedDetailsHeight: 0 });
 		} else {
 			this.setState({ activeDetails: e.currentTarget.id });
-			console.log(this.state.activeDetails);
 			const lastOpenedDetaisWasBeforeThis = Number(this.state.lastOpenedDetailsKey)< Number(e.currentTarget.title)
 			this.initLastOpenedDetailsHeight(this.state.lastOpenedDetailsHeight, lastOpenedDetaisWasBeforeThis)
 			this.setState({lastOpenedDetailsKey:e.currentTarget.title});
@@ -236,21 +232,20 @@ export class festivalProgramContainer extends Component {
 
 
   favouriteItemToggle=(item)=>{
-    console.log(item.currentTarget.name)
+
     if (this.isActiveFavouriteItem(item.currentTarget.name)) {
       this.props.removeFromFavourites(item.currentTarget.name)
-      console.log('torles')
+
       const userId=this.props.userId
       removeFavouriteEvent(userId,item.currentTarget.name)
     } else {
       this.props.addToFavourites(item.currentTarget.name)
-      console.log('hozza adas')
-      //apiHelper
+
       const userId=this.props.userId
       saveFavouriteEvent(userId,item.currentTarget.name)
     }
     
-    console.log(this.props.savedShows)
+
 
 	}
 
@@ -288,11 +283,11 @@ export class festivalProgramContainer extends Component {
     const grouppedFestivalPrograms = this.groupByDays(sliceOfPrograms)
 
     const eventDays = Object.keys(grouppedFestivalPrograms).sort()
-    console.log('napok: ',this.state.eventDays) 
+
   
     const programListByDay = eventDays.map((days,daysIndex) =>{
       return (
-        <div style={{ paddingBottom: '40px' }}>
+        <div key={daysIndex} style={{ paddingBottom: '40px' }}>
 						<Subheader className={classes.subheader}>
 							<h1 className={classes.listHeader}>
 								{moment(days).format('LL')}
