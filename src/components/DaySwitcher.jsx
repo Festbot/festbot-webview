@@ -9,6 +9,10 @@ export class DaySwitcher extends Component {
 
   festivalEventDayFilterHandler=(activeDay)=>{
     const day = this.props.eventDays[activeDay.currentTarget.id]
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+  });
     this.props.setActiveDay(day) 
     if (activeDay.currentTarget.id=='ALL') {this.props.setActiveDay('ALL') }
   }
@@ -24,7 +28,7 @@ export class DaySwitcher extends Component {
     });    
 
     return (
-      <div className={classes.container} style={this.props.isActive.Filter? {height: '44px'}:{height: '0px'}}>
+      <div className={classes.container} >
       <div id='ALL' onClick={this.festivalEventDayFilterHandler} className={(this.props.activeDay=="ALL") ? classes.active : classes.item }>ALL</div>
       {eventDaysSwitcherItem}
       </div>

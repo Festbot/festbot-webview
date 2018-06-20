@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "emoji-flags": "^1.2.0",
     "faker": "^4.1.0",
     "material-ui": "^0.20.0",
