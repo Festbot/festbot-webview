@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import classes from './FilterSwitchers.css';
 import DaySwitcher from '../../../components/DaySwitcher.jsx';
 import StageSwitcher from '../../../components/StageSwitcher.jsx';
-import classNames from 'classNames';
+import classNames from 'classnames';
 
 export class FilterSwitchers extends Component {
 	constructor(props) {
