@@ -55,6 +55,7 @@ export class festivalProgramContainer extends Component {
 
 	async componentDidMount() {
 		this.props.onViewChange('program_list');
+		
 
 		const { data: artist } = await axios.get('https://api.festbot.com/artists/_design/default/_list/json/default-view');
 

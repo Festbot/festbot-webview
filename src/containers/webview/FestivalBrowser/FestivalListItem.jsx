@@ -96,7 +96,7 @@ class FestivalListItem extends Component {
 						style={{
 							maxHeight: this.props.isOpenDetails ? '1000px' : '120px',
 							minHeight: this.props.isOpenDetails ? '300px' : '120px',
-							backgroundImage: this.props.festival.coverPhoto ? 'url(https://ucarecdn.com/' + this.props.festival.coverPhoto + '/)':'none',
+							backgroundImage: this.props.festival.coverPhoto ? 'url(https://ucarecdn.com/' + this.props.festival.coverPhoto + '/)' : 'none',
 							transition: this.props.isOpenDetails ? 'all 0.3s ease-in-out' : 'none'
 						}}
 					/>
@@ -109,11 +109,12 @@ class FestivalListItem extends Component {
 								e.stopPropagation();
 							}}
 						>
-						{this.props.showActivation && <IconButton className={classes.iconButtonRoot} iconStyle={{ width: '30', height: '30' }} style={{ width: '35', height: '35' }} id={this.props.festival._id} onClick={this.props.handleOpen}>
-						{' '}
-						{this.props.isActiveItem ? <Done color={colors.orange900} /> : <Add color={colors.teal400} />}
-					</IconButton>}
-							
+							{this.props.showActivation && (
+								<IconButton className={classes.iconButtonRoot} iconStyle={{ width: '30', height: '30' }} style={{ width: '35', height: '35' }} id={this.props.festival._id} onClick={this.props.handleOpen}>
+									{' '}
+									{this.props.isActiveItem ? <Done color={colors.orange900} /> : <Add color={colors.teal400} />}
+								</IconButton>
+							)}
 						</div>
 						<div className={classes.detailsIcon}> {!this.props.isOpenDetails ? <IconDetails color="white" /> : <IconClose color="white" />}</div>
 						<div className={classes.country}>{moment(this.props.festival.dates[0]).format('MMM Do')}</div>
