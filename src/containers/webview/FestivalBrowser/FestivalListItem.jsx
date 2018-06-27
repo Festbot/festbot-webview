@@ -1,44 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
-
-import FontIcon from 'material-ui/FontIcon';
-import RaisedButton from 'material-ui/RaisedButton';
-import DetailsIcon from 'material-ui/svg-icons/image/details';
 import Add from 'material-ui/svg-icons/content/add';
 import Done from 'material-ui/svg-icons/action/done';
-import Avatar from 'material-ui/Avatar';
-import { Rating } from 'material-ui-rating';
-
-import { GridList, GridTile } from 'material-ui/GridList';
 import { IconButton } from 'material-ui';
 import IconDetails from 'material-ui/svg-icons/navigation/expand-more';
 import IconClose from 'material-ui/svg-icons/navigation/close';
-
 import * as colors from 'material-ui/styles/colors';
-
-import { List, ListItem } from 'material-ui/List';
-
-import Divider from 'material-ui/Divider';
-
 import classes from './festivalListItem.css';
-
 import FestivalListDetails from './FestivalListDetails.jsx';
-
-const styles = {
-	icon: {
-		marginRight: 5,
-		marginLeft: 5,
-		fontSize: '12px',
-		color: colors.orange800
-	},
-	rate: {
-		marginRight: 5,
-		marginLeft: 5,
-		fontSize: '12px',
-		color: colors.yellow700
-	}
-};
 
 class FestivalListItem extends Component {
 	offset(el) {

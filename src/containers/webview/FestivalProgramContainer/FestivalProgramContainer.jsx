@@ -1,41 +1,19 @@
 import React, { Component } from 'react';
-import Aux from '../../../hoc/Aux/Aux.jsx';
 import { connect } from 'react-redux';
 import classes from './FestivalProgramContainer.css';
-import * as colors from 'material-ui/styles/colors';
 import axios from 'axios';
 import 'babel-polyfill';
 import * as Ramda from 'ramda';
 import moment from 'moment';
 import { saveFavouriteEvent, removeFavouriteEvent } from '../../../components/apiHelper.js';
 import { Helmet } from 'react-helmet';
-
-//import HeaderBar from '../../../ui/HeaderBar.jsx';
 import SearchBar from '../../../ui/SearchBar.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
 import Subheader from 'material-ui/Subheader';
-
-import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-
-import DatePicker from 'material-ui/DatePicker';
-import { GridList, GridTile } from 'material-ui/GridList';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
-import IconToday from 'material-ui/svg-icons/action/today';
-import IconLocation from 'material-ui/svg-icons/maps/add-location';
-
 import FestivalProgramListItem from './FestivalProgramListItem.jsx';
-//import FilterElements from './FilterElements.jsx'
-
 import ScrollToTop from 'react-scroll-up';
-import FilterSwitchers from '../../../containers/webview/FestivalProgramContainer/FilterSwitchers.jsx'
-
-const items = Array(15)
-	.fill(null)
-	.map((e, i) => {
-		return <MenuItem value={i} key={i} primaryText={`Festival Stage ${i}`} />;
-	});
+import FilterSwitchers from '../../../containers/webview/FestivalProgramContainer/FilterSwitchers.jsx';
 
 export class festivalProgramContainer extends Component {
 	state = {
@@ -61,11 +39,9 @@ export class festivalProgramContainer extends Component {
 
 		this.setState({ artist: artist });
 
-		let { data } = await axios.get('https://api.festbot.com/shows/_design/default/_list/all-data/order-by-date');
+		let { data } = await axios.get('https://api.festbot.com/events/_design/default/_list/all-data/order-by-date');
 
-		const festivalProgramResults = data.filter(event => {
-			return event.festival.toLowerCase().indexOf(this.props.match.params.festival_name.toLowerCase()) > -1;
-		});
+		const festivalProgramResults = data.filter(event => event.festivalId === this.props.match.params.festival_id);
 
 		this.setState({ searchResults: festivalProgramResults, data: festivalProgramResults });
 
@@ -233,7 +209,6 @@ export class festivalProgramContainer extends Component {
 				<div key={daysIndex} style={{ paddingBottom: '40px' }}>
 					<Subheader className={classes.subheader}>
 						<h1 className={classes.listHeader}>{moment(day).format('LL')}</h1>
-						
 					</Subheader>
 					<Divider />
 					<Divider />
@@ -255,20 +230,14 @@ export class festivalProgramContainer extends Component {
 				</div>
 			);
 		});
-		
+
 		return (
 			<div className={classes.container}>
 				<Helmet>
-					<title>{this.props.match.params.festival_name}</title>
+					<title>{this.props.match.params.festival_id}</title>
 				</Helmet>
 
-				<FilterSwitchers 
-					activeDayClicked={this.festivalEventDayFilterHandler} 
-					activeStageClicked={this.festivalEventStageFilterHandler}
-					isActiveFilter={this.props.isActive.Filter}
-						/>
-					
-
+				<FilterSwitchers activeDayClicked={this.festivalEventDayFilterHandler} activeStageClicked={this.festivalEventStageFilterHandler} isActiveFilter={this.props.isActive.Filter} />
 
 				<SearchBar searchQueryChanged={this.festivalEventKeywordFilter} />
 
@@ -314,4 +283,7 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(festivalProgramContainer);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(festivalProgramContainer);
