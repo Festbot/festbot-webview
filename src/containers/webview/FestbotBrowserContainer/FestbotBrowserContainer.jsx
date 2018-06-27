@@ -43,7 +43,7 @@ export class FestivalBrowserContainer extends Component {
 
 	async componentDidMount() {
 		this.props.setMenu('hide')
-
+		
 		let { data } = await axios.get(
 			'https://api.festbot.com/festivals/_design/default/_list/all-data/default-view'
 		);
@@ -112,14 +112,15 @@ export class FestivalBrowserContainer extends Component {
 		return (
 			<div style={{ paddingBottom: '80px' ,paddingTop: '20px'}}>
 				<Helmet>
-					<title>Festbot - Activation</title>
+				{(this.props.match.path == '/')?<title>Festbot - Activation</title>:<title>Festival browser</title>}
 				</Helmet>
 				<SearchBar searchQueryChanged={this.festivalListFilter} />
 
 				<List>
 					<FestivalListBuilder
 						festivals={this.state.searchResults}
-            handleOpen={this.handleOpen}
+						handleOpen={this.handleOpen}
+						showActivation={this.props.match.path == '/'}
 
 					/>
 				</List>

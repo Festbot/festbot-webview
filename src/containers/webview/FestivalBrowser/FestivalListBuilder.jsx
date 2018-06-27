@@ -86,7 +86,7 @@ class FestivalListBuilder extends Component {
 
 
 	render() {
-
+		
 		const gruppedFestivals = this.groupByCountry(this.props.festivals)
 
 		let sortedCountries = Object.keys(gruppedFestivals).sort()
@@ -138,6 +138,7 @@ class FestivalListBuilder extends Component {
 											festival._id
 										}
 										setLastOpenedDetailsHeight={this.setLastOpenedDetailsHeight}
+										showActivation={this.props.showActivation}
 									/>
 							
 							);
