@@ -33,7 +33,6 @@ export class festivalProgramContainer extends Component {
 
 	async componentDidMount() {
 		this.props.onViewChange('program_list');
-		
 
 		const { data: artist } = await axios.get('https://api.festbot.com/artists/_design/default/_list/json/default-view');
 
@@ -101,7 +100,7 @@ export class festivalProgramContainer extends Component {
 
 	festivalEventKeywordFilter = keyword => {
 		const filteredResults = this.state.data.filter(event => {
-			return event.artist.toLowerCase().indexOf(keyword.toLowerCase()) > -1 || event.place.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
+			return event.artist.toLowerCase().indexOf(keyword.toLowerCase()) > -1 || event.stage.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
 		});
 
 		if (filteredResults.length == 0) return;
