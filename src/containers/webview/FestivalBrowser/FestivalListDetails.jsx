@@ -30,7 +30,7 @@ export class ProgramDetails extends Component {
 						<p>{moment(this.props.festivalEndDate).format('MMM Do')}</p>
 					</div>{' '}
 					<div>
-						<RaisedButton containerElement={<Link to={'/festival/' + this.props.festival.name} />} onClick={this.props.webviewMenuChange} label="Browse" primary={true} style={{ float: 'right' }} />
+						<RaisedButton containerElement={<Link to={'/festival/' + this.props.festival._id} />} onClick={this.props.webviewMenuChange} label="Browse" primary={true} style={{ float: 'right' }} />
 					</div>
 				</div>
 
@@ -53,10 +53,6 @@ export class ProgramDetails extends Component {
 						<h2>Ticket:</h2>
 						<p>{this.props.festival.website}</p>
 					</div>
-				</div>
-
-				<div className={classes.detailsContent}>
-					<RaisedButton containerElement={<Link to={'/festival/' + this.props.festival._id} />} onClick={this.props.webviewMenuChange} label="Browse" primary={true} style={{ float: 'right' }} />
 				</div>
 			</div>
 		);
