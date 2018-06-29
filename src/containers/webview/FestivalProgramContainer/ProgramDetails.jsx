@@ -51,7 +51,8 @@ handleChange = value => {
   render() {
     let spotifyId = ''
     if (this.state.artist) {
-      let spotifyId = this.state.artist.spotify;
+      spotifyId = this.state.artist.spotify;
+      
     }
 		
 		const eventList = this.state.events.map((event,index)=>{
