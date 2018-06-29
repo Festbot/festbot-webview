@@ -31,10 +31,10 @@ export class ProgramDetails extends Component {
   }
 
   async componentDidMount()  {
-    
-  const {data} = await axios.post("https://api.festbot.com/artists/_find",{selector:{slug: this.props.artist}})
 
-	this.setState({artist: data.docs[0]})
+  const {data} = await axios.post("https://api.festbot.com/artists/_find",{selector:{name: this.props.artist}})
+
+	if (data) {this.setState({artist: data.docs[0]})}
 
 
 }
@@ -49,7 +49,10 @@ handleChange = value => {
 
 
   render() {
-		const spotifyId = this.state.artist.spotify;
+    let spotifyId = ''
+    if (this.state.artist) {
+      let spotifyId = this.state.artist.spotify;
+    }
 		
 		const eventList = this.state.events.map((event,index)=>{
 			return (
@@ -113,7 +116,7 @@ handleChange = value => {
         </div>         
 
         <div className={classes.detailsContentGenre}>
-        {this.state.artist.genres.map((genre,index) =>{
+        {this.state.artist && this.state.artist.genres.map((genre,index) =>{
           return <div id={index} key={index} className={classes.inverse}>{genre}</div>
         })}
         </div>

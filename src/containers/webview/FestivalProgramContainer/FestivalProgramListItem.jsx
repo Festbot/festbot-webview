@@ -93,7 +93,7 @@ class FestivalProgramListItem extends Component {
 		}
 		let renderingDetails = '';
 		if (this.props.isOpenDetails) {
-			renderingDetails = <ProgramDetails artist={this.props.event.artist_slug} event={this.props.event} eventRating={propsEventRating} />;
+			renderingDetails = <ProgramDetails artist={this.props.event.artist} event={this.props.event} eventRating={propsEventRating} />;
 		}
 
 		return (
