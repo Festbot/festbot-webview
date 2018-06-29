@@ -116,7 +116,7 @@ export class festivalProgramContainer extends Component {
 						.format('L')
 						.toLowerCase()
 						.indexOf(this.props.activeDay.toLowerCase()) > -1) &&
-				(!this.props.isActive.Filter || this.props.activeStage == 'ALL LOCATION' || event.place.toLowerCase().indexOf(this.props.activeStage.toLowerCase()) > -1) &&
+				(!this.props.isActive.Filter || this.props.activeStage == 'ALL LOCATION' || event.stage.toLowerCase().indexOf(this.props.activeStage.toLowerCase()) > -1) &&
 				(!this.props.isActive.Favourite || this.isActiveFavouriteItem(event._id))
 			);
 		});
@@ -131,7 +131,7 @@ export class festivalProgramContainer extends Component {
 
 	groupByStages = events => {
 		const Stages = Ramda.groupBy(events => {
-			return events.place;
+			return events.stage;
 		});
 		return Stages(events);
 	};

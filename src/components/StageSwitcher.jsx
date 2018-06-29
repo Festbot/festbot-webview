@@ -38,7 +38,7 @@ export class StageSwitcher extends Component {
 			this.props.setActiveStage(this.props.eventStages[index - e.currentTarget.id]);
 		}
 		//Right shift
-		if (index < this.props.eventStages.length && e.currentTarget.id == -1) {
+		if (index < this.props.eventStages.length-1 && e.currentTarget.id == -1) {
 			this.props.setActiveStage(this.props.eventStages[index - e.currentTarget.id]);
 		}
 

@@ -89,7 +89,7 @@ class FestivalProgramListItem extends Component {
 	render() {
 		let propsEventLocation = 'Not announced yet';
 		if (this.props.event.place !== '') {
-			propsEventLocation = this.props.event.place;
+			propsEventLocation = this.props.event.stage;
 		}
 		let renderingDetails = '';
 		if (this.props.isOpenDetails) {

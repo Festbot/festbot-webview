@@ -31,7 +31,7 @@ export class FilterSwitchers extends Component {
 		if ((window.scrollY < 100 && !this.state.visible && this.props.isActiveFilter) || (!this.state.visible && this.props.isActiveFilter && this.state.prevPositionY > window.scrollY)) {
 			this.setState({ visible: true });
 		}
-		if (window.scrollY > 1000 && this.state.visible && this.state.prevPositionY < window.scrollY) {
+		if (window.scrollY > 100 && this.state.visible && this.state.prevPositionY < window.scrollY) {
 			this.setState({ visible: false });
 		}
 		this.setState({ prevPositionY: window.scrollY });
