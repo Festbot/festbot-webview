@@ -32,11 +32,11 @@ export class Details extends Component {
 	async componentDidMount() {
 		let ref = this.activeDetailsDiv;
 
-		const { data } = await axios.post('https://api.festbot.com/artists/_find', { selector: { slug: this.props.artist } });
+		const { data } = await axios.get('https://api.festbot.com/artists/'+this.props.artistId);
 
-		this.setState({ artist: data.docs[0] });
+		this.setState({ artist: data });
 
-		const { data: eventData } = await axios.post('https://api.festbot.com/shows/_find', { selector: { artist_slug: this.props.artist } });
+		const { data: eventData } = await axios.post('https://api.festbot.com/events/_find', { selector: { artistId: this.props.artistId } });
 
 		this.setState({
 			events: eventData.docs.sort((eventA, eventB) => {
@@ -126,7 +126,7 @@ export class Details extends Component {
 				<SwipeableViews index={this.state.slideIndex} onChangeIndex={this.handleChange}>
 					<div style={{ padding: '16px 0' }}>
 						<div className={classes.detailsHeader}>On tour</div>
-						<div className={classes.detailsContent}>{this.props.artist ? eventList : null}</div>
+						<div className={classes.detailsContent}>{this.props.artistId ? eventList : null}</div>
 
 						<div className={classes.detailsHeader} />
 						<div className={classes.detailsContent} style={{ margin: '5px' }}>

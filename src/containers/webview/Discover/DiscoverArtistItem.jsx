@@ -61,7 +61,7 @@ export class DiscoverArtistItem extends Component {
     if (isActiveDetails) {
 
       renderingDetails = <Details 
-        artist={artist.slug} />
+        artistId={artist._id} />
     }
 
     return (

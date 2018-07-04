@@ -53,7 +53,6 @@ export class DiscoverContainer extends Component {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
 
-
 		MessengerExtensions.getContext(
 			'817793415088295',
 			async ({ psid }) => {
@@ -61,20 +60,19 @@ export class DiscoverContainer extends Component {
 					const userId = md5(psid);
 					const { data } = await getUserId(userId);
 					this.props.setUser(data);
-					
+					this.matchingArtists();
 				} catch (error) {
 					console.warn('get user data error', error);
 					alert('Network Error');
 				}
 			},
-			async (err) => {
+			async err => {
 				console.warn('no psid :(');
 				const { data } = await getUserId(this.props.userData.userId);
 				this.props.setUser(data);
+				this.matchingArtists();
 			}
 		);
-
-		this.matchingArtists();
 	}
 
 	// groupByArtist = (artists) => {
@@ -85,20 +83,21 @@ export class DiscoverContainer extends Component {
 	// };
 
 	matchingArtists = () => {
-		if (!this.props.userDataReceived) {return }
-		const filteredResults = this.state.data.filter(artist => {
+		if (!this.props.userData.userDataReceived) {
+			return;
+		}
+		const filteredResults = this.state.data.filter(({ value: artist }) => {
 			if (!artist.genres) {
 				return false;
 			}
 			return Ramda.intersection(this.props.userData.topGenres, artist.genres).length > 0;
 		});
 
-		const topArtists = this.state.data.filter(artist => {
-			console.log(this.props.userData)
+		const topArtists = this.state.data.filter(({ value: artist }) => {
 			return Ramda.contains(artist.name, this.props.userData.topArtists);
 		});
 
-		const exceptTopArtists = filteredResults.filter(artist => {
+		const exceptTopArtists = filteredResults.filter(({ value: artist }) => {
 			return !Ramda.contains(artist.name, this.props.userData.topArtists);
 		});
 
@@ -130,10 +129,11 @@ export class DiscoverContainer extends Component {
 	artistKeywordFilter = keyword => {
 		const filteredResults = this.state.data.filter(({ value: artist }) => {
 			return (
-				artist.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
-				artist.genres.filter(genres => {
-					return genres.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
-				}).length > 0
+				artist.genres &&
+				(artist.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
+					artist.genres.filter(genres => {
+						return genres.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
+					}).length > 0)
 			);
 		});
 
@@ -221,4 +221,7 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DiscoverContainer);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(DiscoverContainer);

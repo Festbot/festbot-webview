@@ -119,7 +119,7 @@ handleChange = value => {
         </div>         
 
         <div className={classes.detailsContentGenre}>
-        {this.state.artist && this.state.artist.genres.map((genre,index) =>{
+        {this.state.artist.genres && this.state.artist.genres.map((genre,index) =>{
           return <div id={index} key={index} className={classes.inverse}>{genre}</div>
         })}
         </div>
