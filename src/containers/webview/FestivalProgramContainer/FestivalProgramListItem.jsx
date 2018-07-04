@@ -116,7 +116,7 @@ class FestivalProgramListItem extends Component {
 		const now=this.state.now
 		const startDate= moment(this.props.event.startDate)
 		const endDate = moment(this.props.event.endDate)
-
+		const ended= moment(this.props.event.endDate)< moment(now)
 		const isStarted =startDate<now
 
 		if (isStarted 
@@ -131,7 +131,15 @@ class FestivalProgramListItem extends Component {
 			onAir = <div className={classes.onAir +' '+ classes.startsIn}>Starts {
 				startDate.endOf().from(now)}</div>
 		}
+
+		if (ended) {
+			onAir = <div className={classes.onAir +' '+ classes.ended}>Ended {
+				endDate.endOf().from(now)}</div>
+		}
 		
+
+		
+
 		return onAir
 	}
 
@@ -149,8 +157,8 @@ class FestivalProgramListItem extends Component {
 		
 
 		return (
-			<div>
-				<div
+			<div >
+				{!(moment(this.props.event.endDate)< moment(this.state.now).subtract(32,'minutes'))&&<div
 					ref={element => (this.activeDetailsDiv = element)}
 					className={classes.listItemContainer}
 					style={{
@@ -185,7 +193,9 @@ class FestivalProgramListItem extends Component {
 						</div>
 					</div>
 				</div>
-			</div>
+			
+			}
+			</div>	
 		);
 	}
 }

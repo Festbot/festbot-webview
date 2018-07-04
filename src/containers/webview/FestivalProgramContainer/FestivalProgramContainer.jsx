@@ -136,6 +136,13 @@ export class festivalProgramContainer extends Component {
 	};
 
 	festivalEventFilter = () => {
+		if (this.props.isActive.Favourite ) {
+			return this.state.searchResults.filter(event => {
+				return (
+					(!this.props.isActive.Favourite || this.isActiveFavouriteItem(event._id))
+				);
+			});
+		}
 
 		return this.state.searchResults.filter(event => {
 			return (

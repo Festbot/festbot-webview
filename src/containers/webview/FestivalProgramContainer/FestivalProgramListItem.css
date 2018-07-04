@@ -158,6 +158,11 @@ body {
  
 }
 
+.ended{
+  background-color: rgb(92, 38, 34);
+  color:#ddd;
+}
+
 .iconButtonRoot{
   padding:0!important;
   width: 35px;

@@ -16,6 +16,8 @@ import SwipeableViews from 'react-swipeable-views';
 import moment from 'moment';
 import { SocialIcon } from 'react-social-icons';
 
+import GoogleMaps from '../../../components/GoogleMaps.jsx'
+
 
 export class ProgramDetails extends Component {
   state={
@@ -54,7 +56,7 @@ handleChange = value => {
       spotifyId = this.state.artist.spotify;
       
     }
-		
+
 		const eventList = this.state.events.map((event,index)=>{
 			return (
 				<li>
@@ -138,7 +140,11 @@ handleChange = value => {
 
 
               <div className={classes.centerCenter}>
-								<p>Map and Navigation will be available once the Location of the event has been confirmed by the organizer.</p>
+              <GoogleMaps 
+              stageName={this.props.event.stage}
+              stageId={this.props.event.stageId}
+              />
+								
 							</div>
 						</SwipeableViews>
 					</div>
