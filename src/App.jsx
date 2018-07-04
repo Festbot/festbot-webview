@@ -42,6 +42,7 @@ class App extends Component {
 							<Switch>
 								<Route path="/" exact component={FestbotBrowserContainer} />
 								<Route path="/festivals" exact component={FestbotBrowserContainer} />
+								<Route path="/festival-list" exact component={FestbotBrowserContainer} />
 								<Route path="/festival/:festival_id" exact component={FestivalProgramContainer} />
 								<Route
 									path="/artist/:artist_name"

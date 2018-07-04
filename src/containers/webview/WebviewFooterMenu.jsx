@@ -21,7 +21,7 @@ const menuItems = {
 
     {
       "name": "Fesztiválok",
-      "route": "/festivals",
+      "route": "/festival-list",
       "iconName": "list",
 
     },
