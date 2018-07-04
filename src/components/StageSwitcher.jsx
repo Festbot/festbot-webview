@@ -24,6 +24,7 @@ export class StageSwitcher extends Component {
 	};
 
 	dropdownToggleHandler = () => {
+
 		this.setState(prevState => {
 			return {
 				isOpenDropdown: !prevState.isOpenDropdown
@@ -32,6 +33,10 @@ export class StageSwitcher extends Component {
 	};
 
 	navigationClickHandler = e => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
 		const index = this.props.eventStages.indexOf(this.props.activeStage);
 		//Left shift
 		if (index > 0 && e.currentTarget.id == 1) {
