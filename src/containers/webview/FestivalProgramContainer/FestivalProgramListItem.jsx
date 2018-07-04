@@ -49,9 +49,23 @@ const styles = {
 const propsEventRating = 4.5;
 
 class FestivalProgramListItem extends Component {
-	state = {
-		slideIndex: 0
-	};
+
+	constructor (props){
+		super(props);
+		this.state = {now:new Date(),slideIndex: 0}
+	}
+
+
+
+	componentDidMount(){
+		this.timer = setInterval(()=>{
+			this.setState({now:new Date()})	
+		},1000*60)
+	}
+
+	componentWillUnmount(){
+		clearInterval(this.timer);
+	}
 
 	offset(el) {
 		var rect = el.getBoundingClientRect(),
@@ -89,8 +103,8 @@ class FestivalProgramListItem extends Component {
 
 
 	getProgress=()=>{
-		const timeLeft = moment(this.props.event.endDate)-new Date()
-		const now = new Date();
+		const timeLeft = moment(this.props.event.endDate)-this.state.now
+		const now = this.state.now;
 		const duration = (moment(this.props.event.endDate)-moment(this.props.event.startDate))
 		const progress = 100-((timeLeft/duration)*100)
 		if (progress<0||progress>100) {return 0}
@@ -99,7 +113,7 @@ class FestivalProgramListItem extends Component {
 
 	onAir=()=>{
 		let onAir=''
-		const now=new Date()
+		const now=this.state.now
 		const startDate= moment(this.props.event.startDate)
 		const endDate = moment(this.props.event.endDate)
 
