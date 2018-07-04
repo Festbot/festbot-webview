@@ -137,11 +137,13 @@ body {
   left: 0px;
   height:6px;
   width:0px;
-  background-color: rgb(255, 0, 0);
+  border-radius: 3px;
+  background-color: rgb(49, 152, 221);
 }
 
+
 .onAir{
-  background-color: rgb(199, 9, 9);
+  background-color: rgb(25, 132, 204);
   color: white;
   border-radius: 2px;
   position: absolute;
@@ -159,8 +161,8 @@ body {
 }
 
 .ended{
-  background-color: rgb(92, 38, 34);
-  color:#ddd;
+  background-color: #a35c23;
+  color:#eee;
 }
 
 .iconButtonRoot{
