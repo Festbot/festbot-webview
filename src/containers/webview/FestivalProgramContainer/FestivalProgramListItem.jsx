@@ -86,6 +86,41 @@ class FestivalProgramListItem extends Component {
 		this.props.detailsIsOpenHandler(e);
 	};
 
+
+
+	getProgress=()=>{
+		const timeLeft = moment(this.props.event.endDate)-new Date()
+		const now = new Date();
+		const duration = (moment(this.props.event.endDate)-moment(this.props.event.startDate))
+		const progress = 100-((timeLeft/duration)*100)
+		if (progress<0||progress>100) {return 0}
+		return progress
+	}
+
+	onAir=()=>{
+		let onAir=''
+		const now=new Date()
+		const startDate= moment(this.props.event.startDate)
+		const endDate = moment(this.props.event.endDate)
+
+		const isStarted =startDate<now
+
+		if (isStarted 
+			&& endDate>now
+			&&this.props.event.endDate) {
+		onAir = <div className={classes.onAir}>Ends {
+			endDate.endOf().from(now)}</div>
+			}
+
+		
+		if (!isStarted && startDate< moment(now).add(3,'hours')) {
+			onAir = <div className={classes.onAir +' '+ classes.startsIn}>Starts {
+				startDate.endOf().from(now)}</div>
+		}
+		
+		return onAir
+	}
+
 	render() {
 		let propsEventLocation = 'Not announced yet';
 		if (this.props.event.place !== '') {
@@ -95,6 +130,9 @@ class FestivalProgramListItem extends Component {
 		if (this.props.isOpenDetails) {
 			renderingDetails = <ProgramDetails artist={this.props.event.artist} event={this.props.event} eventRating={propsEventRating} />;
 		}
+
+
+		
 
 		return (
 			<div>
@@ -126,6 +164,8 @@ class FestivalProgramListItem extends Component {
 						<div className={classes.country}>{moment(this.props.event.startDate).format('LT')}</div>
 						<div className={classes.stage}>{propsEventLocation}</div>
 						<div className={classes.stage} />
+						{this.onAir()}
+						<div className={classes.progressBar} style={{width:this.getProgress()+'%'}} />
 						<div className={classes.details} style={{ maxHeight: this.props.isOpenDetails ? '880px' : '0px', padding: this.props.isOpenDetails ? '0' : '0px' }}>
 							{renderingDetails}
 						</div>

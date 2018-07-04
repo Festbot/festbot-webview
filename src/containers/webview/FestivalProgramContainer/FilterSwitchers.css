@@ -5,8 +5,8 @@
   width:100%;
   z-index: 1;
   transition: all 0.4s ease-in-out;
-  display:none;
-  transform:translateY(-60px);
+
+  transform:translateY(-32px);
 
 }
 

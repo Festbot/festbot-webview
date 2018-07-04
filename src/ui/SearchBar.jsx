@@ -19,21 +19,25 @@ class SearchBar extends Component {
 
 
 		return (
-			<div style={{ position: 'relative' }}>
+			<div style={{ position: 'relative',display:'flex',paddingBottom:'10px' }}>
 				<ActionSearch
 					style={{
 						position: 'absolute',
-						right: 0,
+						right: '35px',
+						zIndex:4,
 						top: 15,
 						width: 20,
 						height: 20
 					}}
 				/>
         <TextField
-          inputStyle={{ borderColor: 'black'}}
-					hintText="Type your search"
+					
+					style={{borderColor: 'black',padding:'0 10px',backgroundColor:'rgba(255,255,255,0.9)',borderRadius:'20px',color:'grey',margin:'0 auto',display:'inline-block',width:window.innerWidth-70+"px"}}
+					placeholder="Type your search"
 					onChange={this.debounce}
-					fullWidth={true}
+					fullWidth={false}
+					underlineStyle={{width:window.innerWidth-100+"px"}}
+					name="search"
 					
 				/>
 			</div>

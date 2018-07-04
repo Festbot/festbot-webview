@@ -23,7 +23,8 @@ class FestivalListBuilder extends Component {
 	handleOpen = e => {
 		this.setState({
 			isModalOpen: true,
-			selectedItem: e.currentTarget.id
+			selectedItem: e.currentTarget.id,
+			activeFestivalCoverPhoto: e.currentTarget.ref
 		});
 	};
 
@@ -81,7 +82,7 @@ class FestivalListBuilder extends Component {
 
 		sortedCountries.splice(sortedCountries.indexOf('HU'), 1);
 		sortedCountries = ['HU', ...sortedCountries];
-
+		console.log()
 		return (
 			<Fragment>
 				{sortedCountries.map((country, countryIndex) => {

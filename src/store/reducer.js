@@ -9,7 +9,7 @@ const initialState ={
   eventDays:[],
   activeDay:'ALL',
   eventStages:['Main Stage','Telekom Arena','Colosseum','Magic Mirror'],
-  activeStage:'ALL LOCATION',
+  activeStage:'HELYSZÍNEK',
   detailsPanelHeight:0,
   userId:'f442bee64bb034de9a00e5b3bd894f18',
 }

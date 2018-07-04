@@ -69,7 +69,7 @@ class FestivalListItem extends Component {
 							transition: this.props.isOpenDetails ? 'all 0.3s ease-in-out' : 'none'
 						}}
 					/>
-					<div id={this.props.festival._id} title={this.props.index} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper}>
+					<div id={this.props.festival._id} ref={this.props.festival.coverPhoto} title={this.props.index} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper}>
 						<div className={classes.backdropLayer} />
 						<div className={classes.title}>{this.props.festival.name}</div>
 						<div

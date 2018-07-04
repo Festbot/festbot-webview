@@ -23,12 +23,9 @@ export class FilterSwitchers extends Component {
 	}
 
 	onScroll = () => {
-		if (!this.props.isActiveFilter) {
-			!this.state.visible ? this.setState({ visible: true }) : null;
-			return;
-		}
 
-		if ((window.scrollY < 100 && !this.state.visible && this.props.isActiveFilter) || (!this.state.visible && this.props.isActiveFilter && this.state.prevPositionY > window.scrollY)) {
+
+		if ((window.scrollY < 100 && !this.state.visible ) || (!this.state.visible  && this.state.prevPositionY > window.scrollY)) {
 			this.setState({ visible: true });
 		}
 		if (window.scrollY > 100 && this.state.visible && this.state.prevPositionY < window.scrollY) {
@@ -38,10 +35,10 @@ export class FilterSwitchers extends Component {
 	};
 
 	render() {
-		const { activeDayClicked, activeStageClicked, isActiveFilter } = this.props;
+		const { activeDayClicked, activeStageClicked } = this.props;
 		return (
-			<div className={classNames(classes.container, { [classes.show]: this.state.visible && isActiveFilter, [classes.active]: isActiveFilter })}>
-				<DaySwitcher activeDayClicked={activeDayClicked} />
+			<div className={classNames(classes.container, { [classes.show]: this.state.visible})}>
+				
 				<StageSwitcher activeStageClicked={activeStageClicked} />
 			</div>
 		);

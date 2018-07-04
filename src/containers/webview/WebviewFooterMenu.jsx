@@ -19,26 +19,20 @@ const menuItems = {
 
     // },
 
-    // {
-    //   "name": "I\"am free to",
-    //   "route": "/i_am_free_to",
-    //   "iconName": "record_voice_over",
+    {
+      "name": "Fesztiválok",
+      "route": "/festivals",
+      "iconName": "list",
 
+    },
+    // {
+    //   "name": "Napok",
+    //   "route": "",
+    //   "iconName": "today",
+    //   "toggleItem": "Filter"
     // },
     {
-      "name": "Trending",
-      "route": "",
-      "iconName": "trending_up",
-      "toggleItem": "Trending"
-    },
-    {
-      "name": "My Filter",
-      "route": "",
-      "iconName": "filter_list",
-      "toggleItem": "Filter"
-    },
-    {
-      "name": "My Favourite",
+      "name": "Kedvencek",
       "route": "",
       "iconName": "star",
       "toggleItem": "Favourite"

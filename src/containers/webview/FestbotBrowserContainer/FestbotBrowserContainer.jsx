@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import { Redirect } from 'react-router'
 import axios from 'axios';
 import 'babel-polyfill';
 import qs from 'query-string';
@@ -43,6 +44,8 @@ export class FestivalBrowserContainer extends Component {
 
 	async componentDidMount() {
 		this.props.setMenu('hide')
+		this.props.setActiveDay('ALL')
+		this.props.setActiveStage('HELYSZÍNEK')
 		
 		let { data } = await axios.get(
 			'https://api.festbot.com/festivals/_design/default/_list/all-data/default-view'
@@ -55,19 +58,19 @@ export class FestivalBrowserContainer extends Component {
 			MessengerExtensions.getContext(
 				'817793415088295',
 				async ({ psid }) => {
-					console.log('psid', psid);
+					//console.log('psid', psid);
 					try {
 						const userId = md5(psid);
 						const { data } = await getUserId(userId);
 						this.props.setUser(data);
 						
 					} catch (error) {
-						console.warn('get user data error', error);
+					//	console.warn('get user data error', error);
 						alert('Network Error');
 					}
 				},
 				async (err) => {
-					console.warn('no psid :(');
+					//console.warn('no psid :(');
 					const { data } = await getUserId(this.props.userData.userId);
 					this.props.setUser(data);
 				}
@@ -97,7 +100,6 @@ export class FestivalBrowserContainer extends Component {
 
 	render() {
 
-
 		if (this.state.data.length ===0) {
 			return (
 				<div className={classes.center}>
@@ -108,6 +110,10 @@ export class FestivalBrowserContainer extends Component {
 					/>
 				</div>
 			);
+		}
+
+		if (this.props.match.path == '/festivals'&& this.props.userData.activeFestival){
+			return <Redirect to={`/festival/${this.props.userData.activeFestival}`}/>
 		}
 
 		return (
@@ -161,6 +167,8 @@ const mapDispatchToProps =  dispatch => {
 		onFavouriteToggle: () => dispatch({type: 'UPD_FAVOURITE'}),
 		setMenu: (actualViewMenu) => dispatch({type: 'UPD_MENU', value: actualViewMenu}),
 		setUser: (userData) => dispatch ({type: 'SET_USER',value: userData}),
+		setActiveDay: day => dispatch({ type: 'UPD_ACTIVEDAY', value: day }),
+		setActiveStage: stage => dispatch({ type: 'UPD_ACTIVESTAGE', value: stage }),
   }
 }
 

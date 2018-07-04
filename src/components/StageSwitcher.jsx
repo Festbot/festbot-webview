@@ -17,8 +17,8 @@ export class StageSwitcher extends Component {
       behavior: "smooth"
   });
 		this.props.setActiveStage(stage);
-		if (activeStage.currentTarget.id == 'ALL LOCATION') {
-			this.props.setActiveStage('ALL LOCATION');
+		if (activeStage.currentTarget.id == 'HELYSZÍNEK') {
+			this.props.setActiveStage('HELYSZÍNEK');
 		}
 		this.dropdownToggleHandler();
 	};
@@ -43,14 +43,15 @@ export class StageSwitcher extends Component {
 		}
 
 		if (index == 0 && e.currentTarget.id == 1) {
-			this.props.setActiveStage('ALL LOCATION');
+			this.props.setActiveStage('HELYSZÍNEK');
 		}
+		
 	};
 
 	render() {
 		let eventStageSwitcherItem = this.props.eventStages.map((e, i) => {
-			<li id="ALL LOCATION" onClick={this.festivalEventStageFilterHandler} className={this.props.activeStage == e ? classes.activeSelection : classes.item}>
-				ALL LOCATION
+			<li id="HELYSZÍNEK" onClick={this.festivalEventStageFilterHandler} className={this.props.activeStage == e ? classes.activeSelection : classes.item}>
+				HELYSZÍNEK Stages
 			</li>;
 			if (this.props.eventStages.length > 1) {
 				return (
@@ -70,15 +71,15 @@ export class StageSwitcher extends Component {
 						<LeftArrowIcon id={1} onClick={this.navigationClickHandler} style={{ height: '100%', margin: 'auto', width: '30px' }} />
 					</div>
 					<div id={this.props.activeStage} onClick={this.dropdownToggleHandler} className={classes.active}>
-						<span className={classes.slidein}>{this.props.activeStage}</span>
+						<span className={classes.slidein}>{(this.props.activeStage=="HELYSZÍNEK")?"HELYSZÍNEK / STAGE ":this.props.activeStage}</span>
 					</div>
 					<div className={classes.navigation}>
 						<RightArrowIcon id={-1} onClick={this.navigationClickHandler} style={{ height: '100%', margin: 'auto', width: '30px' }} />
 					</div>
 				</div>
 				<div className={classes.dropDownContainer} style={this.state.isOpenDropdown ? { maxHeight: '300px' } : { maxHeight: '0', padding: '0' }}>
-					<li id="ALL LOCATION" onClick={this.festivalEventStageFilterHandler} className={this.props.activeStage == 'ALL LOCATION' ? classes.activeSelection : classes.item}>
-						ALL LOCATION
+					<li id="HELYSZÍNEK" onClick={this.festivalEventStageFilterHandler} className={this.props.activeStage == 'HELYSZÍNEK' ? classes.activeSelection : classes.item}>
+						HELYSZÍNEK ( ALL )
 					</li>
 					{eventStageSwitcherItem}
 				</div>
