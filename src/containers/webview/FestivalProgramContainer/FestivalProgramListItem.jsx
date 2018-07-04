@@ -158,7 +158,7 @@ class FestivalProgramListItem extends Component {
 
 		return (
 			<div >
-				{!(moment(this.props.event.endDate)< moment(this.state.now).subtract(32,'minutes'))&&<div
+				{!(moment(this.props.event.endDate)< moment(this.state.now).subtract(19,'minutes'))&&<div
 					ref={element => (this.activeDetailsDiv = element)}
 					className={classes.listItemContainer}
 					style={{
