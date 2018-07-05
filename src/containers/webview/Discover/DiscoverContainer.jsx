@@ -48,7 +48,7 @@ export class DiscoverContainer extends Component {
 		let { data } = await axios.get('https://api.festbot.com/artists/_design/webview/_view/order-by-featured?descending=true');
 
 		this.setState({ searchResults: data.rows, data: data.rows });
-
+		
 		if (!this.props.match.params.artist_name == '') {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}

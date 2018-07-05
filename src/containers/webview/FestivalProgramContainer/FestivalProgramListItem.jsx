@@ -49,23 +49,12 @@ const styles = {
 const propsEventRating = 4.5;
 
 class FestivalProgramListItem extends Component {
-
 	constructor (props){
 		super(props);
-		this.state = {now:new Date(),slideIndex: 0}
+		this.state = {slideIndex: 0}
 	}
 
 
-
-	componentDidMount(){
-		this.timer = setInterval(()=>{
-			this.setState({now:new Date()})	
-		},1000*60)
-	}
-
-	componentWillUnmount(){
-		clearInterval(this.timer);
-	}
 
 	offset(el) {
 		var rect = el.getBoundingClientRect(),
@@ -103,8 +92,8 @@ class FestivalProgramListItem extends Component {
 
 
 	getProgress=()=>{
-		const timeLeft = moment(this.props.event.endDate)-this.state.now
-		const now = this.state.now;
+		const timeLeft = moment(this.props.event.endDate)-this.props.now
+		const now = this.props.now;
 		const duration = (moment(this.props.event.endDate)-moment(this.props.event.startDate))
 		const progress = 100-((timeLeft/duration)*100)
 		if (progress<0||progress>100) {return 0}
@@ -113,7 +102,7 @@ class FestivalProgramListItem extends Component {
 
 	onAir=()=>{
 		let onAir=''
-		const now=this.state.now
+		const now=this.props.now
 		const startDate= moment(this.props.event.startDate)
 		const endDate = moment(this.props.event.endDate)
 		const ended= moment(this.props.event.endDate)< moment(now)
@@ -158,7 +147,7 @@ class FestivalProgramListItem extends Component {
 
 		return (
 			<div >
-				{!(moment(this.props.event.endDate)< moment(this.state.now).subtract(19,'minutes'))&&<div
+				<div
 					ref={element => (this.activeDetailsDiv = element)}
 					className={classes.listItemContainer}
 					style={{
@@ -194,7 +183,6 @@ class FestivalProgramListItem extends Component {
 					</div>
 				</div>
 			
-			}
 			</div>	
 		);
 	}
