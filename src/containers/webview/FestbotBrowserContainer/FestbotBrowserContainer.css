@@ -3,10 +3,8 @@
 .listHeader {
   margin:0px;
   padding:0px;
-  
+ 
   color: black;
- 
- 
   display: inline-block;
 }
 
@@ -22,6 +20,12 @@
 
 }
 
+.searchBarBackground{
+  width:100%;
+  background-color: rgb(108, 146, 167);
+  padding-top:30px;
+  padding-bottom: 15px;
+}
 
 .headerP{
   float: right;

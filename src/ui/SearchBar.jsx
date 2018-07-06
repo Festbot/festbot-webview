@@ -24,7 +24,7 @@ class SearchBar extends Component {
 					style={{
 						position: 'absolute',
 						right: '35px',
-						zIndex:4,
+						zIndex:1,
 						top: 15,
 						width: 20,
 						height: 20

@@ -107,7 +107,8 @@ export class DiscoverContainer extends Component {
 
 		this.setState({
 			searchResults: listOfPersonalPreferences,
-			matchingArtists: listOfPersonalPreferences
+			matchingArtists: listOfPersonalPreferences,
+			listTitle:`Artists for You`,
 		});
 	};
 
@@ -138,21 +139,25 @@ export class DiscoverContainer extends Component {
 		});
 
 		if (filteredResults.length == 0) return;
+
 		this.setState({
 			activeDetails: '',
 			isOpenDetails: false,
-			searchResults: filteredResults
+			searchResults: filteredResults,
+			listTitle:"Search results: "+filteredResults.length,
 		});
+
 		if (filteredResults.length == 1) {
 			this.setState({
 				activeDetails: filteredResults[0].value.name,
 				isOpenDetails: true,
-				searchResults: filteredResults
+				searchResults: filteredResults,
+			listTitle:"",
 			});
 		}
 
 		if (keyword == '' && !this.props.userData.userId == '') {
-			this.setState({ searchResults: this.state.matchingArtists });
+			this.setState({ searchResults: this.state.matchingArtists,listTitle:"Artists for You" });
 		}
 	};
 
@@ -169,6 +174,7 @@ export class DiscoverContainer extends Component {
 
 	render() {
 		const sliceOfArtist = this.state.searchResults.slice(this.state.yListOffset, this.state.yListOffset + 400);
+		
 		const artistList = sliceOfArtist.map(({ value: artist }, index) => {
 			return (
 				<DiscoverArtistItem
@@ -188,8 +194,10 @@ export class DiscoverContainer extends Component {
 				<Helmet>
 					<title>Discover Artist</title>
 				</Helmet>
-
+				<div className={classes.searchBarBackground}>
 				<SearchBar defaultValue={this.props.match.params.artist_name} searchQueryChanged={this.artistKeywordFilter} />
+				</div>
+				<div className={classes.listTitle}>{this.state.listTitle}</div>
 				{artistList}
 				<ScrollToTop showUnder={1000}>
 					<span className={classes.scrollToTopButton}>UP</span>

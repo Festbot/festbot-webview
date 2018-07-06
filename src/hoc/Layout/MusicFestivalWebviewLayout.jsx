@@ -15,7 +15,7 @@ const layout = props => {
         <title>Festbot</title>
         <meta
           name="description"
-          content="Festbot is a chatbot for greater festival experience. "
+          content="Festbot is a chatbot for music festivals. "
         />
         <link rel="canonical" href="https://festbot.com/webview" />
       </Helmet>
