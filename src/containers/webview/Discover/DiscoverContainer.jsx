@@ -45,10 +45,12 @@ export class DiscoverContainer extends Component {
 	async componentDidMount() {
 		this.props.onViewChange('hide');
 
-		let { data } = await axios.get('https://api.festbot.com/artists/_design/webview/_view/order-by-featured?descending=true');
+		let {
+			data: { docs: data }
+		} = await axios.post('https://api.festbot.com/artists/_find', { selector: { name: { $regex: '(?i)' } }, limit: 100, sort: [{ featured: 'desc' }, { popularity: 'desc' }] });
 
-		this.setState({ searchResults: data.rows, data: data.rows });
-		
+		this.setState({ searchResults: data, data: data });
+
 		if (!this.props.match.params.artist_name == '') {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
@@ -75,40 +77,33 @@ export class DiscoverContainer extends Component {
 		);
 	}
 
-	// groupByArtist = (artists) => {
-	// 	const artistNames = Ramda.groupBy(artist=>{
-	// 		return artist.name
-	// 	})
-	// 	return artistNames(artists)
-	// };
-
-	matchingArtists = () => {
+	matchingArtists = async () => {
 		if (!this.props.userData.userDataReceived) {
 			return;
 		}
-		const filteredResults = this.state.data.filter(({ value: artist }) => {
-			if (!artist.genres) {
-				return false;
-			}
-			return Ramda.intersection(this.props.userData.topGenres, artist.genres).length > 0;
+	
+		let {
+			data: { docs: exceptTopArtists }
+		} = await axios.post('https://api.festbot.com/artists/_find', {
+			selector: { genres: { $in: this.props.userData.topGenres }, $nor: [{ name: { $in: this.props.userData.topArtists } }] },
+			limit: 100,
+			sort: [{ featured: 'desc' }, { popularity: 'desc' }]
 		});
 
-		const topArtists = this.state.data.filter(({ value: artist }) => {
-			return Ramda.contains(artist.name, this.props.userData.topArtists);
-		});
-
-		const exceptTopArtists = filteredResults.filter(({ value: artist }) => {
-			return !Ramda.contains(artist.name, this.props.userData.topArtists);
+		let {
+			data: { docs: topArtists }
+		} = await axios.post('https://api.festbot.com/artists/_find', {
+			selector: { name: { $in: this.props.userData.topArtists } },
+			limit: 100,
+			sort: [{ featured: 'desc' }, { popularity: 'desc' }]
 		});
 
 		const listOfPersonalPreferences = topArtists.concat(exceptTopArtists);
 
-		// featured+listOfPersonalPreferences
-
 		this.setState({
 			searchResults: listOfPersonalPreferences,
 			matchingArtists: listOfPersonalPreferences,
-			listTitle:`Artists for You`,
+			listTitle: `Artists for You`
 		});
 	};
 
@@ -127,15 +122,13 @@ export class DiscoverContainer extends Component {
 		}
 	};
 
-	artistKeywordFilter = keyword => {
-		const filteredResults = this.state.data.filter(({ value: artist }) => {
-			return (
-				artist.genres &&
-				(artist.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
-					artist.genres.filter(genres => {
-						return genres.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
-					}).length > 0)
-			);
+	artistKeywordFilter = async keyword => {
+		let {
+			data: { docs: filteredResults }
+		} = await axios.post('https://api.festbot.com/artists/_find', {
+			selector: { $or: [{ name: { $regex: '(?i)' + keyword } }, { genres: { $elemMatch: { $regex: '(?i)' + keyword } } }] },
+			limit: 100,
+			sort: [{ featured: 'desc' }, { popularity: 'desc' }]
 		});
 
 		if (filteredResults.length == 0) return;
@@ -144,20 +137,20 @@ export class DiscoverContainer extends Component {
 			activeDetails: '',
 			isOpenDetails: false,
 			searchResults: filteredResults,
-			listTitle:"Search results: "+filteredResults.length,
+			listTitle: `Search results: ${filteredResults.length == 100 ? '100+' : filteredResults.length}`
 		});
 
 		if (filteredResults.length == 1) {
 			this.setState({
-				activeDetails: filteredResults[0].value.name,
+				activeDetails: filteredResults[0].name,
 				isOpenDetails: true,
 				searchResults: filteredResults,
-			listTitle:"",
+				listTitle: ''
 			});
 		}
 
 		if (keyword == '' && !this.props.userData.userId == '') {
-			this.setState({ searchResults: this.state.matchingArtists,listTitle:"Artists for You" });
+			this.setState({ searchResults: this.state.matchingArtists, listTitle: 'Artists for You' });
 		}
 	};
 
@@ -172,10 +165,33 @@ export class DiscoverContainer extends Component {
 		}
 	};
 
+	genresList = () => {
+		let genresList = '';
+
+		if (!this.props.userData.topGenres) {
+			return;
+		}
+
+		return (genresList = (
+			<div>
+			
+				<div className={classes.detailsContentGenre}>
+					{this.props.userData.topGenres.map((genre, i) => {
+						return (
+							<div key={i} onClick={()=>this.artistKeywordFilter(genre)} className={classes.genreItem}>
+								{genre}
+							</div>
+						);
+					})}
+				</div>
+			</div>
+		));
+	};
+
 	render() {
 		const sliceOfArtist = this.state.searchResults.slice(this.state.yListOffset, this.state.yListOffset + 400);
-		
-		const artistList = sliceOfArtist.map(({ value: artist }, index) => {
+
+		const artistList = sliceOfArtist.map((artist, index) => {
 			return (
 				<DiscoverArtistItem
 					key={index}
@@ -195,8 +211,10 @@ export class DiscoverContainer extends Component {
 					<title>Discover Artist</title>
 				</Helmet>
 				<div className={classes.searchBarBackground}>
-				<SearchBar defaultValue={this.props.match.params.artist_name} searchQueryChanged={this.artistKeywordFilter} />
+					<SearchBar defaultValue={this.props.match.params.artist_name} searchQueryChanged={this.artistKeywordFilter} />
 				</div>
+
+				{this.genresList()}
 				<div className={classes.listTitle}>{this.state.listTitle}</div>
 				{artistList}
 				<ScrollToTop showUnder={1000}>
