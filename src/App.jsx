@@ -14,6 +14,7 @@ import { BrowserRouter } from 'react-router-dom';
 import FestivalProgramContainer from './containers/webview/FestivalProgramContainer/FestivalProgramContainer.jsx';
 import DiscoverContainer from './containers/webview/Discover/DiscoverContainer.jsx';
 import ComingSoonPage from './containers/webview/ComingSoonPage.jsx'
+import ZerkingContainer from './containers/webview/Zerking/ZerkingContainer.jsx'
 
 import VisibiltyControl from './hoc/VisibilityControl/VisibilityControl.jsx';
 
@@ -53,6 +54,7 @@ class App extends Component {
 									}}
 								/>
 								<Route path="/discover/:artist_name?" exact component={DiscoverContainer} />
+								<Route path="/zerking" exact component={ZerkingContainer} />
 								<Route component={ComingSoonPage} />
 							</Switch>
 							</MusicFestivalWebViewLayout>
