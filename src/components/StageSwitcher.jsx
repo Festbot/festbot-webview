@@ -93,12 +93,12 @@ export class StageSwitcher extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({festbot}) => {
 	return {
-		eventStages: state.eventStages,
-		activeStage: state.activeStage,
+		eventStages: festbot.eventStages,
+		activeStage: festbot.activeStage,
 		isActive: {
-			Filter: state.isActiveFilter
+			Filter: festbot.isActiveFilter
 		}
 	};
 };

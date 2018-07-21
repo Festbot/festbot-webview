@@ -305,19 +305,19 @@ export class festivalProgramContainer extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({festbot}) => {
 	return {
-		userId: state.userId,
-		eventStages: state.eventStages,
-		activeStage: state.activeStage,
-		activeDay: state.activeDay,
-		storedEventDays: state.eventDays,
-		webviewMenu: state.webviewMenu,
-		savedShows: state.savedShows,
+		userId: festbot.userId,
+		eventStages: festbot.eventStages,
+		activeStage: festbot.activeStage,
+		activeDay: festbot.activeDay,
+		storedEventDays: festbot.eventDays,
+		webviewMenu: festbot.webviewMenu,
+		savedShows: festbot.savedShows,
 		isActive: {
-			Trending: state.isActiveTrending,
-			Filter: state.isActiveFilter,
-			Favourite: state.isActiveFavourite
+			Trending: festbot.isActiveTrending,
+			Filter: festbot.isActiveFilter,
+			Favourite: festbot.isActiveFavourite
 		}
 	};
 };

@@ -3,21 +3,16 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import 'babel-polyfill';
-import qs from 'query-string';
+
 import { getUserId } from '../../../components/apiHelper.js';
 
-import Aux from '../../../hoc/Aux/Aux.jsx';
+
 import classes from './FestbotBrowserContainer.css';
 
 import { List, ListItem } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import RaisedButton from 'material-ui/RaisedButton';
 
-import Subheader from 'material-ui/Subheader';
-import * as colors from 'material-ui/styles/colors';
-import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import { GridList, GridTile } from 'material-ui/GridList';
+
 
 import SearchBar from '../../../ui/SearchBar.jsx';
 import ScrollToTop from 'react-scroll-up';

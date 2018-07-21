@@ -147,16 +147,16 @@ class WebviewFooterMenu extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({festbot}) => {
 
   let stateMap={
-    webviewMenu:state.webviewMenu,
+    webviewMenu:festbot.webviewMenu,
     isActive:{}
   }
 
-  menuItems[state.webviewMenu].forEach((item) => {
+  menuItems[festbot.webviewMenu].forEach((item) => {
     if (item.toggleItem ) {
-       stateMap.isActive[item.toggleItem] = state["isActive"+item.toggleItem]
+       stateMap.isActive[item.toggleItem] = festbot["isActive"+item.toggleItem]
     }
   })
 

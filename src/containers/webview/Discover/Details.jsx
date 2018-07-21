@@ -17,6 +17,8 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import moment from 'moment';
 
+import { getEventsByArtist } from './../../../helpers/eventApiHelper.js';
+
 export class Details extends Component {
 	state = {
 		slideIndex: 0,
@@ -31,15 +33,11 @@ export class Details extends Component {
 
 	async componentDidMount() {
 		let ref = this.activeDetailsDiv;
-
-		const { data } = await axios.get('https://api.festbot.com/artists/'+this.props.artistId);
-
-		this.setState({ artist: data });
-
-		const { data: eventData } = await axios.post('https://api.festbot.com/events/_find', { selector: { artistId: this.props.artistId } });
+		
+		const eventData = await getEventsByArtist(this.props.artist.name)
 
 		this.setState({
-			events: eventData.docs.sort((eventA, eventB) => {
+			events: eventData.sort((eventA, eventB) => {
 				if (moment(eventA.startDate).isBefore(eventB.startDate)) return -1;
 				if (moment(eventB.startDate).isBefore(eventA.startDate)) return 1;
 				if (moment(eventB.startDate).isSame(eventA.startDate)) return 0;
@@ -165,10 +163,10 @@ export class Details extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({festbot}) => {
 	return {
-		userId: state.userId,
-		savedShows: state.savedShows
+		userId: festbot.userId,
+		savedShows: festbot.savedShows
 	};
 };
 

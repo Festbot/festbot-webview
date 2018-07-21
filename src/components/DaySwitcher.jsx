@@ -69,12 +69,12 @@ export class DaySwitcher extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({festbot}) => {
 	return {
-		eventDays: state.eventDays,
-		activeDay: state.activeDay,
+		eventDays: festbot.eventDays,
+		activeDay: festbot.activeDay,
 		isActive: {
-			Filter: state.isActiveFilter
+			Filter: festbot.isActiveFilter
 		}
 	};
 };

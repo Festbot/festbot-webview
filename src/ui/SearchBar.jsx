@@ -15,7 +15,7 @@ class SearchBar extends Component {
   }
 
 	render() {
-
+		const {placeholder="Type your search"} = this.props
 
 
 		return (
@@ -33,7 +33,7 @@ class SearchBar extends Component {
         <TextField
 					
 					style={{borderColor: 'black',padding:'0 10px',backgroundColor:'rgba(255,255,255,0.9)',borderRadius:'20px',color:'grey',margin:'0 auto',display:'inline-block',width:window.innerWidth-70+"px"}}
-					placeholder="Type your search"
+					placeholder={placeholder}
 					onChange={this.debounce}
 					fullWidth={false}
 					underlineStyle={{width:window.innerWidth-100+"px"}}

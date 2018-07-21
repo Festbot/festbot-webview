@@ -225,17 +225,17 @@ export class DiscoverContainer extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({festbot}) => {
 	return {
-		detailsPanelHeight: state.detailsPanelHeight,
+		detailsPanelHeight: festbot.detailsPanelHeight,
 		userData: {
-			userId: state.userId,
-			activeFestival: state.activeFestival,
-			savedArtists: state.savedArtists,
-			savedShows: state.savedShows,
-			topArtists: state.topArtists,
-			topGenres: state.topGenres,
-			userDataReceived: state.userDataReceived
+			userId: festbot.userId,
+			activeFestival: festbot.activeFestival,
+			savedArtists: festbot.savedArtists,
+			savedShows: festbot.savedShows,
+			topArtists: festbot.topArtists,
+			topGenres: festbot.topGenres,
+			userDataReceived: festbot.userDataReceived
 		}
 	};
 };

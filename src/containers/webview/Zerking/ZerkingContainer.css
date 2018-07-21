@@ -1,5 +1,5 @@
 .container{
-  padding-top: 200px;
+ 
 }
 
 .button {
@@ -20,3 +20,4 @@
 .button:hover {
 	background-color: rgb(221, 62, 97);
 }
+
