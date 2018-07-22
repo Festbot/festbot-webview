@@ -2,6 +2,8 @@ import {
   UPDATE_ARTIST_LIST,
   SEARCH_BY_ARTIST,
   SEARCH_BY_GENRE,
+  GET_FESTIVAL_STAGES,
+  GET_FESTIVAL_POIS
 } from './actions/actionTypes.js'
 
 import {
@@ -10,8 +12,15 @@ import {
 } from '../helpers/artistApiHelper.js'
 
 import {
+  getStagesByFestivalId,
+  getPoisByFestivalId,
+} from '../helpers/festivalApiHelper.js'
+
+import {
   updateArtistsList,
   updateFilteredResultArtistList,
+  setFestivalStages,
+  setFestivalPois,
 } from './actions/actions.js'
 
 
@@ -24,6 +33,14 @@ export default  store =>  next => async action =>{
         case SEARCH_BY_GENRE:
         const filteredResult= await getArtistsByGenre(action.payload)
         store.dispatch(updateFilteredResultArtistList(filteredResult));
+        break;
+        case GET_FESTIVAL_STAGES:
+        const stages= await getStagesByFestivalId(action.payload)
+        store.dispatch(setFestivalStages(stages));
+        break;
+        case GET_FESTIVAL_POIS:
+        const pois= await getPoisByFestivalId(action.payload)
+        store.dispatch(setFestivalPois(pois));
         break;
       }
     

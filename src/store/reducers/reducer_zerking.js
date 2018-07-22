@@ -1,12 +1,55 @@
-import {SET_FESTIVAL} from '../actions/actionTypes.js'
+import { 
+  SET_FESTIVAL,
+  SET_FESTIVAL_STAGES,
+  SET_FESTIVAL_POIS,
+  ADD_ITEM_TO_ZERKING,
+  REMOVE_ITEM_TO_ZERKING,
+  SET_ITEM_TO_ZERKING,
+ } from '../actions/actionTypes.js';
 
-const reducer = (state = "", action) => {
+ const initialState = {
+  itemsToZerking:[]
+ }
+
+const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_FESTIVAL:
 			return {
 				...state,
 				activeFestival: action.payload
 			};
+			break;
+		case SET_FESTIVAL_STAGES:
+			return {
+				...state,
+				stages: action.payload
+			};
+			break;
+		case SET_FESTIVAL_POIS:
+			return {
+				...state,
+				pois: action.payload
+			};
+      break;
+      case ADD_ITEM_TO_ZERKING:
+			return {
+				...state,
+				itemsToZerking: state.itemsToZerking.concat(action.payload)
+			};
+      break;
+      case REMOVE_ITEM_TO_ZERKING:
+      const updatedArray = state.itemsToZerking.filter(item => item.category !== action.payload  )
+			return {
+				...state,
+				itemsToZerking: updatedArray
+			};
+      break;
+      case SET_ITEM_TO_ZERKING:
+			return {
+				...state,
+				itemsToZerking: action.payload
+			};
+			break;
 	}
 	return state;
 };

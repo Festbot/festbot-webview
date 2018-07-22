@@ -5,30 +5,73 @@ import classes from './ZerkingContainer.css';
 import { Helmet } from 'react-helmet';
 
 import geolocationWrapper from './setGeolocation.js';
-import Map from './Map.jsx'
-import Marker from './Marker.jsx'
-import FestivalSelector from './FestivalSelector.jsx'
+import Map from './Map.jsx';
+import Marker from './Marker.jsx';
+import FestivalSelector from './FestivalSelector.jsx';
+import StageSelector from './StageSelector.jsx';
+import PoiSelector from './PoiSelector.jsx';
+import PoiContaier from './PoiContaier.jsx';
 
+import { addItemToVenues, addItemToPois } from '../../../helpers/festivalApiHelper.js';
 
-import {setFestival} from '../../../store/actions/actions.js'
+import { setFestival, getFestivalStages, getFestivalPois, setItemToZerking } from '../../../store/actions/actions.js';
+
+import { foodTypes, drinkTypes, serviceTypes } from './poiTypes.js';
 
 export class ZerkingContainer extends Component {
+	state = {
+		isOpen: {
+			Stages: false,
+			Food: false,
+			Drink: false,
+			Services: false
+		}
+	};
 
-	componentDidMount() {}
+	isOpenToggleHandler = e => {
+		const item = e.currentTarget.id;
+		this.setState({
+			isOpen: { [item]: !this.state.isOpen[item] }
+		});
+	};
 
-	
+	submitItems = async () => {
+		let item = '';
 
-	componentWillUnmount() {}
+		for (var i = 0; i < this.props.itemsToZerking.length; i++) {
+			if (this.props.itemsToZerking[i].category == 'stage') {
+				item = this.props.itemsToZerking[i];
+				await addItemToVenues(item);
+			} else {
+				item = this.props.itemsToZerking[i];
+				await addItemToPois(item);
+			}
+		}
+		await this.props.getFestivalStages(this.props.activeFestival._id);
+		await this.props.getFestivalPois(this.props.activeFestival._id);
+		this.props.setItemToZerking([]);
+	};
 
-
+	closeAllGroup = () => {
+		this.setState({
+			isOpen: {
+				Stages: false,
+				Food: false,
+				Drink: false,
+				Services: false
+			}
+		});
+	};
 
 	render() {
-    
-    console.log("[active]",this.props.activeFestival)
+		// console.log("[active]",this.props.activeFestival)
+		// console.log("[stages]",this.props.stages)
+		// console.log("[pois]",this.props.pois)
+		// console.log("[itemsToZerking]",this.props.itemsToZerking)
 
 		// var beaches = [
 		// 	['Bondi Beach', -33.890542, 151.274856, 4],
-		// 	['Coogee Beach', -33.923036, 151.259052, 5],
+		// 	['Coogee Beach'-33.890542, 151.274856, 5],
 		// 	['Cronulla Beach', -34.028249, 151.157507, 3],
 		// 	['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
 		// 	['Maroubra Beach', -33.950198, 151.259302, 1]
@@ -51,14 +94,10 @@ export class ZerkingContainer extends Component {
 		// };
 
 		// const poi = beaches.map(beach => {
-			// return (
-			//   <Marker position={{lat: beach[1], lng: beach[2]}} icon={image} title={beach[0]}></Marker>
-			// )
+		// return (
+		//   <Marker position={{lat: beach[1], lng: beach[2]}} icon={image} title={beach[0]}></Marker>
+		// )
 		// });
-
-
-
-
 
 		return (
 			<div>
@@ -66,38 +105,53 @@ export class ZerkingContainer extends Component {
 					<title>Zerking</title>
 				</Helmet>
 
-        <Map pos={this.props.pos}>
-          <Marker pos={this.props.pos} iconType="arrow"/>
-          <Marker pos={{lat: 31.231416,lng: 121.483701}}/>
-          <Marker pos={{lat: 31.231416,lng: 121.573701}}/>
-        </Map>
-        
-        
-        
-        <div className={classes.container}>
-        <FestivalSelector festival={this.props.activeFestival}/>
-        <div className={classes.button}>{`Add Stage`}</div>
-					<div className={classes.button}>{`Add Food`}</div>
-					<div className={classes.button}>{`Add Drinks`}</div>
-					<div className={classes.button}>{`Add Service`}</div>
-					<div className={classes.button}>{`Add this`}</div>
+				<Map pos={this.props.pos}>
+					<Marker pos={{ lat: 31.231416, lng: 121.483701 }} />
+					<Marker pos={{ lat: 31.231416, lng: 121.573701 }} />
+				</Map>
+
+				<div className={classes.container}>
+					<FestivalSelector onClick={this.submitItems} itemsToZerking={this.props.itemsToZerking} festival={this.props.activeFestival} />
+
+					{this.props.activeFestival && (
+						<div>
+							{this.props.stages && <div onClick={this.isOpenToggleHandler} className={classes.button} id="Stages">{`Stages (${this.props.stages.length})`}</div>}
+							{this.state.isOpen.Stages && <StageSelector stages={this.props.stages} festival={this.props.activeFestival} pos={this.props.pos} />}
+							<div onClick={this.isOpenToggleHandler} className={classes.button} id="Food">{`Food (${foodTypes.length})`}</div>
+							{this.state.isOpen.Food && <PoiSelector poiTypes={foodTypes} festival={this.props.activeFestival} pos={this.props.pos} />}
+							<div onClick={this.isOpenToggleHandler} className={classes.button} id="Drinks">{`Drinks (${drinkTypes.length})`}</div>
+							{this.state.isOpen.Drinks && <PoiSelector poiTypes={drinkTypes} festival={this.props.activeFestival} pos={this.props.pos} />}
+							<div onClick={this.isOpenToggleHandler} className={classes.button} id="Services">{`Services (${serviceTypes.length})`}</div>
+							{this.state.isOpen.Services && <PoiSelector poiTypes={serviceTypes} festival={this.props.activeFestival} pos={this.props.pos} />}
+							{this.props.pois && <div className={classes.button}>{`${this.props.pois.length} POI's of ${this.props.activeFestival.name}`}</div>}
+							<PoiContaier pois={this.props.pois} festival={this.props.activeFestival} pos={this.props.pos} />
+						</div>
+					)}
 				</div>
 			</div>
 		);
 	}
 }
 
-const mapStateToProps = ({zerking}) => {
+const mapStateToProps = ({ zerking }) => {
 	return {
 		activeFestival: zerking.activeFestival,
+		stages: zerking.stages,
+		pois: zerking.pois,
+		itemsToZerking: zerking.itemsToZerking
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
 		setActiveFestival: festival => dispatch(setFestival(festival)),
+		setItemToZerking: item => dispatch(setItemToZerking(item)),
+		getFestivalStages: festivalId => dispatch(getFestivalStages(festivalId)),
+		getFestivalPois: festivalId => dispatch(getFestivalPois(festivalId))
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(geolocationWrapper(ZerkingContainer));
-
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(geolocationWrapper(ZerkingContainer));

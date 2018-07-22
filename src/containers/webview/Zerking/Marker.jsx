@@ -20,6 +20,23 @@ arrow: {
 
 export class Marker extends Component {
 
+  componentWillUnmount(){
+
+    this.setMapMarker(null,google)
+
+  }
+
+  setMapMarker=(map,google)=>{
+
+    const {pos,iconType="info"} = this.props
+
+     this.marker = new google.maps.Marker({
+      position: pos,
+      map: map,
+      icon:icons[iconType].icon
+    });
+  }
+
   render() {
     const {pos,iconType="info"} = this.props
 
@@ -27,13 +44,7 @@ export class Marker extends Component {
         
         <Consumer>
         {({map,google})=>{if (map&&iconType) {
-          console.log(icons[iconType].icon)
-
-          new google.maps.Marker({
-            position: pos,
-            map: map,
-            icon:icons[iconType].icon
-          });
+          this.setMapMarker(map,google)
         }}}
         </Consumer>
 
