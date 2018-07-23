@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import styled from 'styled-components'
 
+
 import {getDistance} from '../../../helpers/getDistance.js'
 import { isNull } from 'util';
 import { addItemToZerking, removeItemToZerking, getFestivalPois} from '../../../store/actions/actions.js';
@@ -25,9 +26,6 @@ font-weight: 100;
 cursor: pointer;
 flex: 1 auto;
 
-&:hover {
-  background-color: #ddd;
-}
 `
 const PoiContainer= styled.div`
 display:flex;
@@ -43,14 +41,15 @@ export class PoiSelector extends Component {
 
 
   setItemToZerking=  (e)=>{
-    if (this.isToggledForZerkig(e)){
-      this.props.removeItemToZerking(e)
-      console.log('[removePOI]',e)
+    if (this.isToggledForZerkig(e.key)){
+      this.props.removeItemToZerking(e.key)
+      console.log('[removePOI]',e.key)
       return
     }
 
     const item = {
-      category: e,
+      category: e.key,
+      name:e.name,
       festivalId: this.props.festival._id,
       coordinates:{
         lat: this.props.pos.lat,
@@ -74,8 +73,8 @@ export class PoiSelector extends Component {
   renderPoi = (poiType) =>{
 
     return (
-      <PoiItem isToggledForZerkig={this.isToggledForZerkig(poiType)} onClick={()=>this.setItemToZerking(poiType)} key={poiType}>
-        {poiType}
+      <PoiItem isToggledForZerkig={this.isToggledForZerkig(poiType.key)} onClick={()=>this.setItemToZerking(poiType)} key={poiType.key}>
+        {poiType.name}
       </PoiItem>)
   }
 

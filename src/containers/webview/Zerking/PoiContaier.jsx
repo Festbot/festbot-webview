@@ -28,9 +28,6 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
   font-weight: 100;
   cursor: pointer;
   
-  &:hover {
-    background-color: rgb(189, 150, 158);
-  }
   `
   
   const LocationInfo = styled.div`
@@ -52,7 +49,7 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
    
       return(<PoiItem key={poi._id} >
         <LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}</LocationInfo>
-        {poi.category}
+        {poi.name||poi.category}
         <ResetButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} >X</ResetButton>
         </PoiItem>)
     }

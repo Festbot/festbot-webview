@@ -13,7 +13,7 @@ const MapCrosshair = styled.div`
 	right:0;
 	left:0;
 	right0;
-	background-color:rgba(222,120,120,0.3);
+	background-color:rgba(222,120,120,0.2);
 	width:140px;
 	height:140px;
 	border-radius:50%;
@@ -21,7 +21,7 @@ const MapCrosshair = styled.div`
 const VerticalLine = styled.div`
 	height:140px;
 	width:1px;
-	background-color:blue;
+	background-color:rgba(0,0,120,0.3);
 	margin:0 auto;
 `
 const HorizontalLine = styled.div`
@@ -29,7 +29,7 @@ position:relative;
 top:-70px;
 	height:1px;
 	width:140px;
-	background-color:blue;
+	background-color:rgba(0,0,120,0.3);
 	margin: auto 0;
 `
 
@@ -71,8 +71,8 @@ class Map extends Component {
     return <Provider value={{map: this.map,google:this.props.google}}>
 			{this.props.children}
 			
-			{this.props.loaded&&<MapContainer innerRef={this.mapRef} />}
-			<MapCrosshair><VerticalLine></VerticalLine><HorizontalLine></HorizontalLine></MapCrosshair>
+			{this.props.loaded&&<div><MapContainer innerRef={this.mapRef} />
+			<MapCrosshair><VerticalLine></VerticalLine><HorizontalLine></HorizontalLine></MapCrosshair></div>}
     </Provider>
     
   }

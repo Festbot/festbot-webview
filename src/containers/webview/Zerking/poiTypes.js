@@ -1,41 +1,135 @@
 export const foodTypes = [
-	"Hamburger",
-	"Pizza",
-	"Mexican",
-	"Gyros",
-	"Healthy",
-	"Breakfast",
-  "Fish",
-  "Vegan"
+	{
+		name:"Hamburger",
+		key:"hotdog_hamburger"
+	},
+	{
+		name:"Pizza",
+		key:"pizza"
+	},
+	{
+		name:"Mexican",
+		key:"mexican"
+	},
+	{
+		name:"Gyros",
+		key:"gyros"
+	},
+	{
+		name:"Healthy",
+		key:"healthy_food"
+	},
+	{
+		name:"Breakfast",
+		key:"breakfast"
+	},
+	{
+		name:"Fish",
+		key:"fish"
+	},
+	{
+		name:"Vegan",
+		key:"vegan"
+	}
 ] 
 
+
 export const drinkTypes = [
-	"Beer",
-	"Wine",
-	"Cocktails",
-	"Whiskey",
-  "Coffee",
-  "Spirit",
-  "Smoothie"
+	{
+		name:"Beer",
+		key:"beer"
+	},
+	{
+		name:"Wine",
+		key:"wine"
+	},
+	{
+		name:"Cocktails",
+		key:"cocktails"
+	},
+	{
+		name:"Whiskey",
+		key:"whisky"
+	},
+	{
+		name:"Coffee",
+		key:"coffee"
+	},
+	{
+		name:"Spirit",
+		key:"shots"
+	},
+	{
+		name:"Smoothie",
+		key:"smoothie"
+	}
 ] 
 
 export const serviceTypes = [
-  "Toilet",
-  "Camping",
-  "Shower",
-	"Entrance",
-	"Taxi",
-	"Supermarket",
-	"Parking",
-  "Tobacco",
-  "Lockers",
-	"Charging",
-	"First Aid",
-	"Information",
-	"ATM",
-  "Massage",
-  "Pharmacy",
-	"Bike Storage"
+	{
+		name:"Toilet",
+		key:"wc"
+	},
+	{
+		name:"Camping",
+		key:"camping"
+	},
+	{
+		name:"Shower",
+		key:"shower"
+	},
+	{
+		name:"Entrance",
+		key:"entrance"
+	},
+	{
+		name:"Taxi",
+		key:"taxi"
+	},
+	{
+		name:"Supermarket",
+		key:"supermarket"
+	},
+	{
+		name:"Parking",
+		key:"parking"
+	},
+	{
+		name:"Tobacco",
+		key:"tobacco"
+	},
+	{
+		name:"Lockers",
+		key:"lockers"
+	},
+	{
+		name:"Phone charging",
+		key:"charging_station"
+	},
+	{
+		name:"First Aid",
+		key:"first-aid"
+	},
+	{
+		name:"Information",
+		key:"information"
+	},
+	{
+		name:"ATM",
+		key:"atm"
+	},
+	{
+		name:"Massage",
+		key:"massage"
+	},
+	{
+		name:"Pharmacy",
+		key:"pharmacy"
+	},
+	{
+		name:"Bike Storage",
+		key:"bike_storage"
+	}
 ] 
 
 
