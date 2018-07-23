@@ -48,7 +48,7 @@ export class ZerkingContainer extends Component {
 			}
 		}
 		await this.props.getFestivalStages(this.props.activeFestival._id);
-		await this.props.getFestivalPois(this.props.activeFestival._id);
+		await this.props.activeFestival&&this.props.getFestivalPois(this.props.activeFestival._id);
 		this.props.setItemToZerking([]);
 	};
 
@@ -61,7 +61,13 @@ export class ZerkingContainer extends Component {
 				Services: false
 			}
 		});
-	};
+  };
+  
+  renderMarkers = (poi) =>{
+   
+    return(<Marker pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} />
+      )
+  }
 
 	render() {
 		// console.log("[active]",this.props.activeFestival)
@@ -98,6 +104,11 @@ export class ZerkingContainer extends Component {
 		//   <Marker position={{lat: beach[1], lng: beach[2]}} icon={image} title={beach[0]}></Marker>
 		// )
 		// });
+    let markerRender=""
+    if (this.props.pois) {
+      markerRender= this.props.pois.map(this.renderMarkers)
+    }
+
 
 		return (
 			<div>
@@ -105,8 +116,9 @@ export class ZerkingContainer extends Component {
 					<title>Zerking</title>
 				</Helmet>
 
-				<Map pos={this.props.pos}>
-					<Marker pos={{ lat: 31.231416, lng: 121.483701 }} />
+        <Map pos={this.props.pos}>
+        {markerRender}
+					
 					<Marker pos={{ lat: 31.231416, lng: 121.573701 }} />
 				</Map>
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Consumer} from './Map.jsx'
+var marker=''
 
 const iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
   
@@ -15,6 +16,9 @@ info: {
 },
 arrow: {
   icon: iconBase + 'cross-hairs_highlight.png'
+},
+orange_pin: {
+  icon: 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_orange.png'
 }
 };
 
@@ -22,19 +26,23 @@ export class Marker extends Component {
 
   componentWillUnmount(){
 
-    this.setMapMarker(null,google)
-
+  //  if (!marker=='') {marker.setMap(null)}
+    //while(markersArray.length) { markersArray.pop().setMap(null); }
+  //  marker=''
   }
 
   setMapMarker=(map,google)=>{
 
-    const {pos,iconType="info"} = this.props
+    const {pos,iconType="orange_pin"} = this.props
 
-     this.marker = new google.maps.Marker({
+     marker = new google.maps.Marker({
       position: pos,
       map: map,
       icon:icons[iconType].icon
     });
+
+    //markersArray.push(marker)
+    console.log("[mapsMARKER]",marker)
   }
 
   render() {
