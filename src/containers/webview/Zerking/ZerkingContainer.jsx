@@ -109,7 +109,7 @@ export class ZerkingContainer extends Component {
 				</Helmet>
 
 				<Map pos={this.props.pos}>
-					{this.props.pois.map(poi => <Marker key={poi.coordinates.lat + poi.coordinate.lng} pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} />)}
+					{this.props.pois.map(poi => <Marker key={poi.coordinates.lat + poi.coordinates.lng} pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} />)}
 
 					<Marker pos={{ lat: 31.231416, lng: 121.573701 }} />
 				</Map>
