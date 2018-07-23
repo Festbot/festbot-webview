@@ -30,15 +30,19 @@ export class Marker extends Component {
 	}
 
 	setMapMarker = (map, google) => {
+		if (this.marker) {
+			return;
+		}
+
 		const { pos, iconType = 'orange_pin' } = this.props;
+
+		console.log('addMarker');
 
 		this.marker = new google.maps.Marker({
 			position: pos,
 			map: map,
 			icon: icons[iconType].icon
 		});
-
-		console.log('[mapsMARKER]', this.marker);
 	};
 
 	render() {
