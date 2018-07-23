@@ -28,6 +28,10 @@ export class ZerkingContainer extends Component {
 		}
 	};
 
+	static defaultProps = {
+		pois: []
+	};
+
 	isOpenToggleHandler = e => {
 		const item = e.currentTarget.id;
 		this.setState({
@@ -48,7 +52,7 @@ export class ZerkingContainer extends Component {
 			}
 		}
 		await this.props.getFestivalStages(this.props.activeFestival._id);
-		await this.props.activeFestival&&this.props.getFestivalPois(this.props.activeFestival._id);
+		(await this.props.activeFestival) && this.props.getFestivalPois(this.props.activeFestival._id);
 		this.props.setItemToZerking([]);
 	};
 
@@ -61,13 +65,7 @@ export class ZerkingContainer extends Component {
 				Services: false
 			}
 		});
-  };
-  
-  renderMarkers = (poi) =>{
-   
-    return(<Marker pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} />
-      )
-  }
+	};
 
 	render() {
 		// console.log("[active]",this.props.activeFestival)
@@ -104,21 +102,15 @@ export class ZerkingContainer extends Component {
 		//   <Marker position={{lat: beach[1], lng: beach[2]}} icon={image} title={beach[0]}></Marker>
 		// )
 		// });
-    let markerRender=""
-    if (this.props.pois) {
-      markerRender= this.props.pois.map(this.renderMarkers)
-    }
-
-
 		return (
 			<div>
 				<Helmet>
 					<title>Zerking</title>
 				</Helmet>
 
-        <Map pos={this.props.pos}>
-        {markerRender}
-					
+				<Map pos={this.props.pos}>
+					{this.props.pois.map(poi => <Marker key={poi.coordinates.lat + poi.coordinate.lng} pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} />)}
+
 					<Marker pos={{ lat: 31.231416, lng: 121.573701 }} />
 				</Map>
 
