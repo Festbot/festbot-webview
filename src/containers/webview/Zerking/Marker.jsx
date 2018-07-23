@@ -23,6 +23,7 @@ const icons = {
 
 export class Marker extends Component {
 	componentWillUnmount() {
+		console.log('unmount marker');
 		if (this.marker) {
 			this.marker.setMap(null);
 		}
