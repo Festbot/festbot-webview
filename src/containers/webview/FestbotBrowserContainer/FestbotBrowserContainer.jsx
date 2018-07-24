@@ -105,21 +105,21 @@ export class FestivalBrowserContainer extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({festbot}) => {
 	return {
-		webviewMenu: state.webviewMenu,
+		webviewMenu: festbot.webviewMenu,
 		isActive: {
-			Trending: state.isActiveTrending,
-			Filter: state.isActiveFilter,
-			Favourite: state.isActiveFavourite
+			Trending: festbot.isActiveTrending,
+			Filter: festbot.isActiveFilter,
+			Favourite: festbot.isActiveFavourite
 		},
 		userData: {
-			userId: state.userId,
-			activeFestival: state.activeFestival,
-			savedArtists: state.savedArtists,
-			savedShows: state.savedShows,
-			topArtists: state.topArtists,
-			topGenres: state.topGenres
+			userId: festbot.userId,
+			activeFestival: festbot.activeFestival,
+			savedArtists: festbot.savedArtists,
+			savedShows: festbot.savedShows,
+			topArtists: festbot.topArtists,
+			topGenres: festbot.topGenres
 		}
 	};
 };

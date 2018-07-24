@@ -18,6 +18,7 @@ export class ProgramDetails extends Component {
 	};
 
 	render() {
+		
 		return (
 			<div>
 				<div className={classes.detailsContent}>

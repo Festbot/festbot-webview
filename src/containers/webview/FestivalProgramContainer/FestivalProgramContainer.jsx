@@ -34,6 +34,7 @@ export class festivalProgramContainer extends Component {
 			lastOpenedDetailsHeight: 0,
 			lastOpenedDetailsKey: 0,
 			isEventListExist: true,
+			isEventExpired:false,
 			festival: ''
 		};
 	}
@@ -57,7 +58,11 @@ export class festivalProgramContainer extends Component {
 			this.setState({ isEventListExist: false });
 		}
 
-		this.setState({ searchResults: this.filterPastEvents(festivalProgramResults), data: this.filterPastEvents(festivalProgramResults) });
+		if ((this.filterPastEvents(festivalProgramResults).length == 0)&&(!festivalProgramResults.length == 0)) {
+			this.setState({ isEventExpired: true });
+		}
+
+		this.setState({ searchResults: this.filterPastEvents(festivalProgramResults), data: festivalProgramResults });
 		this.updateEventDays(this.state.searchResults);
 		this.updateEventLocations(this.state.searchResults);
 
@@ -65,7 +70,7 @@ export class festivalProgramContainer extends Component {
 
 		this.timer = setInterval(() => {
 			this.setState({ now: new Date() });
-			this.setState({ searchResults: this.filterPastEvents(festivalProgramResults), data: this.filterPastEvents(festivalProgramResults) });
+			this.setState({ searchResults: this.filterPastEvents(festivalProgramResults), data: festivalProgramResults });
 			this.updateEventDays(this.state.searchResults);
 			this.updateEventLocations(this.state.searchResults);
 		}, 1000 * 60);
@@ -132,7 +137,8 @@ export class festivalProgramContainer extends Component {
 	};
 
 	festivalEventKeywordFilter = keyword => {
-		const filteredResults = this.state.data.filter(event => {
+		const eventListWithoutPastEvents = this.filterPastEvents(this.state.data)
+		const filteredResults = eventListWithoutPastEvents.filter(event => {
 			return event.artist.toLowerCase().indexOf(keyword.toLowerCase()) > -1 || event.stage.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
 		});
 
@@ -142,8 +148,8 @@ export class festivalProgramContainer extends Component {
 
 	filterPastEvents = data => {
 		const most = moment(this.state.now).subtract(19, 'minutes');
-		return data.filter(event => {
-			return most < moment(event.endDate);
+		return data.filter(({endDate=event.startDate}) => {
+			return most < moment(endDate);
 		});
 	};
 
@@ -233,6 +239,15 @@ export class festivalProgramContainer extends Component {
 	};
 
 	render() {
+		if (this.state.isEventExpired){
+			return (
+				<div className={classes.center}>
+				<div style={{ margin: 'auto', fontSize: '150%', textAlign: 'center' }}>
+							Az összes program véget ért!<br /> 
+						</div></div>
+			)
+		}
+
 		if (this.state.data.length === 0) {
 			return (
 				<div className={classes.center}>
@@ -275,6 +290,7 @@ export class festivalProgramContainer extends Component {
 								isOpenDetails={this.state.activeDetails === event._id}
 								setLastOpenedDetailsHeight={this.setLastOpenedDetailsHeight}
 								now={this.state.now}
+								
 							/>
 						);
 					})}

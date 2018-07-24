@@ -34,8 +34,10 @@ class FestivalListBuilder extends Component {
 
 	submitHandler = async () => {
 		const userId = this.props.userData.userId;
+		console.log("[AXIOS]",userId, this.state.selectedItem)
 		try {
 			await saveActiveFestbot(userId, this.state.selectedItem);
+			
 			this.props.setActiveFestival(this.state.selectedItem);
 		} catch (error) {
 			alert('Network Error');
@@ -128,12 +130,12 @@ class FestivalListBuilder extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({festbot}) => {
 	return {
-		webviewMenu: state.webviewMenu,
+		webviewMenu: festbot.webviewMenu,
 		userData: {
-			userId: state.userId,
-			activeFestival: state.activeFestival
+			userId: festbot.userId,
+			activeFestival: festbot.activeFestival
 		}
 	};
 };

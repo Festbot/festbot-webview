@@ -51,12 +51,14 @@ handleChange = value => {
 
 
   render() {
+
     let spotifyId = ''
     if (this.state.artist) {
       spotifyId = this.state.artist.spotify;
       
     }
 
+   
 		const eventList = this.state.events.map((event,index)=>{
 			return (
 				<li>
@@ -95,8 +97,8 @@ handleChange = value => {
             <p>{moment(this.props.event.startDate).format('hh:mm')}<br/>{moment(this.props.event.startDate).format('MMM Do (dddd)')}</p>
           </div>
           <div style={{width:'50%'}}>
-            <h2>End time:</h2>
-            <p>{moment(this.props.event.endDate).format('hh:mm')}<br/>{moment(this.props.event.endDate).format('MMM Do (dddd)')}</p>
+          <h2>End time:</h2>
+          {this.props.event.endDate&&<p>{moment(this.props.event.endDate).format('hh:mm')}<br/>{moment(this.props.event.endDate).format('MMM Do (dddd)')}</p>}
          </div> 
         </div> 
 
@@ -119,7 +121,7 @@ handleChange = value => {
         </div>         
 
         <div className={classes.detailsContentGenre}>
-        {this.state.artist.genres && this.state.artist.genres.map((genre,index) =>{
+        {this.state.artist&&this.state.artist.genres && this.state.artist.genres.map((genre,index) =>{
           return <div id={index} key={index} className={classes.inverse}>{genre}</div>
         })}
         </div>

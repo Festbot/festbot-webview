@@ -108,7 +108,7 @@ export const serviceTypes = [
 	},
 	{
 		name:"First Aid",
-		key:"first-aid"
+		key:"first_aid"
 	},
 	{
 		name:"Information",

@@ -176,7 +176,7 @@ class FestivalProgramListItem extends Component {
 						<div className={classes.stage}>{propsEventLocation}</div>
 						<div className={classes.stage} />
 						{this.onAir()}
-						<div className={classes.progressBar} style={{width:this.getProgress()+'%'}} />
+						{this.props.event.endDate&&<div className={classes.progressBar} style={{width:this.getProgress()+'%'}} />}
 						<div className={classes.details} style={{ maxHeight: this.props.isOpenDetails ? '880px' : '0px', padding: this.props.isOpenDetails ? '0' : '0px' }}>
 							{renderingDetails}
 						</div>

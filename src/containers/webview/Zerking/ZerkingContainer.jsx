@@ -109,7 +109,7 @@ export class ZerkingContainer extends Component {
 				</Helmet>
 
 				<Map pos={this.props.pos}>
-					{this.props.pois.map(poi => <Marker key={poi._id} pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} />)}
+					{this.props.pois.map(poi => <Marker key={poi._id} pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} iconType={poi.category} />)}
 
 					<Marker pos={{ lat: 31.231416, lng: 121.573701 }} />
 				</Map>
@@ -127,7 +127,7 @@ export class ZerkingContainer extends Component {
 							{this.state.isOpen.Drinks && <PoiSelector poiTypes={drinkTypes} festival={this.props.activeFestival} pos={this.props.pos} />}
 							<div onClick={this.isOpenToggleHandler} className={classes.button} id="Services">{`Services (${serviceTypes.length})`}</div>
 							{this.state.isOpen.Services && <PoiSelector poiTypes={serviceTypes} festival={this.props.activeFestival} pos={this.props.pos} />}
-							{this.props.pois && <div className={classes.button}>{`${this.props.pois.length} POI's of ${this.props.activeFestival.name}`}</div>}
+							{this.props.pois.length && (<div className={classes.button}>{`${this.props.pois.length} POI's of ${this.props.activeFestival.name}`}</div>)}
 							<PoiContaier pois={this.props.pois} festival={this.props.activeFestival} pos={this.props.pos} />
 						</div>
 					)}
