@@ -34,6 +34,35 @@ const FestivalItem = styled.div`
 		background-color: rgb(189, 0, 08);
 	}
 `;
+
+
+const FixedAddButton = styled.div`
+
+
+background-color: rgb(0, 199, 88);
+text-align: center;
+width: 100%;
+
+padding: 20px 10px;
+font-size: 120%;
+color: white;
+
+font-weight: 100;
+cursor: pointer;
+box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+
+position:fixed;
+bottom:0;
+z-index:1;
+
+
+&:hover {
+	background-color: rgb(189, 0, 08);
+}
+`;
+
+
+
 const Dots = styled.div`
 	width: 10px;
 	display: inline-block;
@@ -49,7 +78,9 @@ const Dot = styled.div`
 `;
 
 export class FestivalSelector extends Component {
-
+	state ={
+		showFixed:false
+	}
 	componentWillMount(){
 	//	this.visibilityActionHandler()
 	}
@@ -122,6 +153,7 @@ export class FestivalSelector extends Component {
 					</Dots>
 				</FestivalItem>
 				</VisibilityControl>
+				{this.state.showFixed&&<FixedAddButton onClick={this.props.onClick}>{`Add ${this.props.itemsToZerking.length} POI to ${this.props.festival.name}`}</FixedAddButton>}
 			</div>
 		);
 	}

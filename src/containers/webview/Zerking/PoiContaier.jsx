@@ -12,6 +12,19 @@ import { getFestivalPois} from '../../../store/actions/actions.js';
 
 import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
 
+  const DirectionMarker = styled.div`
+  position:absolute;
+  margin:0 auto;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  transform: translateX(${props => props.direction}px);
+  height:100%;
+  width:3px;
+  background-color:red;
+
+  `
 
   const PoiItem = styled.div`
   margin: 50px;
@@ -66,12 +79,27 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
     this.setState({heading:direction})
   }
 
+  calculateDirection = (lat1,lng1,lat2,lng2) => {
+    const direction= getDirection(lat1,lng1,lat2,lng2)
+    const compass = this.state.heading
+    // ne kerdezd miert de igy lehet kiszamolni, h merre kell menni
+    let x = (compass-direction)
+    if(direction>compass) {x=-x}
+    if (x>180) {x=x-360}
+    if((compass-direction)>0) {x=-x}
+
+    return x.toFixed()
+  }
+
+
+
   renderPois = (poi) =>{
    
       return(<PoiItem key={poi._id} ><VisibilityControl always effect="zoom">
+        <DirectionMarker direction={this.calculateDirection(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)} />
         <LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}</LocationInfo>
         {poi.name||poi.category}
-        <ResetButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} >X</ResetButton>{`[${this.state.heading}]`}{getDirection(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}
+        <ResetButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} >X</ResetButton>
         </VisibilityControl></PoiItem>)
     }
 
@@ -82,6 +110,7 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
     }
 
   render() {
+    console.log("[width]",window.innerWidth/2)
     console.log("[POIcontainer]",this.props.pois)
     const {pois} = this.props
     let poiRender=''
@@ -90,7 +119,7 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
     }
 
     return (
-      <div>
+      <div style={{paddingBottom:"60px"}}>
       
         {poiRender}
         

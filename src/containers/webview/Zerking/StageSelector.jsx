@@ -33,7 +33,7 @@ font-weight: 100;
 cursor: pointer;
 
 &:hover {
-  background-color: rgb(189, 150, 158);
+  background-color: rgb(219, 209, 208);
 }
 `
 
