@@ -9,7 +9,7 @@ import 'babel-polyfill';
 import * as Ramda from 'ramda';
 import moment from 'moment';
 import { getUserId } from '../../../components/apiHelper.js';
-import qs from 'query-string';
+
 
 //import HeaderBar from '../../../ui/HeaderBar.jsx';
 import SearchBar from '../../../ui/SearchBar.jsx';
