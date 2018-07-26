@@ -2,31 +2,18 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import FontIcon from 'material-ui/FontIcon';
-import RaisedButton from 'material-ui/RaisedButton';
-import DetailsIcon from 'material-ui/svg-icons/image/details';
 import Star from 'material-ui/svg-icons/toggle/star';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
-import Avatar from 'material-ui/Avatar';
-import { Rating } from 'material-ui-rating';
+
 import IconDetails from 'material-ui/svg-icons/navigation/expand-more';
 import IconClose from 'material-ui/svg-icons/navigation/close';
-import IconHeadset from 'material-ui/svg-icons/hardware/headset';
 
-import IconInfo from 'material-ui/svg-icons/action/event';
-
-import { Tabs, Tab } from 'material-ui/Tabs';
 // From https://github.com/oliviertassinari/react-swipeable-views
-import SwipeableViews from 'react-swipeable-views';
 
-import { GridList, GridTile } from 'material-ui/GridList';
 import { IconButton } from 'material-ui';
 
 import * as colors from 'material-ui/styles/colors';
 
-import { List, ListItem } from 'material-ui/List';
-
-import Divider from 'material-ui/Divider';
 
 import classes from './FestivalProgramListItem.css';
 
@@ -126,7 +113,9 @@ class FestivalProgramListItem extends Component {
 				endDate.endOf().from(now)}</div>
 		}
 		
+		nextEvent=(thisEvent)=>{
 
+		}
 		
 
 		return onAir

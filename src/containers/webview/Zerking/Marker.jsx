@@ -56,7 +56,7 @@ export class Marker extends Component {
 
 		const { pos, iconType = 'default' } = this.props;
 
-		console.log('addMarker');
+
 		let iconCategory=''
 		if (icons[iconType]) {iconCategory = iconType} else { iconCategory ='default' }
 

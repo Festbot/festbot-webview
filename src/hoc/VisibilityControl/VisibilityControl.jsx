@@ -15,6 +15,7 @@ export class VisibilityControl extends Component {
     }));
 
     this.checkVisible()
+    this.props.visibilityActionHandler&&this.props.visibilityActionHandler(true)
   }
 
   componentWillUnmount = () => {
@@ -25,15 +26,16 @@ export class VisibilityControl extends Component {
     const rect = this.div.getBoundingClientRect()
     if (rect.y<window.innerHeight && rect.y+rect.height >0) {
       this.state.visible ? null : this.setState((prevState) => ({visible: true}));
+      this.props.visibilityActionHandler&&this.props.visibilityActionHandler(this.state.visible)
     } 
     if (this.props.always && (rect.y>window.innerHeight || rect.y+rect.height <0)) {
       !this.state.visible ? null : this.setState((prevState) => ({visible: false}));
+      this.props.visibilityActionHandler&&this.props.visibilityActionHandler(this.state.visible)
     }
   }
 
 
   render() {
-
     let effect={}
     switch (this.props.effect) {
       case 'fade':

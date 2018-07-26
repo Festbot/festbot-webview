@@ -67,7 +67,11 @@ export class ZerkingContainer extends Component {
 		});
 	};
 
+
+
+
 	render() {
+		let renderFixedAddPoiButton=''
 		// console.log("[active]",this.props.activeFestival)
 		// console.log("[stages]",this.props.stages)
 		// console.log("[pois]",this.props.pois)

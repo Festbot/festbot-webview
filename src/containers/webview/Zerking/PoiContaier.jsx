@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components'
 
+import VisibilityControl from '../../../hoc/VisibilityControl/VisibilityControl.jsx'
+
 import {getDistance} from '../../../helpers/getDistance.js'
+import {getDirection} from '../../../helpers/getDirection.js'
+import {deviceOrientationListener,addDeviceOrientationListener,removeDeviceOrientationListener} from '../../../helpers/getCompassData.js'
 
 import { getFestivalPois} from '../../../store/actions/actions.js';
 
@@ -44,14 +48,31 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
   `
   export class PoiContaier extends Component {
 
+    state={
+      heading:0
+    }
+
+  componentDidMount(){
+    addDeviceOrientationListener(this.getCompassData)
+  }
+
+  componentWillUnmount() {
+    removeDeviceOrientationListener(this.getCompassData)
+  }
+
+  getCompassData =(event)=>{
+    const direction = deviceOrientationListener(event)
+    console.log(direction)
+    this.setState({heading:direction})
+  }
 
   renderPois = (poi) =>{
    
-      return(<PoiItem key={poi._id} >
+      return(<PoiItem key={poi._id} ><VisibilityControl always effect="zoom">
         <LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}</LocationInfo>
         {poi.name||poi.category}
-        <ResetButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} >X</ResetButton>
-        </PoiItem>)
+        <ResetButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} >X</ResetButton>{`[${this.state.heading}]`}{getDirection(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}
+        </VisibilityControl></PoiItem>)
     }
 
     deletePoi= async (item)=>{
@@ -70,7 +91,9 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
 
     return (
       <div>
+      
         {poiRender}
+        
       </div>
     )
   }

@@ -5,6 +5,8 @@ import styled from 'styled-components';
 
 import SearchBar from '../../../ui/SearchBar.jsx';
 
+import VisibilityControl from '../../../hoc/VisibilityControl/VisibilityControl.jsx'
+
 import { getFestivalByName } from '../../../helpers/festivalApiHelper.js';
 
 import { setFestival,getFestivalStages,getFestivalPois,setItemToZerking } from '../../../store/actions/actions.js';
@@ -48,6 +50,10 @@ const Dot = styled.div`
 
 export class FestivalSelector extends Component {
 
+	componentWillMount(){
+	//	this.visibilityActionHandler()
+	}
+
 
 	festivalListFilter = async keyword => {
 		const festivalList = await getFestivalByName(keyword);
@@ -77,19 +83,36 @@ export class FestivalSelector extends Component {
 		);
 	};
 
+
+	visibilityActionHandler=(itemVisible)=>{
+		if (!itemVisible) {
+			this.setState({showFixed:true})
+			console.log("Item not Visible")
+		} else {
+			this.setState({showFixed:false})
+			console.log("Item  Visible")
+		}
+}
+
+
 	render() {
 		if (!this.props.festival) {
 			return (
+			
 				<FestivalSelectorContainer>
 					<FestivalItem style={{ backgroundColor: 'rgb(229, 0, 88)' }}>{`Select Festival`}</FestivalItem>
 					<SearchBar searchQueryChanged={this.festivalListFilter} placeholder="Search Festival" />
 					{this.festivalListRender}
 				</FestivalSelectorContainer>
+
 			);
 		}
 
 		return (
 			<div>
+
+			<VisibilityControl  always={true} visibilityActionHandler={this.visibilityActionHandler}>
+					
 				<FestivalItem onClick={this.props.onClick} style={{ backgroundColor: 'rgb(0, 199, 88)' }}>
 				{`Add ${this.props.itemsToZerking.length} here ${this.props.festival.name}`}
 					<Dots onClick={() => this.setActiveFestival()}>
@@ -98,6 +121,7 @@ export class FestivalSelector extends Component {
 						<Dot />
 					</Dots>
 				</FestivalItem>
+				</VisibilityControl>
 			</div>
 		);
 	}

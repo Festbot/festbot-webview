@@ -1,4 +1,3 @@
-import React from 'react'
 
 export const getDistance = (lat1,lon1,lat2,lon2) => {
 

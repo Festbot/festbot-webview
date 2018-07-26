@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import styled from 'styled-components'
 
+import VisibilityControl from '../../../hoc/VisibilityControl/VisibilityControl.jsx'
+
 import {getDistance} from '../../../helpers/getDistance.js'
 import { isNull } from 'util';
 import { setItemToZerking,getFestivalStages} from '../../../store/actions/actions.js';
@@ -88,12 +90,14 @@ export class StageSelector extends Component {
       return(<StageItem isZerked key={stage.name} >
         <LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,stage.coordinates.lat, stage.coordinates.lng)}</LocationInfo>
         {stage.name}
-        <ResetButton onClick={()=>this.resetStageLocation(stage)}>X</ResetButton>
-        </StageItem>)
+        <ResetButton onClick={()=>this.resetStageLocation(stage)}>X</ResetButton></StageItem>
+        )
     }
 
-    return (<StageItem onClick={()=>this.setItemToZerking(stage)} key={stage.name}>{stage.name}
+    return (<StageItem onClick={()=>this.setItemToZerking(stage)} key={stage.name}>
+      {stage.name}
       <ResetButton>+</ResetButton>
+      
       </StageItem>)
   }
 
