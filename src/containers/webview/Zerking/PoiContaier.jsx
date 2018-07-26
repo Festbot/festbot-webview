@@ -88,6 +88,8 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
     if (x>180) {x=x-360}
     if((compass-direction)>0) {x=-x}
 
+    const unit=(window.innerWidth*0.8)/360
+    x = unit*x
     return x.toFixed()
   }
 
