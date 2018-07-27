@@ -53,7 +53,7 @@ box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
 
 position:fixed;
 bottom:0;
-z-index:1;
+z-index:5;
 
 
 &:hover {

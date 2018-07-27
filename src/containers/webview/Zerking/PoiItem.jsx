@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+
 import { connect } from 'react-redux';
 import styled from 'styled-components'
 
 import {icons} from './mapIcons.js'
+import Hammer from 'hammerjs'
 
 import VisibilityControl from '../../../hoc/VisibilityControl/VisibilityControl.jsx'
 
@@ -21,6 +23,19 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
   height:32px;
  
  `
+  const DeleteButton = styled.div `
+  position: absolute;
+  right:10px;
+ 
+  width:80px;
+  background-color:red;
+  margin:5px;
+  text-align:center;
+  font-size:120%;
+  color:white;
+  padding:11px 0;
+  border-radius:2px;
+  `
 
   const PoiItem = styled.div`
   position:relative;
@@ -41,7 +56,10 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
   border-radius: 3px;
   font-weight: 100;
   cursor: pointer;
+  transition: all 0.3s ease-out;
 
+  transform: translateX(${props => props.swiped? -100:0}px);
+  z-index:2;
   
   `
 
@@ -70,22 +88,65 @@ margin:0 auto;
   right:10px;
   
   `
-  export class PoiContaier extends Component {
 
-    state={
-      heading:0
-    }
 
- 
 
-  renderPois = (poi) =>{
+export class PoiItem extends Component {
+  state={
+    heading:0,
+    swiped:0
+  }
+
+
+  componentDidMount() {
+    const mc = new Hammer(e)
+    mc.on("swipeleft", ()=>{
+      this.setState({swiped:mc.element.id})
+    })
+  }
+
+  componentWillMount(){
+
+  }
+
+
+  addSwipe=(e)=> {
+    const mc = new Hammer(e)
+    mc.on("swipeleft", ()=>{
+      this.setState({swiped:mc.element.id})
+    })
+    mc.on("swiperight", ()=>{
+      this.setState({swiped:0})
+    })
+  }
+
+
+
+
+  deletePoi= async (item)=>{
+
+    await deleteItemFromPois(item)
+    await this.props.getFestivalPois(this.props.festival._id)
+  }
+
+
+
+  render() {
+
+
+
+    renderPois = (poi) =>{
 
       const iconType= poi.category
       let iconCategory=''
       if (icons[iconType]) {iconCategory = iconType} else { iconCategory ='default' }
       const iconUrl = icons[iconCategory].icon
+     
+      const isSwiped = (this.state.swiped==poi._id)
    
-      return(<PoiItem key={poi._id} >
+      return(<div style={{position: 'relative'}} key={poi._id} >
+      <DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)}>Delete</DeleteButton>
+        <PoiItem innerRef={this.addSwipe} swiped={isSwiped} id={poi._id} >
         <Navigation  poi={poi} pos={this.props.pos} />
         <VisibilityControl always effect="zoom">
         <Flexbox>
@@ -94,43 +155,27 @@ margin:0 auto;
         
         <PoiTitle>{poi.name||poi.category}</PoiTitle>
         <LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}</LocationInfo>
-        <ResetButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} >X</ResetButton>
-        </Flexbox>
         
-        </VisibilityControl></PoiItem>)
+        </Flexbox>
+       
+        </VisibilityControl></PoiItem>
+        
+        </div>)
     }
 
-    deletePoi= async (item)=>{
 
-      await deleteItemFromPois(item)
-      await this.props.getFestivalPois(this.props.festival._id)
-    }
 
-  render() {
 
-    const {pois} = this.props
-    let poiRender=''
-    if (pois) {
-      poiRender= pois.map(this.renderPois)
-    }
+
+
+
 
     return (
-      <div style={{paddingBottom:"60px"}}>
-      
-        {poiRender}
+      <div>
         
       </div>
     )
   }
 }
 
-
-
-const mapDispatchToProps = dispatch => {
-	return {
-		getFestivalPois: festivalId => dispatch(getFestivalPois(festivalId)),
-	};
-};
-
-
-export default connect(null, mapDispatchToProps)(PoiContaier)
+export default PoiItem

@@ -13,8 +13,10 @@ export const getDistance = (lat1,lon1,lat2,lon2) => {
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
     var d = R * c*1000; // Distance in m
 
+    if (d>19999) {return `${(d/1000).toFixed()}km`}
     if (d>1999) {return `${(d/1000).toFixed(2)}km`}
 
+    
     return `${d.toFixed()}m`;
 }
   

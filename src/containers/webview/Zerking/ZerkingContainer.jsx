@@ -72,40 +72,7 @@ export class ZerkingContainer extends Component {
 
 	render() {
 		let renderFixedAddPoiButton=''
-		// console.log("[active]",this.props.activeFestival)
-		// console.log("[stages]",this.props.stages)
-		// console.log("[pois]",this.props.pois)
-		// console.log("[itemsToZerking]",this.props.itemsToZerking)
-
-		// var beaches = [
-		// 	['Bondi Beach', -33.890542, 151.274856, 4],
-		// 	['Coogee Beach'-33.890542, 151.274856, 5],
-		// 	['Cronulla Beach', -34.028249, 151.157507, 3],
-		// 	['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-		// 	['Maroubra Beach', -33.950198, 151.259302, 1]
-		// ];
-
-		// var image = {
-		// 	url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-		// 	// This marker is 20 pixels wide by 32 pixels high.
-		// 	size: new google.maps.Size(20, 32),
-
-		// 	// The origin for this image is (0, 0).
-		// 	origin: new google.maps.Point(0, 0),
-		// 	// The anchor for this image is the base of the flagpole at (0, 32).
-		// 	anchor: new google.maps.Point(0, 32)
-		// };
-
-		// var shape = {
-		// 	coords: [1, 1, 1, 20, 18, 20, 18, 1],
-		// 	type: 'poly'
-		// };
-
-		// const poi = beaches.map(beach => {
-		// return (
-		//   <Marker position={{lat: beach[1], lng: beach[2]}} icon={image} title={beach[0]}></Marker>
-		// )
-		// });
+		
 		return (
 			<div>
 				<Helmet>
@@ -113,9 +80,10 @@ export class ZerkingContainer extends Component {
 				</Helmet>
 
 				<Map pos={this.props.pos}>
-					{this.props.pois.map(poi => <Marker key={poi._id} pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} iconType={poi.category} />)}
+				{this.props.pois.map(poi => <Marker key={poi._id} pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} iconType={poi.category} />)}
+				{this.props.stages&&this.props.stages.map(stage => <Marker key={stage._id} pos={{ lat: stage.coordinates.lat, lng: stage.coordinates.lng }} iconType={stage.category} />)}
 
-					<Marker pos={{ lat: 31.231416, lng: 121.573701 }} />
+					
 				</Map>
 
 				<div className={classes.container}>

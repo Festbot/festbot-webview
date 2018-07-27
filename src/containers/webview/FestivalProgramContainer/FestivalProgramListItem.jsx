@@ -113,9 +113,7 @@ class FestivalProgramListItem extends Component {
 				endDate.endOf().from(now)}</div>
 		}
 		
-		nextEvent=(thisEvent)=>{
 
-		}
 		
 
 		return onAir
