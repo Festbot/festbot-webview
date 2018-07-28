@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import styled from 'styled-components'
 
+import {icons} from './mapIcons.js'
 
 import {getDistance} from '../../../helpers/getDistance.js'
 import { isNull } from 'util';
@@ -10,6 +11,19 @@ import { addItemToZerking, removeItemToZerking, getFestivalPois} from '../../../
 
 import { addItemToVenues } from '../../../helpers/festivalApiHelper.js';
 
+const  MapIcon = styled.img`
+position: relative;
+ padding-left:5px;
+ width:32px;
+ height:32px;
+ margin:0 auto;
+`
+
+const MapIconTitle = styled.div`
+padding:5px;
+font-size:80%;
+
+`
 
 const PoiItem = styled.div`
 text-align: center;
@@ -25,6 +39,9 @@ border-radius: 3px;
 font-weight: 100;
 cursor: pointer;
 flex: 1 auto;
+display:flex;
+flex-direction:column;
+alig-items:ceter;
 
 `
 const PoiContainer= styled.div`
@@ -72,9 +89,14 @@ export class PoiSelector extends Component {
 
   renderPoi = (poiType) =>{
 
+    const iconType= poiType.key
+      let iconCategory=''
+      if (icons[iconType]) {iconCategory = iconType} else { iconCategory ='default' }
+      const iconUrl = icons[iconCategory].icon
+      
     return (
       <PoiItem isToggledForZerkig={this.isToggledForZerkig(poiType.key)} onClick={()=>this.setItemToZerking(poiType)} key={poiType.key}>
-        {poiType.name}
+      <MapIcon src={iconUrl}/><MapIconTitle>{poiType.name}</MapIconTitle>
       </PoiItem>)
   }
 
