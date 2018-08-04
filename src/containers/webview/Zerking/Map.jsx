@@ -82,5 +82,5 @@ class Map extends Component {
 }
 
 export default wrapper({
-	apiKey: 'AIzaSyDTCkVlGg_KCM_MH7WM3Yd-gXlhPhaWvFw'
+	apiKey: 'AIzaSyC49vNbH1LIEEtQtY6KxUi7MkTZZqjLIgg'
 })(Map);

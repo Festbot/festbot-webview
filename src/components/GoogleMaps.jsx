@@ -23,14 +23,14 @@ export class GoogleMaps extends Component {
 
   mapsItem = () =>{
     if (this.state.stage==''){return}
- 
+
     if (this.state.stage.coordinates.lat==null){
       return <p>Map and Navigation will be available once the Location of the event has been confirmed by the Festbot team.</p>
     }
     return (<div>     <img className={classes.map} onClick={this.handler} src={this.getStaticMapUrl(this.state.stage.coordinates.lat,this.state.stage.coordinates.lng)}/>
     <p>Click for navigation</p>
       </div>
- 
+
     )
   }
 
@@ -46,18 +46,18 @@ export class GoogleMaps extends Component {
         size: '200x200',
         maptype: 'roadmap',
         markers: `color:red|${lat},${lng}`,
-        key: 'AIzaSyDTCkVlGg_KCM_MH7WM3Yd-gXlhPhaWvFw',
-      })
+        key: 'AIzaSyC49vNbH1LIEEtQtY6KxUi7MkTZZqjLIgg',
+	  })
     );
   };
 
 
   render() {
-    
+
 
     return (
       <div>
-      <div className={classes.title}>{this.props.stageName}</div>  
+      <div className={classes.title}>{this.props.stageName}</div>
       {this.mapsItem()}
 
       </div>
