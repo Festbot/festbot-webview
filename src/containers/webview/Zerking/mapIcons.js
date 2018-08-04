@@ -107,5 +107,14 @@ export const icons = {
 	},	
 	stage: {
 		icon: festbot + '669ecb31-4cc0-48e4-9c06-47ad02b3f6b6' + iconSize
+	},	
+	glutenfree: {
+		icon: festbot + '71d7ebbe-15cd-4b6e-a50f-348f29c35a18' + iconSize
+	},	
+	soup: {
+		icon: festbot + '9c45601f-1b4e-4967-8049-75170651041a' + iconSize
+	},	
+	pasta: {
+		icon: festbot + '190f885d-7501-4bc5-9b23-d840afe7f3ce' + iconSize
 	}
 };

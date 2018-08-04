@@ -30,6 +30,18 @@ export const foodTypes = [
 	{
 		name:"Vegan",
 		key:"vegan"
+	},
+	{
+		name:"Pasta",
+		key:"pasta"
+	},
+	{
+		name:"Soup",
+		key:"soup"
+	},
+	{
+		name:"Gluten free",
+		key:"glutenfree"
 	}
 ] 
 
@@ -87,7 +99,7 @@ export const serviceTypes = [
 		key:"taxi"
 	},
 	{
-		name:"Supermarket",
+		name:"Grocery",
 		key:"supermarket"
 	},
 	{

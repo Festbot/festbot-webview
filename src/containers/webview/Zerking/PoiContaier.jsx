@@ -23,7 +23,6 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
     }
 
 
-
   render() {
 
     const {pois,pos,festival} = this.props
