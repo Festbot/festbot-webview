@@ -145,7 +145,7 @@ export class FestivalSelector extends Component {
 			<VisibilityControl  always={true} visibilityActionHandler={this.visibilityActionHandler}>
 					
 				<FestivalItem onClick={this.props.onClick} style={{ backgroundColor: 'rgb(0, 199, 88)' }}>
-				{`Add ${this.props.itemsToZerking.length} here ${this.props.festival.name}`}
+				{this.props.itemsToZerking.length?`Add ${this.props.itemsToZerking.length} here ${this.props.festival.name}`:`${this.props.festival.name}`}
 					<Dots onClick={() => this.setActiveFestival()}>
 						<Dot />
 						<Dot />
@@ -153,7 +153,7 @@ export class FestivalSelector extends Component {
 					</Dots>
 				</FestivalItem>
 				</VisibilityControl>
-				{this.state.showFixed&&<FixedAddButton onClick={this.props.onClick}>{`Add ${this.props.itemsToZerking.length} POI to ${this.props.festival.name}`}</FixedAddButton>}
+				{this.props.itemsToZerking.length?this.state.showFixed&&<FixedAddButton onClick={this.props.onClick}>{`Add ${this.props.itemsToZerking.length} POI to ${this.props.festival.name}`}</FixedAddButton>:``}
 			</div>
 		);
 	}
