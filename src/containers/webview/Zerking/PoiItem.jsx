@@ -15,6 +15,7 @@ import {getDistance} from '../../../helpers/getDistance.js'
 import { getFestivalPois} from '../../../store/actions/actions.js';
 
 import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
+import { create } from 'domain';
 
  const  MapIcon = styled.img`
  position: relative;
@@ -37,7 +38,7 @@ import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
   border-radius:2px;
   `
 
-  const PoiItem = styled.div`
+  const Poi = styled.div`
   position:relative;
   margin: 50px;
   
@@ -92,6 +93,11 @@ margin:0 auto;
 
 
 export class PoiItem extends Component {
+constructor(props){
+  super(props);
+  this.itemRef = React.createRef();
+}
+
   state={
     heading:0,
     swiped:0
@@ -99,18 +105,25 @@ export class PoiItem extends Component {
 
 
   componentDidMount() {
-    const mc = new Hammer(e)
-    mc.on("swipeleft", ()=>{
-      this.setState({swiped:mc.element.id})
+    this.mc = new Hammer(this.itemRef.current)
+    
+    this.mc.on("swipeleft", ()=>{
+      this.setState({swiped:this.itemRef.current.id})
     })
-  }
+    this.mc.on("swiperight", ()=>{
+      this.setState({swiped:0})
 
-  componentWillMount(){
+    })
+}
 
+  componentWillUnmount(){
+    this.mc.off("swipeleft")
+    this.mc.off("swiperight")
   }
 
 
   addSwipe=(e)=> {
+    console.log(e)
     const mc = new Hammer(e)
     mc.on("swipeleft", ()=>{
       this.setState({swiped:mc.element.id})
@@ -126,54 +139,37 @@ export class PoiItem extends Component {
   deletePoi= async (item)=>{
 
     await deleteItemFromPois(item)
-    await this.props.getFestivalPois(this.props.festival._id)
+    await this.props.getFestivalPois(this.props.festivalId)
   }
 
 
 
   render() {
-
-
-
-    renderPois = (poi) =>{
-
+    const {poi} = this.props
       const iconType= poi.category
       let iconCategory=''
+
       if (icons[iconType]) {iconCategory = iconType} else { iconCategory ='default' }
+
       const iconUrl = icons[iconCategory].icon
-     
       const isSwiped = (this.state.swiped==poi._id)
-   
-      return(<div style={{position: 'relative'}} key={poi._id} >
-      <DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)}>Delete</DeleteButton>
-        <PoiItem innerRef={this.addSwipe} swiped={isSwiped} id={poi._id} >
-        <Navigation  poi={poi} pos={this.props.pos} />
-        <VisibilityControl always effect="zoom">
-        <Flexbox>
-        
-        <MapIcon src={iconUrl}/>
-        
-        <PoiTitle>{poi.name||poi.category}</PoiTitle>
-        <LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}</LocationInfo>
-        
-        </Flexbox>
-       
-        </VisibilityControl></PoiItem>
-        
-        </div>)
-    }
-
-
-
-
-
-
 
 
     return (
-      <div>
-        
+     
+      <div style={{position: 'relative'}}  >
+      <DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)}>Delete</DeleteButton>
+        <Poi innerRef={this.itemRef} swiped={isSwiped} id={poi._id} >
+          <Navigation  poi={poi} pos={this.props.pos} />
+          <VisibilityControl always effect="zoom">
+            <Flexbox>
+              <MapIcon src={iconUrl}/>
+              <PoiTitle>{poi.name||poi.category}</PoiTitle>
+              <LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}</LocationInfo>
+            </Flexbox>
+        </VisibilityControl></Poi>
       </div>
+
     )
   }
 }
