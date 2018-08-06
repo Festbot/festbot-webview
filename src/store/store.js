@@ -1,9 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 
-import middleware from './middleware.js'
-import reducers from './reducers/'
+import middlewareOther from './middleware/middlewareOther.js'
+import middlewareUser from './middleware/middlewareUser.js'
+import reducers from './reducers/index.js'
 
 
-const store = createStore(reducers,applyMiddleware(middleware));
+const store = createStore(reducers,applyMiddleware(middlewareOther,middlewareUser));
 
 export default store;

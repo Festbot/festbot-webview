@@ -12,7 +12,7 @@ import Navigation from './Navigation.jsx'
 
 import {getDistance} from '../../../helpers/getDistance.js'
 
-import { getFestivalPois} from '../../../store/actions/actions.js';
+import { getFestivalPois} from '../../../store/actions';
 
 import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
 import { create } from 'domain';
@@ -28,32 +28,33 @@ import { create } from 'domain';
   position: absolute;
   right:10px;
  
-  width:80px;
+  width:90px;
   background-color:red;
-  margin:5px;
+margin:1px 0;
   text-align:center;
   font-size:120%;
   color:white;
-  padding:11px 0;
-  border-radius:2px;
+  padding:18px 0;
+  border-radius:3px;
+  transition: all 0.3s ease-out;
+  opacity:${props => props.swiped? 1:0.01};
   `
 
   const Poi = styled.div`
   position:relative;
-  margin: 50px;
   
-  background-color: white ;
+  background-color: rgba(22,22,22,0.9) ;
 
   color: rgb(59, 40, 78);
-  border:1px solid rgba(59, 40, 78,0.5);
+ color: #ddd;
   
   text-align: center;
   width: 90%;
-  margin:10px auto;
-  padding: 10px 10px;
+  margin: 10px auto;
+  padding: 15px 10px;
   font-size: 120%;
   
-  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+
   border-radius: 3px;
   font-weight: 100;
   cursor: pointer;
@@ -100,11 +101,13 @@ constructor(props){
 
   state={
     heading:0,
-    swiped:0
+    swiped:0,
+    isVisible:false
   }
 
 
   componentDidMount() {
+    if (this.props.readOnly) {return}
     this.mc = new Hammer(this.itemRef.current)
     
     this.mc.on("swipeleft", ()=>{
@@ -117,6 +120,7 @@ constructor(props){
 }
 
   componentWillUnmount(){
+    if (this.props.readOnly) {return}
     this.mc.off("swipeleft")
     this.mc.off("swiperight")
   }
@@ -142,6 +146,14 @@ constructor(props){
     await this.props.getFestivalPois(this.props.festivalId)
   }
 
+  visibilityActionHandler=(itemVisible)=>{
+		if (!itemVisible) {
+			this.setState({isVisible:false})
+		} else {
+			this.setState({isVisible:true})
+		}
+}
+
 
 
   render() {
@@ -158,14 +170,14 @@ constructor(props){
     return (
      
       <div style={{position: 'relative'}}  >
-      <DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)}>Delete</DeleteButton>
+      <DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} swiped={isSwiped} >Delete</DeleteButton>
         <Poi innerRef={this.itemRef} swiped={isSwiped} id={poi._id} >
-          <Navigation  poi={poi} pos={this.props.pos} />
-          <VisibilityControl always effect="zoom">
+          {this.state.isVisible&&<Navigation  poi={poi} pos={this.props.pos} />}
+          <VisibilityControl always visibilityActionHandler={this.visibilityActionHandler} effect="zoom">
             <Flexbox>
               <MapIcon src={iconUrl}/>
               <PoiTitle>{poi.name||poi.category}</PoiTitle>
-              <LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}</LocationInfo>
+              {this.state.isVisible&&<LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}</LocationInfo>}
             </Flexbox>
         </VisibilityControl></Poi>
       </div>

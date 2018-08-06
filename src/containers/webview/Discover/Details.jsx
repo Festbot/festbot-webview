@@ -4,7 +4,7 @@ import classes from './DiscoverContainer.css';
 import * as colors from 'material-ui/styles/colors';
 import axios from 'axios';
 
-import { saveFavouriteEvent, removeFavouriteEvent } from '../../../components/apiHelper.js';
+import { saveFavouriteEvent, removeFavouriteEvent } from '../../../helpers/apiHelper';
 
 import IconHeadset from 'material-ui/svg-icons/hardware/headset';
 import IconInfo from 'material-ui/svg-icons/action/event';
@@ -17,7 +17,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import moment from 'moment';
 
-import { getEventsByArtist } from './../../../helpers/eventApiHelper.js';
+import { getEventsByArtist } from '../../../helpers/eventApiHelper';
 
 export class Details extends Component {
 	state = {

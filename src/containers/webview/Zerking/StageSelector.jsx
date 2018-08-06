@@ -9,7 +9,7 @@ import {getDistance} from '../../../helpers/getDistance.js'
 
 import Navigation from './Navigation.jsx'
 
-import { setItemToZerking,getFestivalStages} from '../../../store/actions/actions.js';
+import { setItemToZerking,getFestivalStages} from '../../../store/actions';
 
 import { addItemToVenues } from '../../../helpers/festivalApiHelper.js';
 
@@ -20,15 +20,15 @@ margin: 50px;
 background-color:  ${props => props.isZerked ? 'rgb(210,220,210)' : 'white'};  ;
 
 color: rgb(59, 40, 78);
-border:1px solid rgba(59, 40, 78,0.5);
+
 
 text-align: center;
 width: 90%;
 margin:10px auto;
-padding: 10px 10px;
+padding: 15px 10px;
 font-size: 110%;
 
-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+
 border-radius: 3px;
 font-weight: 100;
 cursor: pointer;

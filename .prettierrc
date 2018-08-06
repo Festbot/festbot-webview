@@ -4,4 +4,4 @@ semi: true
 bracketSpacing: true
 jsxBracketSameLine: false
 arrowParens: avoid
-printWidth: 240
+printWidth: 80

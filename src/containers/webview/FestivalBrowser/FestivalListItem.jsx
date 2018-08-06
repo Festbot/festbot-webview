@@ -7,7 +7,7 @@ import IconDetails from 'material-ui/svg-icons/navigation/expand-more';
 import IconClose from 'material-ui/svg-icons/navigation/close';
 import * as colors from 'material-ui/styles/colors';
 import classes from './festivalListItem.css';
-import FestivalListDetails from './FestivalListDetails.jsx';
+import FestivalListDetails from './FestivalListDetails';
 
 class FestivalListItem extends Component {
 	offset(el) {

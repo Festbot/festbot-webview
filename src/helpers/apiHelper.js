@@ -41,7 +41,7 @@ export function saveActiveFestbot(userId, festival) {
 	return axios(options);
 }
 
-export function getUserId(userId) {
+export async function getUserData(userId) {
 	const options = {
 		method: 'GET',
 		headers: { 'content-type': 'application/x-www-form-urlencoded' },
@@ -50,6 +50,6 @@ export function getUserId(userId) {
 		}),
 		url: 'https://api.festbot.com/users/' + userId
 	};
-
-	return axios(options);
+	const {data} = await axios(options)
+	return data;
 }

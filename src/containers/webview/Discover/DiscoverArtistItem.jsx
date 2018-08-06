@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 import classes from './DiscoverContainer.css';
 
-import Details from './Details.jsx'
+import Details from './Details'
 
 import IconDetails from 'material-ui/svg-icons/navigation/expand-more';
 import IconClose from 'material-ui/svg-icons/navigation/close';

@@ -58,10 +58,10 @@ export const icons = {
 		icon: festbot + 'b5e50f35-8970-4660-ae4e-86e014f35e58' + iconSize
 	},	
 	massage: {
-		icon: festbot + 'f31c6f5e-85d4-41be-b78f-dfc0f60677a5' + iconSize
+		icon: festbot + '90d93d50-fae8-487a-bca0-365ba5e9c782' + iconSize
 	},	
 	bike_storage: {
-		icon: festbot + '16965c32-abfb-403f-9ffd-0e91b597d4c0' + iconSize
+		icon: festbot + 'c0aa4bbc-c411-47fa-bd84-217343c98cf7' + iconSize
 	},	
 	beer: {
 		icon: festbot + 'b64d6ba8-5657-4ad8-a8d5-9007f1e9975b' + iconSize
@@ -94,7 +94,7 @@ export const icons = {
 		icon: festbot + 'ac1da83e-561a-423d-806f-c48cd77d5b88' + iconSize
 	},	
 	healthy_food: {
-		icon: festbot + '288a0deb-2482-4af6-b02b-63a09f98adaa' + iconSize
+		icon: festbot + '507e0ce8-f387-433f-a9bd-aa6b47c5c3aa' + iconSize
 	},	
 	breakfast: {
 		icon: festbot + '1aa2f496-dda8-4398-88ea-07ec020a1d88' + iconSize
@@ -103,7 +103,7 @@ export const icons = {
 		icon: festbot + 'dc30223c-26d2-4510-81f4-2f05a80f3434' + iconSize
 	},	
 	vegan: {
-		icon: festbot + '27b2b3c6-9ccd-4685-b0ff-174b7e3cffaf' + iconSize
+		icon: festbot + 'dd0fcc82-2aa3-457d-a95a-4f5eb2e7cadd' + iconSize
 	},	
 	stage: {
 		icon: festbot + '669ecb31-4cc0-48e4-9c06-47ad02b3f6b6' + iconSize

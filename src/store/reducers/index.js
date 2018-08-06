@@ -1,12 +1,14 @@
 import {  combineReducers } from 'redux';
 
-import ReducerFestbot from './reducer_festbot.js';
-import ReducerZerking from './reducer_zerking.js';
+import ReducerFestbot from './reducerFestbot.js';
+import ReducerZerking from './reducerZerking.js';
+import ReducerDiscover from './reducerDiscover.js';
 
 
 const rootReducer = combineReducers({
 	festbot: ReducerFestbot,
-	zerking: ReducerZerking
+	zerking: ReducerZerking,
+	discover: ReducerDiscover,
 });
 
 export default rootReducer;

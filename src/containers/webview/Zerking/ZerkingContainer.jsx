@@ -14,7 +14,7 @@ import PoiContaier from './PoiContaier.jsx';
 
 import { addItemToVenues, addItemToPois } from '../../../helpers/festivalApiHelper.js';
 
-import { setFestival, getFestivalStages, getFestivalPois, setItemToZerking } from '../../../store/actions/actions.js';
+import { setFestival, getFestivalStages, getFestivalPois, setItemToZerking } from '../../../store/actions';
 
 import { foodTypes, drinkTypes, serviceTypes } from './poiTypes.js';
 
@@ -72,7 +72,7 @@ export class ZerkingContainer extends Component {
 
 	render() {
 		let renderFixedAddPoiButton=''
-		
+		console.log(this.props)
 		return (
 			<div>
 				<Helmet>
@@ -109,7 +109,7 @@ export class ZerkingContainer extends Component {
 	}
 }
 
-const mapStateToProps = ({ zerking }) => {
+const mapStateToProps = ({  zerking }) => {
 	return {
 		activeFestival: zerking.activeFestival,
 		stages: zerking.stages,

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router';
 import axios from 'axios';
 import 'babel-polyfill';
 
-import { getUserId } from '../../../components/apiHelper.js';
+import { getUserData } from '../../../helpers/apiHelper.js';
 
 
 import classes from './FestbotBrowserContainer.css';
@@ -51,7 +51,7 @@ export class FestivalBrowserContainer extends Component {
 				//console.log('psid', psid);
 				try {
 					const userId = md5(psid);
-					const { data } = await getUserId(userId);
+					const data = await getUserData(userId);
 					this.props.setUser(data);
 				} catch (error) {
 					//	console.warn('get user data error', error);
@@ -60,7 +60,7 @@ export class FestivalBrowserContainer extends Component {
 			},
 			async err => {
 				//console.warn('no psid :(');
-				const { data } = await getUserId(this.props.userData.userId);
+				const data = await getUserData(this.props.userData.userId);
 				this.props.setUser(data);
 			}
 		);

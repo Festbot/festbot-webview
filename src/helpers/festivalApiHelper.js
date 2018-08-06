@@ -11,10 +11,18 @@ export const getFestivalByName = async function(keyword = '') {
 	return festivalData;
 };
 
+
+export const getFestivalDataById = async function (festivalId){
+	const { data: festival } = await axios.get(`https://api.festbot.com/festivals/${festivalId}`);
+	return festival
+}
+
+
+
 export const getStagesByFestivalId = async function(keyword = '') {
 	const {
 		data: { docs: festivalData }
-	} = await axios.post(`https://${ROOT_URL}/venues/_find`, { selector: { festivalId: { $regex: '(?i)' + keyword } } });
+	} = await axios.post(`https://${ROOT_URL}/venues/_find`, { selector: { festivalId: { $regex: '(?i)' + keyword } }, limit: 250 });
 
 	return festivalData;
 };

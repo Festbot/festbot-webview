@@ -7,7 +7,7 @@ import {icons} from './mapIcons.js'
 
 import {getDistance} from '../../../helpers/getDistance.js'
 import { isNull } from 'util';
-import { addItemToZerking, removeItemToZerking, getFestivalPois} from '../../../store/actions/actions.js';
+import { addItemToZerking, removeItemToZerking, getFestivalPois} from '../../../store/actions';
 
 import { addItemToVenues } from '../../../helpers/festivalApiHelper.js';
 
@@ -27,9 +27,10 @@ font-size:80%;
 
 const PoiItem = styled.div`
 text-align: center;
-background-color:  ${props => props.isToggledForZerkig ? 'rgb(210,220,210)' : 'white'};  ;
+background-color:  ${props => props.isToggledForZerkig ? 'rgb(80,100,0)' : 'rgba(22,22,22,0.9)'};  ;
 color: rgb(59, 40, 78);
-border:1px solid rgba(59, 40, 78,0.5);
+color:#ddd;
+
 margin:10px;
 padding: 10px 10px;
 font-size: 110%;

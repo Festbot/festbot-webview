@@ -13,7 +13,7 @@ const CenterMarker = styled.div`
  
   height:15%;
   width:2px;
-  background-color:rgba(20,20,20,0.4);
+  background-color:rgba(220,220,220,0.4);
   `
 const DirectionMarker = styled.div `
 position:absolute;
@@ -28,7 +28,11 @@ border-left: 9px solid transparent;
 border-right: 9px solid transparent;
 transform: translateX(${props => props.direction}px);
 
-border-top: 9px solid rgba(30,30,200,0.6);
+border-top: 9px solid rgba(${props =>{
+  if (props.direction>-30&&props.direction<30) {return '0,240,0,0.9'}
+  if ((props.direction<-15&&props.direction>-90)||(props.direction>15&&props.direction<90)){return '240,240,0,0.9'}
+  return '240,0,0,0.9'
+}});
 `
 
 

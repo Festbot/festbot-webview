@@ -1,39 +1,23 @@
 import React, { Component } from 'react';
-import Aux from '../../../hoc/Aux/Aux.jsx';
+
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import classes from './DiscoverContainer.css';
-import * as colors from 'material-ui/styles/colors';
-import axios from 'axios';
+
 import 'babel-polyfill';
-import * as Ramda from 'ramda';
-import moment from 'moment';
-import { getUserId } from '../../../components/apiHelper.js';
 
-
-//import HeaderBar from '../../../ui/HeaderBar.jsx';
 import SearchBar from '../../../ui/SearchBar.jsx';
-import CircularProgress from 'material-ui/CircularProgress';
-import Subheader from 'material-ui/Subheader';
-import Details from './Details.jsx';
+
 import DiscoverArtistItem from './DiscoverArtistItem.jsx';
 
-import IconDetails from 'material-ui/svg-icons/navigation/expand-more';
-import IconClose from 'material-ui/svg-icons/navigation/close';
-import IconHeadset from 'material-ui/svg-icons/hardware/headset';
-import IconInfo from 'material-ui/svg-icons/action/event';
-
-import md5 from 'md5';
-
-import { Tabs, Tab } from 'material-ui/Tabs';
-// From https://github.com/oliviertassinari/react-swipeable-views
-import SwipeableViews from 'react-swipeable-views';
 import ScrollToTop from 'react-scroll-up';
+
+import {initMatchingArtistsOfUser,updateSearchResults} from '../../../store/actions'
+import {getArtistsByNameGenre} from '../../../helpers/artistApiHelper.js'
+ 
 
 export class DiscoverContainer extends Component {
 	state = {
-		searchResults: [],
-		matchingArtists: [],
 		data: [],
 		yListOffset: 0,
 		activeDetails: '',
@@ -44,68 +28,21 @@ export class DiscoverContainer extends Component {
 
 	async componentDidMount() {
 		this.props.onViewChange('hide');
-
-		let {
-			data: { docs: data }
-		} = await axios.post('https://api.festbot.com/artists/_find', { selector: { name: { $regex: '(?i)' } }, limit: 100, sort: [{ featured: 'desc' }, { popularity: 'desc' }] });
-
-		this.setState({ searchResults: data, data: data });
-
+			
 		if (!this.props.match.params.artist_name == '') {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
 
-		MessengerExtensions.getContext(
-			'817793415088295',
-			async ({ psid }) => {
-				try {
-					const userId = md5(psid);
-					const { data } = await getUserId(userId);
-					this.props.setUser(data);
-					this.matchingArtists();
-				} catch (error) {
-					console.warn('get user data error', error);
-					alert('Network Error');
-				}
-			},
-			async err => {
-				console.warn('no psid :(');
-				const { data } = await getUserId(this.props.userData.userId);
-				this.props.setUser(data);
-				this.matchingArtists();
-			}
-		);
+		this.props.initMatchingArtistsOfUser()
+		
+		if (this.props.userData.userDataReceived) {
+			this.setState({
+				listTitle: `Artists for You`
+			});
+		}
+
 	}
 
-	matchingArtists = async () => {
-		if (!this.props.userData.userDataReceived) {
-			return;
-		}
-	
-		let {
-			data: { docs: exceptTopArtists }
-		} = await axios.post('https://api.festbot.com/artists/_find', {
-			selector: { genres: { $in: this.props.userData.topGenres }, $nor: [{ name: { $in: this.props.userData.topArtists } }] },
-			limit: 100,
-			sort: [{ featured: 'desc' }, { popularity: 'desc' }]
-		});
-
-		let {
-			data: { docs: topArtists }
-		} = await axios.post('https://api.festbot.com/artists/_find', {
-			selector: { name: { $in: this.props.userData.topArtists } },
-			limit: 100,
-			sort: [{ featured: 'desc' }, { popularity: 'desc' }]
-		});
-
-		const listOfPersonalPreferences = topArtists.concat(exceptTopArtists);
-
-		this.setState({
-			searchResults: listOfPersonalPreferences,
-			matchingArtists: listOfPersonalPreferences,
-			listTitle: `Artists for You`
-		});
-	};
 
 	detailsIsOpenHandler = e => {
 		if (this.state.activeDetails === e.currentTarget.id) {
@@ -123,34 +60,29 @@ export class DiscoverContainer extends Component {
 	};
 
 	artistKeywordFilter = async keyword => {
-		let {
-			data: { docs: filteredResults }
-		} = await axios.post('https://api.festbot.com/artists/_find', {
-			selector: { $or: [{ name: { $regex: '(?i)' + keyword } }, { genres: { $elemMatch: { $regex: '(?i)' + keyword } } }] },
-			limit: 100,
-			sort: [{ featured: 'desc' }, { popularity: 'desc' }]
-		});
+		
+		let filteredResults= await getArtistsByNameGenre(keyword)
 
 		if (filteredResults.length == 0) return;
-
+		this.props.updateSearchResults(filteredResults)
 		this.setState({
 			activeDetails: '',
 			isOpenDetails: false,
-			searchResults: filteredResults,
 			listTitle: `Search results: ${filteredResults.length == 100 ? '100+' : filteredResults.length}`
 		});
 
 		if (filteredResults.length == 1) {
+			this.props.updateSearchResults(filteredResults)
 			this.setState({
 				activeDetails: filteredResults[0].name,
 				isOpenDetails: true,
-				searchResults: filteredResults,
 				listTitle: ''
 			});
 		}
 
 		if (keyword == '' && !this.props.userData.userId == '') {
-			this.setState({ searchResults: this.state.matchingArtists, listTitle: 'Artists for You' });
+			this.setState({listTitle: 'Artists for You' });
+			this.props.updateSearchResults(this.props.matchingArtists)
 		}
 	};
 
@@ -189,7 +121,8 @@ export class DiscoverContainer extends Component {
 	};
 
 	render() {
-		const sliceOfArtist = this.state.searchResults.slice(this.state.yListOffset, this.state.yListOffset + 400);
+		if (!this.props.searchResults) {return <div></div>}
+		const sliceOfArtist = this.props.searchResults.slice(this.state.yListOffset, this.state.yListOffset + 400);
 
 		const artistList = sliceOfArtist.map((artist, index) => {
 			return (
@@ -225,7 +158,7 @@ export class DiscoverContainer extends Component {
 	}
 }
 
-const mapStateToProps = ({festbot}) => {
+const mapStateToProps = ({festbot,discover}) => {
 	return {
 		detailsPanelHeight: festbot.detailsPanelHeight,
 		userData: {
@@ -236,14 +169,20 @@ const mapStateToProps = ({festbot}) => {
 			topArtists: festbot.topArtists,
 			topGenres: festbot.topGenres,
 			userDataReceived: festbot.userDataReceived
-		}
+		},
+		searchResults: discover.searchResults,
+		matchingArtists:discover.matchingArtists
+
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
 		setUser: userData => dispatch({ type: 'SET_USER', value: userData }),
-		onViewChange: actualViewMenu => dispatch({ type: 'UPD_MENU', value: actualViewMenu })
+		onViewChange: actualViewMenu => dispatch({ type: 'UPD_MENU', value: actualViewMenu }),
+		initMatchingArtistsOfUser: ()=>dispatch(initMatchingArtistsOfUser()),
+		updateSearchResults:data=>dispatch(updateSearchResults(data))
+
 	};
 };
 

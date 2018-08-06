@@ -9,7 +9,7 @@ import VisibilityControl from '../../../hoc/VisibilityControl/VisibilityControl.
 
 import { getFestivalByName } from '../../../helpers/festivalApiHelper.js';
 
-import { setFestival,getFestivalStages,getFestivalPois,setItemToZerking } from '../../../store/actions/actions.js';
+import { setFestival,getFestivalStages,getFestivalPois,setItemToZerking } from '../../../store/actions';
 
 const FestivalSelectorContainer = styled.div`
 	display: flex;

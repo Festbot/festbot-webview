@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Consumer } from './Map.jsx';
-import {icons} from './mapIcons.js'
+import { Consumer } from './Map';
+import {icons} from './mapIcons'
 
 
 export class Marker extends Component {

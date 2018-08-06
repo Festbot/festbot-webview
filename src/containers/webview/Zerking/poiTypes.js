@@ -16,7 +16,7 @@ export const foodTypes = [
 		key:"gyros"
 	},
 	{
-		name:"Healthy",
+		name:"Healthy food",
 		key:"healthy_food"
 	},
 	{

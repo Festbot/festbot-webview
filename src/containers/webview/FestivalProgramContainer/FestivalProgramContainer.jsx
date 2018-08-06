@@ -5,7 +5,7 @@ import axios from 'axios';
 import 'babel-polyfill';
 import * as Ramda from 'ramda';
 import moment from 'moment';
-import { saveFavouriteEvent, removeFavouriteEvent } from '../../../components/apiHelper.js';
+import { saveFavouriteEvent, removeFavouriteEvent } from '../../../helpers/apiHelper.js';
 import { Helmet } from 'react-helmet';
 import SearchBar from '../../../ui/SearchBar.jsx';
 import CircularProgress from 'material-ui/CircularProgress';

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { saveActiveFestbot } from '../../../components/apiHelper.js';
+import { saveActiveFestbot } from '../../../helpers/apiHelper.js';
 import classes from './FestivalListBuilder.css';
 import * as Ramda from 'ramda';
 import FestivalListItem from './FestivalListItem.jsx';
