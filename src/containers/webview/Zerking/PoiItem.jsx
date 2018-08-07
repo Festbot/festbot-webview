@@ -104,6 +104,7 @@ constructor(props){
     swiped:0,
     isVisible:false
   }
+  static defaultProps={pos:{lat:0,lng:0},distance:0}
 
 
   componentDidMount() {
@@ -166,6 +167,14 @@ constructor(props){
       const iconUrl = icons[iconCategory].icon
       const isSwiped = (this.state.swiped==poi._id)
 
+      let distance
+      const d=this.props.distance
+      distance=`${d.toFixed()}m`
+      if (d>1999) {distance= `${(d/1000).toFixed(2)}km`}
+      if (d>9999) {distance= `${(d/1000).toFixed()}km`}
+      
+      
+
 
     return (
      
@@ -177,7 +186,7 @@ constructor(props){
             <Flexbox>
               <MapIcon src={iconUrl}/>
               <PoiTitle>{poi.name||poi.category}</PoiTitle>
-              {this.state.isVisible&&<LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,poi.coordinates.lat, poi.coordinates.lng)}</LocationInfo>}
+              {this.state.isVisible&&<LocationInfo>{distance}</LocationInfo>}
             </Flexbox>
         </VisibilityControl></Poi>
       </div>

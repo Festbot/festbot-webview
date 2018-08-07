@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-
-import { foodTypes, drinkTypes, serviceTypes } from '../Zerking/poiTypes.js';
-
 const Container = styled.div`
 background-color: #eee;
 background-size: cover;

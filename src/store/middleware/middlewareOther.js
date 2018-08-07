@@ -3,6 +3,8 @@ import {
 	SEARCH_BY_GENRE,
 	GET_FESTIVAL_STAGES,
 	GET_FESTIVAL_POIS,
+	ADD_ITEM_TO_SELECTOR,
+	REMOVE_ITEM_FROM_SELECTOR
 } from '../actions/actionTypes.js';
 
 import {
@@ -20,6 +22,9 @@ import {
 	updateFilteredResultArtistList,
 	setFestivalStages,
 	setFestivalPois,
+	setFestivalFilteredPois,
+	addItemToZerking,
+	removeItemToZerking
 
 } from '../actions';
 
@@ -46,6 +51,23 @@ export default store => next => async action => {
 			const pois = await getPoisByFestivalId(action.payload);
 			store.dispatch(setFestivalPois(pois));
 			break;
+		case ADD_ITEM_TO_SELECTOR:
+
+			const newFilterItem=[action.payload[0].category]
+			const updatedFilterItemArray = newFilterItem.concat(store.getState().zerking.filterItems)
+		
+			const filteredPois= store.getState().zerking.pois.filter(poi=>{
+				return updatedFilterItemArray.indexOf(poi.category)>-1
+			})
+
+			console.log("[MIDDLEWARE]",filteredPois)
+			store.dispatch(addItemToZerking(action.payload))
+			store.dispatch(setFestivalFilteredPois(filteredPois))
+		break;
+		case REMOVE_ITEM_FROM_SELECTOR:
+			store.dispatch(removeItemToZerking(action.payload))
+
+		break;
 	}
 
 	const result = next(action);

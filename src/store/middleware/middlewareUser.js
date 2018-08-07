@@ -2,7 +2,8 @@ import {
 	INIT_USER_DATA,
 	INIT_USER_ACTIVE_FESTIVAL_POIS,
 	INIT_USER_ACTIVE_FESTIVAL_STAGES,
-	INIT_MATCHING_ARTIST_OF_USER
+	INIT_MATCHING_ARTIST_OF_USER,
+	UPDATE_MY_POSITION,
 } from '../actions/actionTypes.js';
 
 import {
@@ -19,7 +20,9 @@ import getUserId from '../../helpers/getUserId.js';
 
 import { getUserData } from '../../helpers/apiHelper.js';
 
-import {getFestivalDataById} from '../../helpers/festivalApiHelper.js'
+import { getFestivalDataById } from '../../helpers/festivalApiHelper.js';
+
+import { getDistance } from '../../helpers/getDistance.js';
 
 import {
 	setUserData,
@@ -27,15 +30,17 @@ import {
 	getFestivalPois,
 	setListOfPersonalPreferences,
 	setUserActiveFestivalData,
+	setMyPosition,
+	setFestivalFilteredPois
 } from '../actions';
 
 export default store => next => async action => {
 	let activeFestivalData;
 	let activeFestival;
 	let userData;
-	console.log("[MIDDLEWARE]",action)
 	const userId = await getUserId();
-	if (!store.getState().userDataReceived) {
+
+	if (!store.getState().festbot.userDataReceived) {
 		userData = await getUserData(userId);
 	}
 
@@ -44,18 +49,19 @@ export default store => next => async action => {
 			store.dispatch(setUserData(userData));
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_POIS:
-			activeFestival = store.getState().activeFestival;
+			activeFestival = store.getState().festbot.activeFestival;
 			if (!activeFestival) {
 				activeFestival = userData.activeFestival;
 				store.dispatch(setUserData(userData));
-				activeFestivalData = await getFestivalDataById(userData.activeFestival);
-				console.log(activeFestivalData)
-				store.dispatch(setUserActiveFestivalData(activeFestivalData))
+				activeFestivalData = await getFestivalDataById(
+					userData.activeFestival
+				);
+				store.dispatch(setUserActiveFestivalData(activeFestivalData));
 			}
 			store.dispatch(getFestivalPois(activeFestival));
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_STAGES:
-			activeFestival = store.getState().activeFestival;
+			activeFestival = store.getState().festbot.activeFestival;
 			if (!activeFestival) {
 				activeFestival = userData.activeFestival;
 				store.dispatch(setUserData(userData));
@@ -73,6 +79,27 @@ export default store => next => async action => {
 			store.dispatch(
 				setListOfPersonalPreferences(listOfPersonalPreferences)
 			);
+			break;
+
+		case UPDATE_MY_POSITION:
+			if (!store.getState().zerking.filteredPois){return}
+			const poisWithDistance = store.getState().zerking.filteredPois.map(poi => {
+					return {
+						...poi,
+						distance: getDistance(
+							action.payload.lat,
+							action.payload.lng,
+							poi.coordinates.lat,
+							poi.coordinates.lng
+						)
+					};
+				});
+				const orderedPois= poisWithDistance.sort((a,b)=>{
+					return a.distance-b.distance;
+				})
+
+				console.log("ordered pois",orderedPois)
+			store.dispatch(setFestivalFilteredPois(orderedPois));
 			break;
 	}
 

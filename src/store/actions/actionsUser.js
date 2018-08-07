@@ -6,6 +6,8 @@ import {
   SET_USER_ACTIVE_FESTIVAL_DATA,
   INIT_MATCHING_ARTIST_OF_USER,
   SET_LIST_OF_PERSONAL_PREFERENCES,
+  UPDATE_MY_POSITION,
+
 
 
 } from './actionTypes.js'
@@ -56,6 +58,13 @@ export function setListOfPersonalPreferences(artists){
   return{
     type:SET_LIST_OF_PERSONAL_PREFERENCES,
     payload: artists
+  }
+}
+
+export function updateMyPosition(position){
+  return{
+    type:UPDATE_MY_POSITION,
+    payload: position
   }
 }
 

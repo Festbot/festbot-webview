@@ -4,10 +4,10 @@ import {
 } from '../actions/actionTypes.js';
 
 const initialState = {
-	itemsToZerking: []
-};
+  itemsToZerking:[]
+ }
 
-const reducer = (state = initialState, action) => {
+const reducer = ( state = initialState,action) => {
 	switch (action.type) {
 		case SET_LIST_OF_PERSONAL_PREFERENCES:
 			return {

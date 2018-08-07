@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import store from '../../../store/store.js'
+import {updateMyPosition} from '../../../store/actions'
 const geo_options = {
 	enableHighAccuracy: true,
 	maximumAge: 30000,
@@ -28,9 +29,13 @@ export const geolocationWrapper = (WrappedComponent) => {
     }
   
 	geo_success = position => {
-		this.setState({pos:{lat: position.coords.latitude,
-			lng: position.coords.longitude}
-    });
+    store.dispatch(updateMyPosition(
+      {
+          lat: position.coords.latitude,
+			    lng: position.coords.longitude
+        }
+    ))
+
 	};
   
     geo_error(err) {
@@ -39,7 +44,7 @@ export const geolocationWrapper = (WrappedComponent) => {
   
     render() {
 
-      return  <WrappedComponent {...this.props} pos={this.state.pos} />
+      return  <WrappedComponent {...this.props}  />
     }
   }
   

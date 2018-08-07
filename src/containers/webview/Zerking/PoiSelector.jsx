@@ -7,7 +7,7 @@ import {icons} from './mapIcons.js'
 
 import {getDistance} from '../../../helpers/getDistance.js'
 import { isNull } from 'util';
-import { addItemToZerking, removeItemToZerking, getFestivalPois} from '../../../store/actions';
+import { addItemToSelector, removeItemFromSelector, getFestivalPois} from '../../../store/actions';
 
 import { addItemToVenues } from '../../../helpers/festivalApiHelper.js';
 
@@ -57,17 +57,17 @@ align-content:stretch;
 export class PoiSelector extends Component {
 
 
-
-  setItemToZerking=  (e)=>{
-    if (this.isToggledForZerkig(e.key)){
-      this.props.removeItemToZerking(e.key)
-      console.log('[removePOI]',e.key)
+  setItemToZerking=  (e,poiType)=>{
+    e.stopPropagation()
+    if (this.isToggledForZerkig(poiType.key)){
+      this.props.removeItemFromSelector(poiType.key)
+      console.log('[removePOI]',poiType.key)
       return
     }
 
     const item = {
-      category: e.key,
-      name:e.name,
+      category: poiType.key,
+      name:poiType.name,
       festivalId: this.props.festival._id,
       coordinates:{
         lat: this.props.pos.lat,
@@ -75,7 +75,7 @@ export class PoiSelector extends Component {
       }
     }
     console.log('[newPOI]',item)
-    this.props.addItemToZerking([item])
+    this.props.addItemToSelector([item])
 
     return
   }
@@ -96,7 +96,7 @@ export class PoiSelector extends Component {
       const iconUrl = icons[iconCategory].icon
       
     return (
-      <PoiItem isToggledForZerkig={this.isToggledForZerkig(poiType.key)} onClick={()=>this.setItemToZerking(poiType)} key={poiType.key}>
+      <PoiItem isToggledForZerkig={this.isToggledForZerkig(poiType.key)} onClick={(e)=>this.setItemToZerking(e,poiType)} key={poiType.key}>
       <MapIcon src={iconUrl}/><MapIconTitle>{poiType.name}</MapIconTitle>
       </PoiItem>)
   }
@@ -126,8 +126,8 @@ const mapStateToProps = ({zerking}) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-    addItemToZerking: item => dispatch(addItemToZerking(item)),
-    removeItemToZerking: category => dispatch(removeItemToZerking(category)),
+    addItemToSelector: item => dispatch(addItemToSelector(item)),
+    removeItemFromSelector: category => dispatch(removeItemFromSelector(category)),
     getFestivalPois: festivalId => dispatch(getFestivalPois(festivalId)),
 	};
 };

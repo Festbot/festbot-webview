@@ -1,18 +1,22 @@
-import { 
-  SET_FESTIVAL,
-  SET_FESTIVAL_STAGES,
+import {
+	SET_FESTIVAL,
+	SET_FESTIVAL_STAGES,
 	SET_FESTIVAL_POIS,
+	SET_FESTIVAL_FILTERED_POIS,
 	SET_USER_ACTIVE_FESTIVAL_DATA,
-  ADD_ITEM_TO_ZERKING,
-  REMOVE_ITEM_TO_ZERKING,
-  SET_ITEM_TO_ZERKING,
- } from '../actions/actionTypes.js';
+	ADD_ITEM_TO_ZERKING,
+	REMOVE_ITEM_TO_ZERKING,
+	SET_ITEM_TO_ZERKING,
+	UPDATE_MY_POSITION
+} from '../actions/actionTypes.js';
 
- const initialState = {
-  itemsToZerking:[]
- }
+const initialState = {
+	itemsToZerking: [],
+	filterItems: []
+};
 
 const reducer = (state = initialState, action) => {
+
 	switch (action.type) {
 		case SET_FESTIVAL:
 			return {
@@ -33,29 +37,51 @@ const reducer = (state = initialState, action) => {
 				filteredPois: action.payload
 			};
 			break;
-			case SET_USER_ACTIVE_FESTIVAL_DATA:
+		case SET_FESTIVAL_FILTERED_POIS:
+			return {
+				...state,
+				filteredPois: action.payload
+			};
+			break;
+		case SET_USER_ACTIVE_FESTIVAL_DATA:
 			return {
 				...state,
 				activeFestivalData: action.payload
 			};
 			break;
-      case ADD_ITEM_TO_ZERKING:
+		case ADD_ITEM_TO_ZERKING:
 			return {
 				...state,
-				itemsToZerking: state.itemsToZerking.concat(action.payload)
+				itemsToZerking: state.itemsToZerking.concat(action.payload),
+				filterItems: state.filterItems.concat(
+					action.payload[0].category
+				)
 			};
-      break;
-      case REMOVE_ITEM_TO_ZERKING:
-      const updatedArray = state.itemsToZerking.filter(item => item.category !== action.payload  )
+			break;
+		case REMOVE_ITEM_TO_ZERKING:
+			const updatedArray = state.itemsToZerking.filter(
+				item => item.category !== action.payload
+			);
+			const updatedFilterItems = state.filterItems.filter(
+				item => item !== action.payload
+			);
 			return {
 				...state,
-				itemsToZerking: updatedArray
+				itemsToZerking: updatedArray,
+				filterItems: updatedFilterItems
 			};
-      break;
-      case SET_ITEM_TO_ZERKING:
+			break;
+		case SET_ITEM_TO_ZERKING:
 			return {
 				...state,
 				itemsToZerking: action.payload
+			};
+			break;
+		case UPDATE_MY_POSITION:
+		console.log("[REDUCER]",action.payload)
+			return {
+				...state,
+				pos: action.payload
 			};
 			break;
 	}

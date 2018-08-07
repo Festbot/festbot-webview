@@ -7,7 +7,6 @@ import { Helmet } from 'react-helmet';
 import geolocationWrapper from '../Zerking/setGeolocation.js';
 import Map from '../Zerking/Map.jsx';
 import Marker from '../Zerking/Marker.jsx';
-import FestivalSelector from '../Zerking/FestivalSelector.jsx';
 import StageSelector from '../Zerking/StageSelector.jsx';
 
 import PoiContaier from '../Zerking/PoiContaier.jsx';
@@ -66,17 +65,17 @@ export class NavigatorContainer extends Component {
 					pois={this.props.pois}
 					coverPhoto={this.props.activeFestivalData.coverPhoto}
         >
-        <StyledCarousel showThumbs={false} showStatus={false}>
+        <StyledCarousel showThumbs={false} showStatus={false} showArrows={false}>
         <div>
-        <Title>Services</Title>
+        <Title>{`Services - ${this.props.activeFestivalData.name} `}</Title>
         <PoiFilter pois={this.props.pois} poiTypes={serviceTypes} pos={{lat:0,lng:0}} festival={this.props.activeFestival}/>
         </div>
         <div>
-        <Title>Drinks</Title>
+        <Title>{`Drinks - ${this.props.activeFestivalData.name} `}</Title>
         <PoiFilter pois={this.props.pois} poiTypes={drinkTypes} pos={{lat:0,lng:0}} festival={this.props.activeFestival}/>
         </div>
         <div>
-        <Title>Food</Title>
+        <Title>{`Food - ${this.props.activeFestivalData.name} `}</Title>
         <PoiFilter pois={this.props.pois} poiTypes={foodTypes} pos={{lat:0,lng:0}} festival={this.props.activeFestival}/>
         </div>
         
@@ -101,7 +100,9 @@ const mapStateToProps = ({ festbot, zerking }) => {
 		stages: zerking.stages,
     pois: zerking.pois,
     filteredPois: zerking.filteredPois,
-		activeFestivalData: zerking.activeFestivalData
+    activeFestivalData: zerking.activeFestivalData,
+    filterItems:zerking.filterItems,
+    pos:zerking.pos
 	};
 };
 

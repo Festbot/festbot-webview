@@ -17,7 +17,7 @@ import { getFestivalPois} from '../../../store/actions';
     const {pois,pos,festival,readOnly=false} = this.props
     let poiRender=''
     if (pois) {
-      poiRender= pois.map(poi =><PoiItem readOnly={readOnly} poi={poi} pos={pos} deletePoi={this.deletePoi} festivalId={festival._id} key={poi._id} getFestivalPois={this.props.getFestivalPois}/>)
+      poiRender= pois.map(poi =><PoiItem readOnly={readOnly} poi={poi} distance={poi.distance} pos={pos} deletePoi={this.deletePoi} festivalId={festival._id} key={poi._id} getFestivalPois={this.props.getFestivalPois}/>)
     }
 
     return (
