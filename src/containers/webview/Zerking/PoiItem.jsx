@@ -103,7 +103,7 @@ constructor(props){
   state={
     heading:0,
     swiped:0,
-    isVisible:false,
+    isVisible:true,
   }
   static defaultProps={pos:{lat:0,lng:0},distance:null}
 
