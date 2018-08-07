@@ -41,7 +41,6 @@ export const withFilteredPoiTypes =(WrappedComponent) => {
 
 
    render() {
-     console.log("[wrapper]",this.props)
     if (!this.props.pois) {return <div></div>}
   
 

@@ -42,6 +42,14 @@ export const foodTypes = [
 	{
 		name:"Gluten free",
 		key:"glutenfree"
+	},
+	{
+		name:"Bakery",
+		key:"bakery"
+	},
+	{
+		name:"Fruits",
+		key:"fruits"
 	}
 ] 
 
@@ -141,6 +149,10 @@ export const serviceTypes = [
 	{
 		name:"Bike Storage",
 		key:"bike_storage"
+	},
+	{
+		name:"Shisha",
+		key:"shisha"
 	}
 ] 
 

@@ -21,6 +21,7 @@ export const geolocationWrapper = (WrappedComponent) => {
     
     componentDidMount() {
       const watchID = navigator.geolocation.watchPosition(this.geo_success, this.geo_error, geo_options);
+      navigator.geolocation.getCurrentPosition(this.geo_success,this.geo_error)
     }
   
   

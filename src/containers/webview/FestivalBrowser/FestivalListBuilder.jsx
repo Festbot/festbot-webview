@@ -34,7 +34,7 @@ class FestivalListBuilder extends Component {
 
 	submitHandler = async () => {
 		const userId = this.props.userData.userId;
-		console.log("[AXIOS]",userId, this.state.selectedItem)
+
 		try {
 			await saveActiveFestbot(userId, this.state.selectedItem);
 			
@@ -84,7 +84,7 @@ class FestivalListBuilder extends Component {
 
 		sortedCountries.splice(sortedCountries.indexOf('HU'), 1);
 		sortedCountries = ['HU', ...sortedCountries];
-		console.log()
+
 		return (
 			<Fragment>
 				{sortedCountries.map((country, countryIndex) => {

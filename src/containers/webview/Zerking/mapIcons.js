@@ -116,5 +116,14 @@ export const icons = {
 	},	
 	pasta: {
 		icon: festbot + '190f885d-7501-4bc5-9b23-d840afe7f3ce' + iconSize
+	},	
+	bakery: {
+		icon: festbot + 'e5268686-a4a9-43db-bdb2-72113537f786' + iconSize
+	},	
+	fruits: {
+		icon: festbot + '2ef95576-f84b-4a3a-b864-f958d4198c97' + iconSize
+	},	
+	shisha: {
+		icon: festbot + 'e06d1f6a-7281-45f0-a9a2-5ff598a10e68' + iconSize
 	}
 };

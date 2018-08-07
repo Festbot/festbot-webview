@@ -60,8 +60,6 @@ export default store => next => async action => {
 				return updatedFilterItemArray.indexOf(poi.category) > -1;
 			});
 
-			console.log('[MIDDLEWARE]', filteredPois);
-
 			store.dispatch(setFestivalFilteredPois(filteredPois));
 			break;
 		case REMOVE_ITEM_TO_ZERKING:
@@ -74,7 +72,7 @@ export default store => next => async action => {
 			});
 
 			store.dispatch(setFestivalFilteredPois(updatedPois));
-			
+
 			if (store.getState().zerking.itemsToZerking.length == 1) {
 				const allPois = store.getState().zerking.pois;
 				store.dispatch(setFestivalFilteredPois(allPois));

@@ -72,7 +72,7 @@ export class ZerkingContainer extends Component {
 
 	render() {
 		let renderFixedAddPoiButton=''
-		console.log(this.props)
+
 		return (
 			<div>
 				<Helmet>
@@ -80,10 +80,8 @@ export class ZerkingContainer extends Component {
 				</Helmet>
 
 				<Map pos={this.props.pos}>
-				{this.props.pois.map(poi => <Marker key={poi._id} pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} iconType={poi.category} />)}
-				{this.props.stages&&this.props.stages.map(stage => <Marker key={stage._id} pos={{ lat: stage.coordinates.lat, lng: stage.coordinates.lng }} iconType={stage.category} />)}
-
-					
+					{this.props.pois.map(poi => <Marker key={poi._id} pos={{ lat: poi.coordinates.lat, lng: poi.coordinates.lng }} iconType={poi.category} />)}
+					{this.props.stages&&this.props.stages.map(stage => <Marker key={stage._id} pos={{ lat: stage.coordinates.lat, lng: stage.coordinates.lng }} iconType={stage.category} />)}
 				</Map>
 
 				<div className={classes.container}>

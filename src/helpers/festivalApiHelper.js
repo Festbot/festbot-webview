@@ -46,7 +46,6 @@ export const addItemToPois = async function(item) {
 };
 
 export const deleteItemFromPois = async function(item) {
-	console.log('[ACTION}', item);
 	await axios.delete(`https://${ROOT_URL}/pois/${item}`);
 	return;
 };

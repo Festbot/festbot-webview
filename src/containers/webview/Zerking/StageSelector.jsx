@@ -96,7 +96,6 @@ export class StageSelector extends Component {
 
   renderStages = (stage) =>{
     if (stage.coordinates.lat) {
-      console.log(stage)
       return(<StageItem isZerked key={stage.name} >
 
         

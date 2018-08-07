@@ -128,7 +128,7 @@ constructor(props){
 
 
   addSwipe=(e)=> {
-    console.log(e)
+
     const mc = new Hammer(e)
     mc.on("swipeleft", ()=>{
       this.setState({swiped:mc.element.id})

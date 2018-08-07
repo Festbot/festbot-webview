@@ -118,10 +118,10 @@ export class FestivalSelector extends Component {
 	visibilityActionHandler=(itemVisible)=>{
 		if (!itemVisible) {
 			this.setState({showFixed:true})
-			console.log("Item not Visible")
+
 		} else {
 			this.setState({showFixed:false})
-			console.log("Item  Visible")
+
 		}
 }
 

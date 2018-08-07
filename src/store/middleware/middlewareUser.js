@@ -98,8 +98,6 @@ export default store => next => async action => {
 				const orderedPois= poisWithDistance.sort((a,b)=>{
 					return a.distance-b.distance;
 				})
-
-				console.log("ordered pois",orderedPois)
 			store.dispatch(setFestivalFilteredPois(orderedPois));
 
 			break;
