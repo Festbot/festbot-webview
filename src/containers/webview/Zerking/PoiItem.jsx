@@ -102,7 +102,7 @@ constructor(props){
   state={
     heading:0,
     swiped:0,
-    isVisible:false
+    isVisible:true
   }
   static defaultProps={pos:{lat:0,lng:0},distance:0}
 
@@ -186,7 +186,7 @@ constructor(props){
             <Flexbox>
               <MapIcon src={iconUrl}/>
               <PoiTitle>{poi.name||poi.category}</PoiTitle>
-              {this.state.isVisible&&<LocationInfo>{distance}</LocationInfo>}
+              <LocationInfo>{distance}</LocationInfo>
             </Flexbox>
         </VisibilityControl></Poi>
       </div>

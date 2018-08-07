@@ -48,14 +48,21 @@ const Container = styled.div`
 `;
 
 export class NavigatorContainer extends Component {
+  state={
+    initPage:0
+  }
 
 	componentDidMount() {
 		this.props.initUserActiveFestivalStages();
 		this.props.initUserActiveFestivalPois();
 	}
 
+
+  changeHander=(e)=>{
+    this.setState({initPage:e})
+  }
+
 	render() {
-		console.log(this.props);
 		if (!this.props.activeFestivalData) {
 			return <div />;
 		}
@@ -65,7 +72,7 @@ export class NavigatorContainer extends Component {
 					pois={this.props.pois}
 					coverPhoto={this.props.activeFestivalData.coverPhoto}
         >
-        <StyledCarousel showThumbs={false} showStatus={false} showArrows={false}>
+        <StyledCarousel showThumbs={false} showStatus={false} showArrows={false} onChange={this.changeHander} selectedItem={this.state.initPage}>
         <div>
         <Title>{`Services - ${this.props.activeFestivalData.name} `}</Title>
         <PoiFilter pois={this.props.pois} poiTypes={serviceTypes} pos={{lat:0,lng:0}} festival={this.props.activeFestival}/>

@@ -31,6 +31,7 @@ import {
 	setListOfPersonalPreferences,
 	setUserActiveFestivalData,
 	setMyPosition,
+	setFestivalPois,
 	setFestivalFilteredPois
 } from '../actions';
 
@@ -100,6 +101,7 @@ export default store => next => async action => {
 
 				console.log("ordered pois",orderedPois)
 			store.dispatch(setFestivalFilteredPois(orderedPois));
+
 			break;
 	}
 

@@ -3,19 +3,21 @@ import {
 	SEARCH_BY_GENRE,
 	GET_FESTIVAL_STAGES,
 	GET_FESTIVAL_POIS,
-	ADD_ITEM_TO_SELECTOR,
-	REMOVE_ITEM_FROM_SELECTOR
+	ADD_ITEM_TO_ZERKING,
+	REMOVE_ITEM_TO_ZERKING
 } from '../actions/actionTypes.js';
 
 import {
 	getArtistsByNameGenre,
-	getArtistsByGenre,
+	getArtistsByGenre
 } from '../../helpers/artistApiHelper.js';
 
 import {
 	getStagesByFestivalId,
 	getPoisByFestivalId
 } from '../../helpers/festivalApiHelper.js';
+
+import { getDistance } from '../../helpers/getDistance.js';
 
 import {
 	updateArtistsList,
@@ -25,12 +27,9 @@ import {
 	setFestivalFilteredPois,
 	addItemToZerking,
 	removeItemToZerking
-
 } from '../actions';
 
-
 export default store => next => async action => {
-
 	switch (action.type) {
 		case SEARCH_BY_ARTIST:
 			const result = await getArtistsByNameGenre(
@@ -51,23 +50,37 @@ export default store => next => async action => {
 			const pois = await getPoisByFestivalId(action.payload);
 			store.dispatch(setFestivalPois(pois));
 			break;
-		case ADD_ITEM_TO_SELECTOR:
+		case ADD_ITEM_TO_ZERKING:
+			const newFilterItem = [action.payload[0].category];
+			const updatedFilterItemArray = newFilterItem.concat(
+				store.getState().zerking.filterItems
+			);
 
-			const newFilterItem=[action.payload[0].category]
-			const updatedFilterItemArray = newFilterItem.concat(store.getState().zerking.filterItems)
-		
-			const filteredPois= store.getState().zerking.pois.filter(poi=>{
-				return updatedFilterItemArray.indexOf(poi.category)>-1
-			})
+			const filteredPois = store.getState().zerking.pois.filter(poi => {
+				return updatedFilterItemArray.indexOf(poi.category) > -1;
+			});
 
-			console.log("[MIDDLEWARE]",filteredPois)
-			store.dispatch(addItemToZerking(action.payload))
-			store.dispatch(setFestivalFilteredPois(filteredPois))
-		break;
-		case REMOVE_ITEM_FROM_SELECTOR:
-			store.dispatch(removeItemToZerking(action.payload))
+			console.log('[MIDDLEWARE]', filteredPois);
 
-		break;
+			store.dispatch(setFestivalFilteredPois(filteredPois));
+			break;
+		case REMOVE_ITEM_TO_ZERKING:
+			const updatedFilterItem = store
+				.getState()
+				.zerking.filterItems.filter(item => item !== action.payload);
+
+			const updatedPois = store.getState().zerking.pois.filter(poi => {
+				return updatedFilterItem.indexOf(poi.category) > -1;
+			});
+
+			store.dispatch(setFestivalFilteredPois(updatedPois));
+			
+			if (store.getState().zerking.itemsToZerking.length == 1) {
+				const allPois = store.getState().zerking.pois;
+				store.dispatch(setFestivalFilteredPois(allPois));
+			}
+
+			break;
 	}
 
 	const result = next(action);
