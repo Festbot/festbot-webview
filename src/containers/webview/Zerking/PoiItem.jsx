@@ -15,7 +15,8 @@ import {getDistance} from '../../../helpers/getDistance.js'
 import { getFestivalPois} from '../../../store/actions';
 
 import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
-import { create } from 'domain';
+
+//import lazyRender from '../../../hoc/lazyRender.jsx'
 
  const  MapIcon = styled.img`
  position: relative;
@@ -102,9 +103,8 @@ constructor(props){
   state={
     heading:0,
     swiped:0,
-    isVisible:true
   }
-  static defaultProps={pos:{lat:0,lng:0},distance:0}
+  static defaultProps={pos:{lat:0,lng:0},distance:null}
 
 
   componentDidMount() {
@@ -147,13 +147,7 @@ constructor(props){
     await this.props.getFestivalPois(this.props.festivalId)
   }
 
-  visibilityActionHandler=(itemVisible)=>{
-		if (!itemVisible) {
-			this.setState({isVisible:false})
-		} else {
-			this.setState({isVisible:true})
-		}
-}
+
 
 
 
@@ -166,33 +160,39 @@ constructor(props){
 
       const iconUrl = icons[iconCategory].icon
       const isSwiped = (this.state.swiped==poi._id)
+      
 
       let distance
-      const d=this.props.distance
-      distance=`${d.toFixed()}m`
-      if (d>1999) {distance= `${(d/1000).toFixed(2)}km`}
-      if (d>9999) {distance= `${(d/1000).toFixed()}km`}
+      if (this.props.distance!==null){
+        const d=this.props.distance
+        distance=`${d.toFixed()}m`
+        if (d>1999) {distance= `${(d/1000).toFixed(2)}km`}
+        if (d>9999) {distance= `${(d/1000).toFixed()}km`}
+      }
       
-      
-
 
     return (
-     
       <div style={{position: 'relative'}}  >
       <DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} swiped={isSwiped} >Delete</DeleteButton>
         <Poi innerRef={this.itemRef} swiped={isSwiped} id={poi._id} >
-          {this.state.isVisible&&<Navigation  poi={poi} pos={this.props.pos} />}
-          <VisibilityControl always visibilityActionHandler={this.visibilityActionHandler} effect="zoom">
+          <Navigation  poi={poi} pos={this.props.pos} />
             <Flexbox>
               <MapIcon src={iconUrl}/>
               <PoiTitle>{poi.name||poi.category}</PoiTitle>
-              <LocationInfo>{distance}</LocationInfo>
+              {this.props.distance!==null&&<LocationInfo>{distance}</LocationInfo>}
             </Flexbox>
-        </VisibilityControl></Poi>
+        </Poi>
       </div>
 
     )
   }
 }
 
+const Placeholder = styled.div`
+height:32px;
+padding: 15px 10px;
+background-color: rgba(22,22,22,0.9) ;
+`
+
 export default PoiItem
+

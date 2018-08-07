@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import classes from './VisibilityControl.css'
+import debounce from 'lodash.debounce'
+
+var isFirst= true
 
 export class VisibilityControl extends Component {
   state= {
@@ -8,7 +11,10 @@ export class VisibilityControl extends Component {
   }
 
   componentDidMount =()=> {
-    window.addEventListener("scroll", this.checkVisible);
+    if (isFirst) {
+      
+    }
+    window.addEventListener("scroll", debounce(this.checkVisible,10));
 
     this.setState((prevState) => ({
       width:this.div.getBoundingClientRect().width
@@ -22,7 +28,8 @@ export class VisibilityControl extends Component {
     window.removeEventListener("scroll", this.checkVisible);
   };
 
-  checkVisible=()=>{
+
+checkVisible=()=>{
     const rect = this.div.getBoundingClientRect()
     if (rect.y<window.innerHeight && rect.y+rect.height >0) {
       this.state.visible ? null : this.setState((prevState) => ({visible: true}));
