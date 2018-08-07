@@ -103,6 +103,7 @@ constructor(props){
   state={
     heading:0,
     swiped:0,
+    isVisible:false,
   }
   static defaultProps={pos:{lat:0,lng:0},distance:null}
 
@@ -149,7 +150,15 @@ constructor(props){
 
 
 
-
+  visibilityActionHandler=(itemVisible)=>{
+    if (!itemVisible) {
+      this.setState({isVisible:false})
+      console.log("not visible")
+    } else {
+      this.setState({isVisible:true})
+      console.log("visible")
+    }
+}
 
   render() {
     const {poi} = this.props
@@ -173,14 +182,16 @@ constructor(props){
 
     return (
       <div style={{position: 'relative'}}  >
-      <DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} swiped={isSwiped} >Delete</DeleteButton>
+      {this.state.isVisible&&!this.props.readOnly&&<DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} swiped={isSwiped} >Delete</DeleteButton>}
         <Poi innerRef={this.itemRef} swiped={isSwiped} id={poi._id} >
-          <Navigation  poi={poi} pos={this.props.pos} />
-            <Flexbox>
-              <MapIcon src={iconUrl}/>
+          {this.state.isVisible&&<Navigation  poi={poi} pos={this.props.pos} />}
+          <VisibilityControl always visibilityActionHandler={this.visibilityActionHandler}  >  
+          <Flexbox>
+          {this.state.isVisible&&<MapIcon src={iconUrl}/>}
               <PoiTitle>{poi.name||poi.category}</PoiTitle>
-              {this.props.distance!==null&&<LocationInfo>{distance}</LocationInfo>}
+              {this.props.distance!==null&&this.state.isVisible&&<LocationInfo>{distance}</LocationInfo>}
             </Flexbox>
+            </VisibilityControl>
         </Poi>
       </div>
 

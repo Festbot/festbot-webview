@@ -6,15 +6,15 @@ var isFirst= true
 
 export class VisibilityControl extends Component {
   state= {
-    visible:false,
+    visible:true,
     width:0,
   }
 
   componentDidMount =()=> {
     if (isFirst) {
-      
+
     }
-    window.addEventListener("scroll", debounce(this.checkVisible,10));
+    window.addEventListener("scroll", this.checkVisible);
 
     this.setState((prevState) => ({
       width:this.div.getBoundingClientRect().width
