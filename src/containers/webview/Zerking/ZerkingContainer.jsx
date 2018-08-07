@@ -113,8 +113,9 @@ const mapStateToProps = ({  zerking }) => {
 	return {
 		activeFestival: zerking.activeFestival,
 		stages: zerking.stages,
-		pois: zerking.pois,
-		itemsToZerking: zerking.itemsToZerking
+		pois: zerking.filteredPois,
+		itemsToZerking: zerking.itemsToZerking,
+		pos:zerking.pos
 	};
 };
 

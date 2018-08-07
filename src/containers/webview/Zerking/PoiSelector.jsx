@@ -61,7 +61,6 @@ export class PoiSelector extends Component {
     e.stopPropagation()
     if (this.isToggledForZerkig(poiType.key)){
       this.props.removeItemToZerking(poiType.key)
-      console.log('[removePOI]',poiType.key)
       return
     }
 
@@ -74,7 +73,6 @@ export class PoiSelector extends Component {
         lng: this.props.pos.lng
       }
     }
-    console.log('[newPOI]',item)
     this.props.addItemToZerking([item])
 
     return
