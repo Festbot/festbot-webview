@@ -53,6 +53,7 @@ export class NavigatorContainer extends Component {
   }
 
 	componentDidMount() {
+		this.props.setMenu('hide');
 		this.props.initUserActiveFestivalStages();
 		this.props.initUserActiveFestivalPois();
 	}
@@ -109,7 +110,8 @@ const mapStateToProps = ({ festbot, zerking }) => {
     filteredPois: zerking.filteredPois,
     activeFestivalData: zerking.activeFestivalData,
     filterItems:zerking.filterItems,
-    pos:zerking.pos
+		pos:zerking.pos,
+		webviewMenu:festbot.webviewMenu,
 	};
 };
 
@@ -117,7 +119,8 @@ const mapDispatchToProps = dispatch => {
 	return {
 		initUserActiveFestivalStages: () =>
 			dispatch(initUserActiveFestivalStages()),
-		initUserActiveFestivalPois: () => dispatch(initUserActiveFestivalPois())
+		initUserActiveFestivalPois: () => dispatch(initUserActiveFestivalPois()),
+		setMenu: actualViewMenu => dispatch({ type: 'UPD_MENU', value: actualViewMenu }),
 	};
 };
 

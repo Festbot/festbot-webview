@@ -25,12 +25,12 @@ const menuItems = {
       "iconName": "list",
 
     },
-    // {
-    //   "name": "Napok",
-    //   "route": "",
-    //   "iconName": "today",
-    //   "toggleItem": "Filter"
-    // },
+    {
+      "name": "Navigátor",
+      "route": "/navigator",
+      "iconName": "my_location"
+      
+    },
     {
       "name": "Kedvencek",
       "route": "",
