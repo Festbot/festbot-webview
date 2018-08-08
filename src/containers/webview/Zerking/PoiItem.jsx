@@ -167,7 +167,7 @@ constructor(props){
         if (d>1999) {distance= `${(d/1000).toFixed(2)}km`}
         if (d>9999) {distance= `${(d/1000).toFixed()}km`}
       }
-      console.log("[item]",poi.name)
+    
 
     return (
       <div style={{position: 'relative'}}  >

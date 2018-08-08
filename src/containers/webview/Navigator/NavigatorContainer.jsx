@@ -65,7 +65,7 @@ export class NavigatorContainer extends Component {
 
 	render() {
 		if (!this.props.activeFestivalData) {
-			return <div />;
+			return <div>Waiting for active festival</div>;
 		}
 		return (
 			<Container>
