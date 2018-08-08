@@ -8,7 +8,7 @@ export default function getUserId() {
 				({ psid }) => {
 					try {
 						
-						alert("[PSID OK]"+psid)
+						console.warn("[PSID OK]",psid)
 						complete(md5(psid))
 					} catch (error) {
 						console.warn('get user data error', error);
