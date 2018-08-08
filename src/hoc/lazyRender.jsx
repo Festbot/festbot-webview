@@ -31,9 +31,10 @@ checkVisible=()=>{
 
   if (!this.state.visible&&rect.y<window.innerHeight && rect.y+rect.height >0) {
      this.setState((prevState) => ({visible: true}));
-     
+     console.log("set true")
   } else if (this.state.visible&& (rect.y>window.innerHeight || rect.y+rect.height <0)) {
    this.setState((prevState) => ({visible: false}));
+   console.log("set false")
   }
 }
 
