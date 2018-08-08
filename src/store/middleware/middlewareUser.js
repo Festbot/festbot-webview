@@ -55,11 +55,12 @@ export default store => next => async action => {
 			if (!activeFestival) {
 				activeFestival = userData.activeFestival;
 				store.dispatch(setUserData(userData));
+			}
 				activeFestivalData = await getFestivalDataById(
 					userData.activeFestival
 				);
 				store.dispatch(setUserActiveFestivalData(activeFestivalData));
-			}
+			
 			store.dispatch(getFestivalPois(activeFestival));
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_STAGES:
