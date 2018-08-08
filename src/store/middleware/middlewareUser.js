@@ -40,17 +40,17 @@ export default store => next => async action => {
 	let activeFestival;
 	let userData;
 	const userId = await getUserId();
-	console.log("[MIDDLEWARE] getUserId finished")
+
 
 		userData = await getUserData(userId);
 	
-	console.log("[MIDDLEWARE] user data ok")
+
 	switch (action.type) {
 		case INIT_USER_DATA:
 			store.dispatch(setUserData(userData));
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_POIS:
-		console.log("[MIDDLEWARE] INIT_USER_ACTIVE_FESTIVAL_POIS started")
+
 			activeFestival = store.getState().festbot.activeFestival;
 			if (!activeFestival) {
 				activeFestival = userData.activeFestival;
@@ -85,9 +85,9 @@ export default store => next => async action => {
 			break;
 
 		case UPDATE_MY_POSITION:
-			console.log("[middleware]UPDATE_MY_POSITION started ")
+
 			if (!store.getState().zerking.filteredPois){return}
-			console.log("[middleware]filteredPois received ")
+
 			const poisWithDistance = store.getState().zerking.filteredPois.map(poi => {
 					return {
 						...poi,
@@ -103,7 +103,7 @@ export default store => next => async action => {
 					return a.distance-b.distance;
 				})
 			store.dispatch(setFestivalFilteredPois(orderedPois));
-			console.log("[middleware]filteredPois ordered ")
+	
 			break;
 	}
 

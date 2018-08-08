@@ -81,7 +81,7 @@ export class Details extends Component {
 	};
 
 	render() {
-		const spotifyId = this.state.artist.spotify;
+		const spotifyId = this.props.artist.spotify;
 
 		const eventList = this.state.events.map((event, index) => {
 			return (

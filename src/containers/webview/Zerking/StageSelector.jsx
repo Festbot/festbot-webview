@@ -92,14 +92,20 @@ export class StageSelector extends Component {
     this.props.getFestivalStages(this.props.activeFestival._id)
   }
   
-
+  distance = (d) => {
+    let distance
+    distance=`${d.toFixed()}m`
+    if (d>1999) {distance= `${(d/1000).toFixed(2)}km`}
+    if (d>9999) {distance= `${(d/1000).toFixed()}km`}
+    return distance
+  }
 
   renderStages = (stage) =>{
     if (stage.coordinates.lat) {
       return(<StageItem isZerked key={stage.name} >
 
         
-        <LocationInfo>{getDistance(this.props.pos.lat,this.props.pos.lng,stage.coordinates.lat, stage.coordinates.lng)}</LocationInfo>
+        <LocationInfo>{this.distance(getDistance(this.props.pos.lat,this.props.pos.lng,stage.coordinates.lat, stage.coordinates.lng))}</LocationInfo>
         <PoiTitle>{stage.name}</PoiTitle>
         <ResetButton onClick={()=>this.resetStageLocation(stage)}>X</ResetButton>
         <Navigation  poi={stage} pos={this.props.pos} />
