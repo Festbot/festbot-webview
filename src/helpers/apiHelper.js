@@ -51,6 +51,5 @@ export async function getUserData(userId) {
 		url: 'https://api.festbot.com/users/' + userId
 	};
 	const {data} = await axios(options)
-	console.log("[USERDATA RECEIVED]",data)
 	return data;
 }
