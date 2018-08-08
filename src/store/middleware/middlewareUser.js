@@ -54,11 +54,14 @@ export default store => next => async action => {
 			activeFestival = store.getState().festbot.activeFestival;
 			if (!activeFestival) {
 				activeFestival = userData.activeFestival;
-			}
 				store.dispatch(setUserData(userData));
+			}
+			console.log("[MIDDLEWARE] active festival" ,activeFestival)
+			console.log("[MIDDLEWARE] userData" ,userData)
 				activeFestivalData = await getFestivalDataById(
 					userData.activeFestival
 				);
+				console.log("[MIDDLEWARE] activeFestivalData" ,activeFestivalData)
 				store.dispatch(setUserActiveFestivalData(activeFestivalData));
 			
 			store.dispatch(getFestivalPois(activeFestival));
