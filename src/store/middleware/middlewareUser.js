@@ -40,11 +40,11 @@ export default store => next => async action => {
 	let activeFestival;
 	let userData;
 	const userId = await getUserId();
+	console.log("[MIDDLEWARE] getUserId finished")
 
-	if (!store.getState().festbot.userDataReceived) {
 		userData = await getUserData(userId);
-	}
-
+	
+	console.log("[MIDDLEWARE] user data ok")
 	switch (action.type) {
 		case INIT_USER_DATA:
 			store.dispatch(setUserData(userData));
@@ -53,18 +53,13 @@ export default store => next => async action => {
 		console.log("[MIDDLEWARE] INIT_USER_ACTIVE_FESTIVAL_POIS started")
 			activeFestival = store.getState().festbot.activeFestival;
 			if (!activeFestival) {
-				userData = await getUserData(userId);
 				activeFestival = userData.activeFestival;
 				store.dispatch(setUserData(userData));
-			}
-			console.log("[MIDDLEWARE] active festival" ,activeFestival)
-			console.log("[MIDDLEWARE] userData" ,userData)
 				activeFestivalData = await getFestivalDataById(
 					userData.activeFestival
 				);
-				console.log("[MIDDLEWARE] activeFestivalData" ,activeFestivalData)
 				store.dispatch(setUserActiveFestivalData(activeFestivalData));
-			
+			}
 			store.dispatch(getFestivalPois(activeFestival));
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_STAGES:
