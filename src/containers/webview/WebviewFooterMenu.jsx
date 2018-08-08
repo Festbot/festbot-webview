@@ -86,10 +86,10 @@ class WebviewFooterMenu extends Component {
 
 
   handleItemClick = (e) =>  {
-    this.props.onToggle(e.props.title)
-
+    e.props.title&&this.props.onToggle(e.props.title)
+    console.log("[FOOTER MENU]",e)
     return (
-      this.setState({ activeItem: e.props.title })
+      e.props.title&&this.setState({ activeItem: e.props.title })
      // () => dispatch({type: 'UPD_MENU', value:'car sharing'}
 
     )
