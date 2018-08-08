@@ -167,7 +167,7 @@ constructor(props){
         if (d>1999) {distance= `${(d/1000).toFixed(2)}km`}
         if (d>9999) {distance= `${(d/1000).toFixed()}km`}
       }
-      
+      console.log("[item]",poi.name)
 
     return (
       <div style={{position: 'relative'}}  >
@@ -192,6 +192,7 @@ const Placeholder = styled.div`
 height:32px;
 padding: 15px 10px;
 background-color: rgba(22,22,22,0.9) ;
+margin:10px auto;
 `
 
 export default lazyRender(PoiItem,Placeholder)

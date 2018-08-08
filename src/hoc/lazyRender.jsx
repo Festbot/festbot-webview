@@ -11,6 +11,7 @@ export default (WrappedComponent,Placeholder) =>{
 
     state={
       visible:false,
+      checkOnce:false
     }
 
 
@@ -29,11 +30,11 @@ checkVisible=()=>{
 
   const rect = this.div.current.getBoundingClientRect()
 
-  if (!this.state.visible&&rect.y<window.innerHeight && rect.y+rect.height >0) {
+  if (!this.state.visible&&rect.top<window.innerHeight && rect.top+rect.height >0) {
      this.setState((prevState) => ({visible: true}));
      console.log("set true")
-  } else if (this.state.visible&& (rect.y>window.innerHeight || rect.y+rect.height <0)) {
-   this.setState((prevState) => ({visible: false}));
+  } else if (this.state.visible&& (rect.top>window.innerHeight || rect.top+rect.height <0)) {
+      this.setState((prevState) => ({visible: false}));
    console.log("set false")
   }
 }

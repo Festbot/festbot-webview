@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
 import PoiItem from './PoiItem.jsx'
-
+import debounce from 'lodash.debounce'
 import { getFestivalPois} from '../../../store/actions';
 
   export class PoiContaier extends Component {
