@@ -65,8 +65,10 @@ export class NavigatorContainer extends Component {
 
 	render() {
 		if (!this.props.activeFestivalData) {
+			console.log("[RENDER] active festival data:",this.props.activeFestivalData)
 			return <div>Waiting for active festival</div>;
 		}
+		console.log("[RENDER container]ACTIVE FESTIVAL DATA received ")
 		return (
 			<Container>
 				<PoiFilterContainer
