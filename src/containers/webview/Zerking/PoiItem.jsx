@@ -16,7 +16,7 @@ import { getFestivalPois} from '../../../store/actions';
 
 import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
 
-//import lazyRender from '../../../hoc/lazyRender.jsx'
+import lazyRender from '../../../hoc/lazyRender.jsx'
 
  const  MapIcon = styled.img`
  position: relative;
@@ -103,7 +103,7 @@ constructor(props){
   state={
     heading:0,
     swiped:0,
-    isVisible:true,
+    isVisible:false,
   }
   static defaultProps={pos:{lat:0,lng:0},distance:null}
 
@@ -148,17 +148,7 @@ constructor(props){
     await this.props.getFestivalPois(this.props.festivalId)
   }
 
-
-
-  visibilityActionHandler=(itemVisible)=>{
-    if (!itemVisible) {
-      this.setState({isVisible:false})
-      console.log("not visible")
-    } else {
-      this.setState({isVisible:true})
-      console.log("visible")
-    }
-}
+ 
 
   render() {
     const {poi} = this.props
@@ -182,16 +172,16 @@ constructor(props){
 
     return (
       <div style={{position: 'relative'}}  >
-      {this.state.isVisible&&!this.props.readOnly&&<DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} swiped={isSwiped} >Delete</DeleteButton>}
+      {!this.props.readOnly&&<DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} swiped={isSwiped} >Delete</DeleteButton>}
         <Poi innerRef={this.itemRef} swiped={isSwiped} id={poi._id} >
-          {this.state.isVisible&&<Navigation  poi={poi} pos={this.props.pos} />}
-          <VisibilityControl always visibilityActionHandler={this.visibilityActionHandler}  >  
+          <Navigation  poi={poi} pos={this.props.pos} />
+         
           <Flexbox>
-          {this.state.isVisible&&<MapIcon src={iconUrl}/>}
+             <MapIcon src={iconUrl}/>
               <PoiTitle>{poi.name||poi.category}</PoiTitle>
-              {this.props.distance!==null&&this.state.isVisible&&<LocationInfo>{distance}</LocationInfo>}
+              {this.props.distance!==null&&<LocationInfo>{distance}</LocationInfo>}
             </Flexbox>
-            </VisibilityControl>
+            
         </Poi>
       </div>
 
@@ -205,5 +195,5 @@ padding: 15px 10px;
 background-color: rgba(22,22,22,0.9) ;
 `
 
-export default PoiItem
+export default lazyRender(PoiItem,Placeholder)
 

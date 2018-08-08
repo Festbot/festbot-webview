@@ -4,28 +4,56 @@ import VisibilityControl from './VisibilityControl/VisibilityControl.jsx'
 export default (WrappedComponent,Placeholder) =>{
 
   return class lazyRender extends Component {
-    state={
-      isVisible:false,
+    constructor(props){
+      super(props);
+      this.div = React.createRef();
     }
+
+    state={
+      visible:false,
+    }
+
 
     visibilityActionHandler=(itemVisible)=>{
       if (!itemVisible) {
-        this.setState({isVisible:false})
+        this.setState({visible:false})
         console.log("not visible")
       } else {
-        this.setState({isVisible:true})
+        this.setState({visible:true})
         console.log("visible")
       }
   }
   
 
+checkVisible=()=>{
+
+  const rect = this.div.current.getBoundingClientRect()
+
+  if (!this.state.visible&&rect.y<window.innerHeight && rect.y+rect.height >0) {
+     this.setState((prevState) => ({visible: true}));
+     
+  } else if (this.state.visible&& (rect.y>window.innerHeight || rect.y+rect.height <0)) {
+   this.setState((prevState) => ({visible: false}));
+  }
+}
+
+
+    componentDidMount(){
+      this.checkVisible()
+      
+    }
+
+    componentDidUpdate(){
+      this.checkVisible()
+    }
+
     render() {
 
       return (
-        <div>
-        <VisibilityControl always visibilityActionHandler={this.visibilityActionHandler}  >
-          {this.state.isVisible?<WrappedComponent {...this.props}/>:<Placeholder/>}
-        </VisibilityControl>
+        <div ref={this.div}>
+        
+          {this.state.visible?<WrappedComponent {...this.props}/>:<Placeholder/>}
+        
         </div>
       )
     }

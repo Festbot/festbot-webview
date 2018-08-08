@@ -6,8 +6,9 @@ var isFirst= true
 
 export class VisibilityControl extends Component {
   state= {
-    visible:true,
     width:0,
+    checkedOnce: false,
+    visible:false
   }
 
   componentDidMount =()=> {
@@ -20,8 +21,8 @@ export class VisibilityControl extends Component {
       width:this.div.getBoundingClientRect().width
     }));
 
-    this.checkVisible()
-    this.props.visibilityActionHandler&&this.props.visibilityActionHandler(true)
+   this.checkVisible()
+   this.props.visibilityActionHandler&&this.props.visibilityActionHandler(true)
   }
 
   componentWillUnmount = () => {
@@ -30,14 +31,18 @@ export class VisibilityControl extends Component {
 
 
 checkVisible=()=>{
+
     const rect = this.div.getBoundingClientRect()
     if (rect.y<window.innerHeight && rect.y+rect.height >0) {
+      (!this.state.visible)&&this.props.visibilityActionHandler&&this.props.visibilityActionHandler(true)
       this.state.visible ? null : this.setState((prevState) => ({visible: true}));
-      this.props.visibilityActionHandler&&this.props.visibilityActionHandler(this.state.visible)
+     
+      
     } 
     if (this.props.always && (rect.y>window.innerHeight || rect.y+rect.height <0)) {
+      (this.state.visible)&&this.props.visibilityActionHandler&&this.props.visibilityActionHandler(false)
       !this.state.visible ? null : this.setState((prevState) => ({visible: false}));
-      this.props.visibilityActionHandler&&this.props.visibilityActionHandler(this.state.visible)
+      
     }
   }
 

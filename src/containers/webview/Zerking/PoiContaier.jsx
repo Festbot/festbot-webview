@@ -8,16 +8,35 @@ import { getFestivalPois} from '../../../store/actions';
   export class PoiContaier extends Component {
 
     state={
-      heading:0
+      heading:0,
+      scrollPosition:0
+    }
+
+  
+    componentDidMount =()=> {
+     
+      window.addEventListener("scroll", this.onScroll);
+  
+    }
+  
+    componentWillUnmount = () => {
+      window.removeEventListener("scroll", this.onScroll);
+    };
+  
+    onScroll=()=>{
+      this.setState({scrollPosition:window.scrollY})
+
     }
 
 
-  render() {
 
+
+  render() {
+    if (!this.props.pois) {return <div></div>}
     const {pois,pos,festival,readOnly=false} = this.props
     let poiRender=''
     if (pois) {
-      poiRender= pois.map(poi =><PoiItem readOnly={readOnly} poi={poi} distance={poi.distance} pos={pos} deletePoi={this.deletePoi} festivalId={festival._id} key={poi._id} getFestivalPois={this.props.getFestivalPois}/>)
+      poiRender= pois.map((poi,index) =><PoiItem scrollPosition={this.state.scrollPosition} readOnly={readOnly} poi={poi} index={index} distance={poi.distance} pos={pos} deletePoi={this.deletePoi} festivalId={festival._id} key={poi._id+index} getFestivalPois={this.props.getFestivalPois}/>)
     }
 
     return (
