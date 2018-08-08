@@ -7,7 +7,9 @@ export default function getUserId() {
 				'817793415088295',
 				({ psid }) => {
 					try {
-						complete(md5(psid));
+						
+						alert("[PSID OK]",psid)
+						complete(md5(psid))
 					} catch (error) {
 						console.warn('get user data error', error);
 						alert('Network Error');
@@ -16,7 +18,9 @@ export default function getUserId() {
 				},
 				err => {
 					console.warn('no psid :(');
+					alert('no psid :(')
 					complete('fbad78af5e115963b0ad97aa3da436c0');
+					
 				}
 			);
 		};
