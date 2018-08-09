@@ -55,7 +55,7 @@ checkVisible=()=>{
       return (
         <div ref={this.div}>
         
-          {this.state.visible?<WrappedComponent {...this.props}/>:<Placeholder isOpenDetails={this.props.isOpenDetails}/>}
+          {this.state.visible?<WrappedComponent {...this.props}/>:<Placeholder/>}
         
         </div>
       )

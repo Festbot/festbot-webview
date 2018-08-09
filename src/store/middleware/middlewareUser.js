@@ -39,18 +39,18 @@ export default store => next => async action => {
 	let activeFestivalData;
 	let activeFestival;
 	let userData;
-	let userId;
+	const userId = await getUserId();
+
+
+		userData = await getUserData(userId);
 	
 
 	switch (action.type) {
 		case INIT_USER_DATA:
-		 userId = await getUserId();
-		userData = await getUserData(userId);
 			store.dispatch(setUserData(userData));
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_POIS:
-			 userId = await getUserId();
-			userData = await getUserData(userId);
+
 			activeFestival = store.getState().festbot.activeFestival;
 			if (!activeFestival) {
 				activeFestival = userData.activeFestival;
@@ -64,8 +64,6 @@ export default store => next => async action => {
 			store.dispatch(getFestivalPois(activeFestival));
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_STAGES:
-			 userId = await getUserId();
-			userData = await getUserData(userId);
 			activeFestival = store.getState().festbot.activeFestival;
 			if (!activeFestival) {
 				activeFestival = userData.activeFestival;
@@ -75,8 +73,6 @@ export default store => next => async action => {
 			break;
 
 		case INIT_MATCHING_ARTIST_OF_USER:
-			 userId = await getUserId();
-			userData = await getUserData(userId);
 			store.dispatch(setUserData(userData));
 			const exceptTopArtists = await getTopGenresArtistOfUser(userData);
 			const topArtists = await getTopArtistOfUser(userData);

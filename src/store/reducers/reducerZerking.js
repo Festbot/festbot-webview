@@ -7,8 +7,7 @@ import {
 	ADD_ITEM_TO_ZERKING,
 	UPDATE_ZERKING_ITEM_ARRAY_REMOVE,
 	SET_ITEM_TO_ZERKING,
-	UPDATE_MY_POSITION,
-	SET_HEADING
+	UPDATE_MY_POSITION
 } from '../actions/actionTypes.js';
 
 const initialState = {
@@ -17,6 +16,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+
 	switch (action.type) {
 		case SET_FESTIVAL:
 			return {
@@ -78,15 +78,10 @@ const reducer = (state = initialState, action) => {
 			};
 			break;
 		case UPDATE_MY_POSITION:
+		console.log("[REDUCER]",action.payload)
 			return {
 				...state,
 				pos: action.payload
-			};
-			break;
-		case SET_HEADING:
-			return {
-				...state,
-				heading: action.payload
 			};
 			break;
 	}
