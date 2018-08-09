@@ -33,10 +33,17 @@ import { getFestivalPois} from '../../../store/actions';
 
   render() {
     if (!this.props.pois) {return <div></div>}
-    const {pois,pos,festival,readOnly=false} = this.props
+    const {pois,pos,festival,readOnly=false,limit=false} = this.props
+    
+   
+
     let poiRender=''
+    let sliceOfPois=''
     if (pois) {
-      poiRender= pois.map((poi,index) =><PoiItem scrollPosition={this.state.scrollPosition} readOnly={readOnly} poi={poi} index={index} distance={poi.distance} pos={pos} deletePoi={this.deletePoi} festivalId={festival._id} key={poi._id+index} getFestivalPois={this.props.getFestivalPois}/>)
+      if (limit) {
+        sliceOfPois=pois.slice(0,limit)
+      } else {sliceOfPois=pois}
+      poiRender= sliceOfPois.map((poi,index) =><PoiItem scrollPosition={this.state.scrollPosition} readOnly={readOnly} poi={poi} index={index} distance={poi.distance} pos={pos} deletePoi={this.deletePoi} festivalId={festival._id} key={poi._id+index} getFestivalPois={this.props.getFestivalPois}/>)
     }
 
     return (

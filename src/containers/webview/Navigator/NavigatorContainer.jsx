@@ -121,6 +121,7 @@ export class NavigatorContainer extends Component {
 
 				<PoiContaier
 					readOnly
+					limit={10}
 					pois={this.props.filteredPois}
 					festival={this.props.activeFestival}
 					pos={this.props.pos}

@@ -62,22 +62,28 @@ export default store => next => async action => {
 			store.dispatch(setFestivalFilteredPois(filteredPois));
 			break;
 		case REMOVE_ITEM_TO_ZERKING:
-			const updatedFilterItem = store
-				.getState()
-				.zerking.filterItems.filter(item => item !== action.payload);
 
-			const updatedPois = store.getState().zerking.pois.filter(poi => {
-				return updatedFilterItem.indexOf(poi.category) > -1;
-			});
-
-			store.dispatch(setFestivalFilteredPois(updatedPois));
-
-			if (store.getState().zerking.filterItems.length == 1) {
+			if (store.getState().zerking.filterItems.length < 2) {
 				const allPois = store.getState().zerking.pois;
 				store.dispatch(setFestivalFilteredPois(allPois));
+				store.dispatch(updateZerkingItemArrayRemove(action.payload));
+			} else {
+				const updatedFilterItem = store
+					.getState()
+					.zerking.filterItems.filter(
+						item => item !== action.payload
+					);
+
+				const updatedPois = store
+					.getState()
+					.zerking.pois.filter(poi => {
+						return updatedFilterItem.indexOf(poi.category) > -1;
+					});
+
+				if (updatedPois.length>0) {store.dispatch(setFestivalFilteredPois(updatedPois));}
+				store.dispatch(updateZerkingItemArrayRemove(action.payload));
 			}
 
-			store.dispatch(updateZerkingItemArrayRemove(action.payload))
 			//TODO
 			//discover nem ad semmit ha nincs zenei izles
 			//kelljen spotify uzenet
