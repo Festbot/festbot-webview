@@ -1,22 +1,18 @@
 import React, { Component } from 'react'
 
-import { connect } from 'react-redux';
+
 import styled from 'styled-components'
 
 import {icons} from './mapIcons.js'
 import Hammer from 'hammerjs'
 
-import VisibilityControl from '../../../hoc/VisibilityControl/VisibilityControl.jsx'
-
 import Navigation from './Navigation.jsx'
-
-import {getDistance} from '../../../helpers/getDistance.js'
-
-import { getFestivalPois} from '../../../store/actions';
 
 import { deleteItemFromPois } from '../../../helpers/festivalApiHelper.js';
 
 import lazyRender from '../../../hoc/lazyRender.jsx'
+import headingWrapper from '../../../hoc/headingWrapper.jsx'
+
 
  const  MapIcon = styled.img`
  position: relative;
@@ -92,11 +88,10 @@ margin:0 auto;
   
   `
 
-
-
 export class PoiItem extends Component {
 constructor(props){
   super(props);
+  this.NavigationMarker = headingWrapper(Navigation)
   this.itemRef = React.createRef();
 }
 
@@ -151,6 +146,7 @@ constructor(props){
 
   render() {
     const {poi} = this.props
+    const NavigationWithHeading=this.NavigationMarker
       const iconType= poi.category
       let iconCategory=''
 
@@ -173,7 +169,7 @@ constructor(props){
       <div style={{position: 'relative'}}  >
       {!this.props.readOnly&&<DeleteButton onClick={()=>this.deletePoi(`${poi._id}?rev=${poi._rev}`)} swiped={isSwiped} >Delete</DeleteButton>}
         <Poi innerRef={this.itemRef} swiped={isSwiped} id={poi._id} >
-          <Navigation  poi={poi} pos={this.props.pos} />
+          <NavigationWithHeading  poi={poi} pos={this.props.pos} />
          
           <Flexbox>
              <MapIcon src={iconUrl}/>
