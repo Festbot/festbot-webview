@@ -180,7 +180,7 @@ class FestivalProgramListItem extends Component {
 
 const Placeholder = styled.div`
 height:120px;
-
+height:${props=>props.isOpenDetails?this.activeDetailsDiv.getBoundingClientRect().height+"px" :"120px"};
 background-color: rgba(22,22,22,0.9) ;
 margin:15px auto;
 `

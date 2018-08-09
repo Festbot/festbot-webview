@@ -99,18 +99,6 @@ export class festivalProgramContainer extends Component {
 		}
 	};
 
-	onScroll = () => {
-		let docHeight = document.body.scrollHeight - document.body.clientHeight;
-		let trigger = docHeight - window.scrollY;
-		if (trigger < 80) {
-			this.showMore();
-			this.setState(function(prevState) {
-				return {
-					paddingTop: window.scrollY - (document.body.clientHeight - prevState.paddingTop)
-				};
-			});
-		}
-	};
 
 	updateEventDays = data => {
 		let Programs = data;
@@ -247,6 +235,7 @@ export class festivalProgramContainer extends Component {
 	
 	onScrollLazyLoad=()=>{
 		this.setState({scrollPosition:window.scrollY})
+		//if (this.state.activeDetails!=='') {this.setState({ activeDetails: ''})}
 	}
 
 	render() {

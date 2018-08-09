@@ -19,24 +19,13 @@ import {
 	initUserActiveFestivalPois
 } from '../../../store/actions';
 
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
 const PoiFilter = withFilteredPoiTypes(PoiSelector);
 
-const StyledCarousel = styled(Carousel)`
-	.carousel .slide {
-		background: none !important;
-	}
-	.carousel img {
-		width: auto !important;
-	}
-`;
-
 const Title = styled.div`
+text-align:center;
 	font-size: 140%;
 	color: white;
-	padding: 10px 20px;
+	padding: 10px 0;
 	border-radius: 3px;
 	background-color: rgba(22, 22, 22, 0.9);
 	width: 100%;
@@ -46,6 +35,23 @@ const Title = styled.div`
 const Container = styled.div`
 	background-color: #2c2c2c;
 `;
+const CarouselContainer = styled.div`
+width:100%;
+overflow-x: scroll;
+white-space:nowrap;
+overflow: auto;
+  -webkit-overflow-scrolling: touch;
+scroll-snap-type: mandatory;
+
+  scroll-snap-destination: 0% 100%;
+  scroll-snap-points-x: repeat(100%);
+`
+const CarouselPage = styled.div`
+scroll-snap-align: start;
+width:100vw;
+display: inline-block;
+`
+
 
 export class NavigatorContainer extends Component {
 	state = {
@@ -68,53 +74,50 @@ export class NavigatorContainer extends Component {
 		}
 		return (
 			<Container>
-				<PoiFilterContainer
+			<PoiFilterContainer
 					pois={this.props.pois}
 					coverPhoto={this.props.activeFestivalData.coverPhoto}
 				>
-					<StyledCarousel
-						showThumbs={false}
-						swipeScrollTolerance={2}
-						showStatus={false}
-						showArrows={false}
-						onChange={this.changeHander}
-						selectedItem={this.state.initPage}
-					>
-						<div>
-							<Title>{`Services - ${
-								this.props.activeFestivalData.name
-							} `}</Title>
-							<PoiFilter
-								pois={this.props.pois}
-								poiTypes={serviceTypes}
-								pos={{ lat: 0, lng: 0 }}
-								festival={this.props.activeFestival}
-							/>
-						</div>
-						<div>
-							<Title>{`Drinks - ${
-								this.props.activeFestivalData.name
-							} `}</Title>
-							<PoiFilter
-								pois={this.props.pois}
-								poiTypes={drinkTypes}
-								pos={{ lat: 0, lng: 0 }}
-								festival={this.props.activeFestival}
-							/>
-						</div>
-						<div>
-							<Title>{`Food - ${
-								this.props.activeFestivalData.name
-							} `}</Title>
-							<PoiFilter
-								pois={this.props.pois}
-								poiTypes={foodTypes}
-								pos={{ lat: 0, lng: 0 }}
-								festival={this.props.activeFestival}
-							/>
-						</div>
-					</StyledCarousel>
+			<CarouselContainer>
+				<CarouselPage>
+				<Title>{`Services - ${
+					this.props.activeFestivalData.name
+				} `}</Title>
+				<PoiFilter
+					pois={this.props.pois}
+					poiTypes={serviceTypes}
+					pos={{ lat: 0, lng: 0 }}
+					festival={this.props.activeFestival}
+				/>
+				</CarouselPage>
+				<CarouselPage>
+				<Title>{`Drinks - ${
+					this.props.activeFestivalData.name
+				} `}</Title>
+				<PoiFilter
+					pois={this.props.pois}
+					poiTypes={drinkTypes}
+					pos={{ lat: 0, lng: 0 }}
+					festival={this.props.activeFestival}
+				/>
+
+				</CarouselPage>
+				<CarouselPage>
+				<Title>{`Food - ${
+					this.props.activeFestivalData.name
+				} `}</Title>
+				<PoiFilter
+					pois={this.props.pois}
+					poiTypes={foodTypes}
+					pos={{ lat: 0, lng: 0 }}
+					festival={this.props.activeFestival}
+				/>
+				</CarouselPage>
+				</CarouselContainer>
 				</PoiFilterContainer>
+
+				
+
 
 				<PoiContaier
 					readOnly
@@ -122,6 +125,8 @@ export class NavigatorContainer extends Component {
 					festival={this.props.activeFestival}
 					pos={this.props.pos}
 				/>
+
+				
 			</Container>
 		);
 	}
