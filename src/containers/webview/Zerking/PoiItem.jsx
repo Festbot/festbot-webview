@@ -135,7 +135,7 @@ export class PoiItem extends Component {
 			this.props.distance === null
 				? props => 
 						<a
-							href="https://webview.festbot.com/navigator"
+							href="https://index.hu"
 							target="_blank"
 							{...props}
 						>
