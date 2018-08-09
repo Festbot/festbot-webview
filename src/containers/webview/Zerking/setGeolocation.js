@@ -40,7 +40,7 @@ export const geolocationWrapper = (WrappedComponent) => {
 	};
   
     geo_error(err) {
-      alert('error:'+err.message);
+      console.warn('error:',err.message);
     }
   
     render() {

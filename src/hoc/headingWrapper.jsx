@@ -9,7 +9,7 @@ export const getHeadingWrapper = WrappedComponent => {
 	if (!isListening) {
 		isListening = true;
 
-		if (AbsoluteOrientationSensor) {
+		if (window.AbsoluteOrientationSensor) {
 			const sensor = new AbsoluteOrientationSensor({ frequency: 10 });
 			sensor.onreading = () =>{
         console.log(calculateHeading(...sensor.quaternion))
