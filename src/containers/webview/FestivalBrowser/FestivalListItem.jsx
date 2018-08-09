@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import moment from 'moment';
 import Add from 'material-ui/svg-icons/content/add';
 import Done from 'material-ui/svg-icons/action/done';
@@ -8,6 +9,8 @@ import IconClose from 'material-ui/svg-icons/navigation/close';
 import * as colors from 'material-ui/styles/colors';
 import classes from './festivalListItem.css';
 import FestivalListDetails from './FestivalListDetails';
+
+
 
 class FestivalListItem extends Component {
 	offset(el) {
@@ -99,5 +102,7 @@ class FestivalListItem extends Component {
 		);
 	}
 }
+
+
 
 export default FestivalListItem;

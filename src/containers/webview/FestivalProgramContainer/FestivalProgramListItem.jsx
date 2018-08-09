@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-
+import styled from 'styled-components'
 import Star from 'material-ui/svg-icons/toggle/star';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
@@ -18,6 +18,8 @@ import * as colors from 'material-ui/styles/colors';
 import classes from './FestivalProgramListItem.css';
 
 import ProgramDetails from './ProgramDetails.jsx';
+
+import lazyRender from '../../../hoc/lazyRender.jsx'
 
 const styles = {
 	icon: {
@@ -175,4 +177,13 @@ class FestivalProgramListItem extends Component {
 	}
 }
 
-export default FestivalProgramListItem;
+
+const Placeholder = styled.div`
+height:120px;
+
+background-color: rgba(22,22,22,0.9) ;
+margin:15px auto;
+`
+
+
+export default lazyRender(FestivalProgramListItem,Placeholder);

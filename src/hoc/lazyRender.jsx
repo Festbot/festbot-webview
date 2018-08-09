@@ -18,10 +18,11 @@ export default (WrappedComponent,Placeholder) =>{
     visibilityActionHandler=(itemVisible)=>{
       if (!itemVisible) {
         this.setState({visible:false})
+   
 
       } else {
         this.setState({visible:true})
-    
+
       }
   }
   

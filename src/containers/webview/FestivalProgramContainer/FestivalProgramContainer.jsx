@@ -37,7 +37,8 @@ export class festivalProgramContainer extends Component {
 			lastOpenedDetailsKey: 0,
 			isEventListExist: true,
 			isEventExpired:false,
-			festival: ''
+			festival: '',
+			scrollPosition:0,
 		};
 	}
 
@@ -48,13 +49,7 @@ export class festivalProgramContainer extends Component {
 
 		this.setState({ festival: festival });
 
-		const { data: artist } = await axios.get('https://api.festbot.com/artists/_design/default/_list/json/default-view');
-
-		this.setState({ artist: artist });
-
 		const data = await getEventsByFestivalId(this.props.match.params.festival_id)
-		
-		//const festivalProgramResults =data
 		
 		const festivalProgramResults= data.map(event=>{
 			if (!event.endDate) { const endDate = moment(event.startDate).add(3,'hours').format()
@@ -64,7 +59,7 @@ export class festivalProgramContainer extends Component {
 		}).filter(event =>{
 			return moment(event.startDate)>moment(event.endDate).subtract(6,'hours') 
 		})
-		// const festivalProgramResults = data.filter(event => event.festivalId === this.props.match.params.festival_id);
+	
 
 		if (festivalProgramResults.length == 0) {
 			this.setState({ isEventListExist: false });
@@ -87,11 +82,11 @@ export class festivalProgramContainer extends Component {
 			this.updateEventLocations(this.state.searchResults);
 		}, 1000 * 60);
 
-		//window.addEventListener("scroll", this.onScroll)
+		window.addEventListener("scroll", this.onScrollLazyLoad)
 	}
 
 	componentWillUnmount() {
-		//window.removeEventListener("scroll", this.onScroll)
+		window.removeEventListener("scroll", this.onScrollLazyLoad)
 		clearInterval(this.timer);
 	}
 
@@ -249,6 +244,10 @@ export class festivalProgramContainer extends Component {
 			};
 		});
 	};
+	
+	onScrollLazyLoad=()=>{
+		this.setState({scrollPosition:window.scrollY})
+	}
 
 	render() {
 		if (this.state.isEventExpired){
@@ -292,6 +291,7 @@ export class festivalProgramContainer extends Component {
 					{grouppedFestivalPrograms[day].map((event, index) => {
 						return (
 							<FestivalProgramListItem
+								scrollPosition={this.state.scrollPosition}
 								key={daysIndex * 1000 + index}
 								index={daysIndex * 1000 + index}
 								detailsIsOpenHandler={this.detailsIsOpenHandler}
