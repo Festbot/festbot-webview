@@ -11,3 +11,12 @@ export const getEventsByArtist = async function(artist=''){
 
 }
 
+
+export const getEventsByFestivalId = async function(festivalId=''){
+
+  const { data: {docs:eventData} } = await axios.post(`https://${ROOT_URL}/events/_find`, { selector: { festivalId: festivalId },
+  limit: 2000,sort:[{'startDate':'asc'}] });
+
+  return eventData
+
+}

@@ -25,6 +25,9 @@ export class DiscoverContainer extends Component {
 		lastOpenedDetailsHeight: 0,
 		lastOpenedDetailsKey: 0
 	};
+	static defaultProps ={
+		topArtists:[]
+	}
 
 	async componentDidMount() {
 		this.props.onViewChange('hide');
@@ -33,7 +36,13 @@ export class DiscoverContainer extends Component {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
 
-		this.props.initMatchingArtistsOfUser()
+		if (this.props.topArtists.length>0) {
+			this.props.initMatchingArtistsOfUser()
+		} else {
+			this.artistKeywordFilter()
+		}
+
+		
 		
 		if (this.props.userData.userDataReceived) {
 			this.setState({
@@ -121,7 +130,7 @@ export class DiscoverContainer extends Component {
 	};
 
 	render() {
-		if (!this.props.searchResults) {return <div></div>}
+		if (!this.props.searchResults) {return <div>Connect streaming service</div>}
 		const sliceOfArtist = this.props.searchResults.slice(this.state.yListOffset, this.state.yListOffset + 400);
 
 		const artistList = sliceOfArtist.map((artist, index) => {

@@ -5,7 +5,7 @@ import {
 	SET_FESTIVAL_FILTERED_POIS,
 	SET_USER_ACTIVE_FESTIVAL_DATA,
 	ADD_ITEM_TO_ZERKING,
-	REMOVE_ITEM_TO_ZERKING,
+	UPDATE_ZERKING_ITEM_ARRAY_REMOVE,
 	SET_ITEM_TO_ZERKING,
 	UPDATE_MY_POSITION
 } from '../actions/actionTypes.js';
@@ -58,7 +58,7 @@ const reducer = (state = initialState, action) => {
 				)
 			};
 			break;
-		case REMOVE_ITEM_TO_ZERKING:
+		case UPDATE_ZERKING_ITEM_ARRAY_REMOVE:
 			const updatedArray = state.itemsToZerking.filter(
 				item => item.category !== action.payload
 			);

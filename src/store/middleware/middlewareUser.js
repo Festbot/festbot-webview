@@ -79,9 +79,12 @@ export default store => next => async action => {
 			const listOfPersonalPreferences = topArtists.concat(
 				exceptTopArtists
 			);
-			store.dispatch(
-				setListOfPersonalPreferences(listOfPersonalPreferences)
-			);
+			if (listOfPersonalPreferences!==[]) {
+				store.dispatch(
+					setListOfPersonalPreferences(listOfPersonalPreferences)
+				);
+			}
+		
 			break;
 
 		case UPDATE_MY_POSITION:

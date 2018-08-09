@@ -25,8 +25,7 @@ import {
 	setFestivalStages,
 	setFestivalPois,
 	setFestivalFilteredPois,
-	addItemToZerking,
-	removeItemToZerking
+	updateZerkingItemArrayRemove
 } from '../actions';
 
 export default store => next => async action => {
@@ -73,10 +72,15 @@ export default store => next => async action => {
 
 			store.dispatch(setFestivalFilteredPois(updatedPois));
 
-			if (store.getState().zerking.itemsToZerking.length == 1) {
+			if (store.getState().zerking.filterItems.length == 1) {
 				const allPois = store.getState().zerking.pois;
 				store.dispatch(setFestivalFilteredPois(allPois));
 			}
+
+			store.dispatch(updateZerkingItemArrayRemove(action.payload))
+			//TODO
+			//discover nem ad semmit ha nincs zenei izles
+			//kelljen spotify uzenet
 
 			break;
 	}

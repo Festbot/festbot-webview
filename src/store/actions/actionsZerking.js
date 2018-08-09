@@ -8,9 +8,9 @@ import {
   SET_FESTIVAL_FILTERED_POIS,
   ADD_ITEM_TO_ZERKING,
   REMOVE_ITEM_TO_ZERKING,
+  UPDATE_ZERKING_ITEM_ARRAY_REMOVE,
   SET_ITEM_TO_ZERKING,
   ADD_ITEM_TO_SELECTOR,
-  REMOVE_ITEM_FROM_SELECTOR
 } from './actionTypes.js'
 
 
@@ -64,9 +64,9 @@ export const addItemToSelector=(item)=>{
   }
 }
 
-export const removeItemFromSelector=(category)=>{
+export const updateZerkingItemArrayRemove=(category)=>{
   return {
-    type: REMOVE_ITEM_FROM_SELECTOR,
+    type: UPDATE_ZERKING_ITEM_ARRAY_REMOVE,
     payload:category
   }
 }

@@ -17,6 +17,18 @@ export const getArtistsByGenre = async function(keyword=''){
 
 }
 
+export const getArtistsById = async function(keyword=''){
+
+  const {
+    data: { docs: filteredResults }
+  } = await axios.post(`https://${ROOT_URL}/artists/_find`, {
+    selector: {  name:  keyword },
+    limit: 1
+  });
+  return filteredResults
+
+}
+
 export const getArtistsByNameGenre = async function(keyword='',limit=100){
 
   const {

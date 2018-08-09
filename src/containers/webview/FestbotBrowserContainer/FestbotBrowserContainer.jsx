@@ -40,6 +40,7 @@ export class FestivalBrowserContainer extends Component {
 		this.props.setMenu('hide');
 		this.props.setActiveDay('ALL');
 		this.props.setActiveStage('HELYSZÍNEK');
+		
 
 		let { data } = await axios.get('https://api.festbot.com/festivals/_design/default/_list/all-data/default-view');
 
@@ -88,6 +89,10 @@ export class FestivalBrowserContainer extends Component {
 			return <Redirect to={`/festival/${this.props.userData.activeFestival}`} />;
 		}
 
+		if (this.props.match.path == '/festivals') {
+			return <div></div>
+		}
+		
 		return (
 			<div style={{ paddingBottom: '80px'}}>
 				<Helmet>{this.props.match.path == '/' ? <title>Festbot - Activation</title> : <title>Festival browser</title>}</Helmet>

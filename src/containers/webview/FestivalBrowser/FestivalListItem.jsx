@@ -69,7 +69,7 @@ class FestivalListItem extends Component {
 							transition: this.props.isOpenDetails ? 'all 0.3s ease-in-out' : 'none'
 						}}
 					/>
-					<div id={this.props.festival._id} ref={this.props.festival.coverPhoto} title={this.props.index} onClick={this.detailsContentOpenHandler} className={classes.listItemWrapper}>
+					<div id={this.props.festival._id} ref={this.props.festival.coverPhoto} title={this.props.index} onClick={this.props.showActivation?this.props.handleOpen:this.detailsContentOpenHandler} className={classes.listItemWrapper}>
 						<div className={classes.backdropLayer} />
 						<div className={classes.title}>{this.props.festival.name}</div>
 						<div
@@ -79,7 +79,7 @@ class FestivalListItem extends Component {
 							}}
 						>
 							{this.props.showActivation && (
-								<IconButton className={classes.iconButtonRoot} iconStyle={{ width: '30', height: '30' }} style={{ width: '35', height: '35' }} id={this.props.festival._id} onClick={this.props.handleOpen}>
+								<IconButton className={classes.iconButtonRoot} iconStyle={{ width: '50', height: '50' }} style={{ width: '35', height: '35' }} id={this.props.festival._id} onClick={this.props.handleOpen}>
 									{' '}
 									{this.props.isActiveItem ? <Done color={colors.orange900} /> : <Add color={colors.teal400} />}
 								</IconButton>
@@ -91,6 +91,7 @@ class FestivalListItem extends Component {
 
 						<div className={classes.details} style={{ maxHeight: this.props.isOpenDetails ? '880px' : '0px', padding: this.props.isOpenDetails ? '0' : '0px' }}>
 							{renderingDetails}
+							{}
 						</div>
 					</div>
 				</div>

@@ -16,6 +16,8 @@ import ScrollToTop from 'react-scroll-up';
 import FilterSwitchers from '../../../containers/webview/FestivalProgramContainer/FilterSwitchers.jsx';
 import DaySwitcher from '../../../components/DaySwitcher';
 
+import {getEventsByFestivalId} from '../../../helpers/eventApiHelper.js'
+
 export class festivalProgramContainer extends Component {
 	constructor(props) {
 		super(props);
@@ -50,9 +52,19 @@ export class festivalProgramContainer extends Component {
 
 		this.setState({ artist: artist });
 
-		let { data } = await axios.get('https://api.festbot.com/events/_design/default/_list/all-data/order-by-date');
-
-		const festivalProgramResults = data.filter(event => event.festivalId === this.props.match.params.festival_id);
+		const data = await getEventsByFestivalId(this.props.match.params.festival_id)
+		
+		//const festivalProgramResults =data
+		
+		const festivalProgramResults= data.map(event=>{
+			if (!event.endDate) { const endDate = moment(event.startDate).add(3,'hours').format()
+			return {...event,endDate}
+		}
+			return event
+		}).filter(event =>{
+			return moment(event.startDate)>moment(event.endDate).subtract(6,'hours') 
+		})
+		// const festivalProgramResults = data.filter(event => event.festivalId === this.props.match.params.festival_id);
 
 		if (festivalProgramResults.length == 0) {
 			this.setState({ isEventListExist: false });

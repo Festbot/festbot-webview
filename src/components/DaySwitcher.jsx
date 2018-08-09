@@ -18,10 +18,10 @@ export class DaySwitcher extends Component {
 			behavior: 'smooth'
 		});
 
-		this.props.setActiveDay(day);
+		
 		if (activeDay.currentTarget.id == 'ALL') {
 			this.props.setActiveDay('ALL');
-		}
+		} else {this.props.setActiveDay(day);}
 	};
 
 	setActiveRef = e => {
