@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import {getDirection} from '../../../helpers/getDirection.js'
-import {deviceOrientationListener,addDeviceOrientationListener,removeDeviceOrientationListener} from '../../../helpers/getCompassData.js'
 
 const CenterMarker = styled.div`
   position:absolute;
@@ -38,27 +37,10 @@ border-top: 9px solid rgba(${props =>{
 
 export class Navigation extends Component {
 
-  state={
-    heading:0
-  }
-
-  componentDidMount(){
-    addDeviceOrientationListener(this.getCompassData)
-  }
-
-  componentWillUnmount() {
-    removeDeviceOrientationListener(this.getCompassData)
-  }
-
-  getCompassData =(event)=>{
-    const direction = deviceOrientationListener(event)
-    
-    this.setState({heading:direction})
-  }
 
   calculateDirection = (lat1,lng1,lat2,lng2) => {
     const direction= getDirection(lat1,lng1,lat2,lng2)
-    const compass = this.state.heading
+    const compass = this.props.heading
     // ne kerdezd miert de igy lehet kiszamolni, h merre kell menni
     let x = (compass-direction)
     if(direction>compass) {x=-x}

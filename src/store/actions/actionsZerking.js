@@ -11,6 +11,7 @@ import {
   UPDATE_ZERKING_ITEM_ARRAY_REMOVE,
   SET_ITEM_TO_ZERKING,
   ADD_ITEM_TO_SELECTOR,
+  SET_HEADING,
 } from './actionTypes.js'
 
 
@@ -91,6 +92,14 @@ export const setItemToZerking=(item)=>{
   return {
     type: SET_ITEM_TO_ZERKING,
     payload:item
+  }
+}
+
+
+export const setHeading=(heading)=>{
+  return {
+    type: SET_HEADING,
+    payload:heading
   }
 }
 

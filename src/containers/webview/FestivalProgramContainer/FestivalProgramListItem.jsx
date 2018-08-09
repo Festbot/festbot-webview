@@ -44,6 +44,20 @@ class FestivalProgramListItem extends Component {
 	}
 
 
+	componentDidMount(){
+		document.body.addEventListener("touchmove", this.onTouchMove)
+	}
+
+	componentWillUnmount(){
+		document.body.removeEventListener("touchmove", this.onTouchMove)
+	}
+
+	onTouchMove=(e)=>{
+		if (this.scrollingInProgress){
+			e.preventDefault()
+		}
+
+	}
 
 	offset(el) {
 		var rect = el.getBoundingClientRect(),
@@ -53,12 +67,14 @@ class FestivalProgramListItem extends Component {
 	}
 
 	smoothScroll = el => {
+		this.scrollingInProgress=true
 		let fromTop = el.getBoundingClientRect();
 		fromTop = el.getBoundingClientRect().top;
 
 		if (fromTop < 2 && fromTop > -2) {
 			const cardHeight = el.getBoundingClientRect().height;
 			this.props.setLastOpenedDetailsHeight(cardHeight - 120);
+			this.scrollingInProgress=false
 			return;
 		}
 
@@ -140,7 +156,7 @@ class FestivalProgramListItem extends Component {
 					ref={element => (this.activeDetailsDiv = element)}
 					className={classes.listItemContainer}
 					style={{
-						maxHeight: this.props.isOpenDetails ? '1000px' : '120px',
+						height: this.props.isOpenDetails ? '600px' : '120px',
 						minHeight: this.props.isOpenDetails ? '300px' : '120px',
 						backgroundImage: this.props.event.artistPhoto ? 'url(https://ucarecdn.com/' + this.props.event.artistPhoto + '/)':'none',
 						transition: this.props.isOpenDetails ? 'all 0.3s ease-in-out' : 'none'
@@ -179,8 +195,8 @@ class FestivalProgramListItem extends Component {
 
 
 const Placeholder = styled.div`
-height:120px;
-height:${props=>props.isOpenDetails?this.activeDetailsDiv.getBoundingClientRect().height+"px" :"120px"};
+
+height:${props=>props.isOpenDetails?"600px" :"120px"};
 background-color: rgba(22,22,22,0.9) ;
 margin:15px auto;
 `
