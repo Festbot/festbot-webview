@@ -63,7 +63,6 @@ const NotificationModal = styled.div`
 	justify-content: center;
 	align-items: center;
 	background-color: rgba(11, 11, 11, 0.7);
-	pointer-events: none;
 	z-index: 20;
 `;
 const OpenChrome = styled.a`
@@ -93,9 +92,10 @@ export class NavigatorContainer extends Component {
 	};
 
 	render() {
-		let showOpenChromeOverlay =
+		let showOpenChromeOverlay = true ||
 			this.props.isWebview && window.AbsoluteOrientationSensor;
-		if (!this.props.stages) {
+
+			if (!this.props.stages) {
 			return <div>Waiting for active festival data...</div>;
 		}
 
@@ -118,7 +118,11 @@ export class NavigatorContainer extends Component {
 
 		return (
 			<Container
-				style={{ height: showOpenChromeOverlay ? '100%' : 'auto' }}
+				style={
+					showOpenChromeOverlay
+						? { height: '100vh', overflow: 'hidden' }
+						: {}
+				}
 			>
 				<PoiFilterContainer
 					pois={this.props.pois}
@@ -183,7 +187,10 @@ export class NavigatorContainer extends Component {
 
 				{showOpenChromeOverlay && (
 					<NotificationModal>
-						<OpenChrome href="intent://webview.festbot.com/navigator#Intent;scheme=https;action=android.intent.action.VIEW;end;">
+						<OpenChrome
+							href="intent://webview.festbot.com/navigator#Intent;scheme=https;action=android.intent.action.VIEW;end;"
+							target="_blank"
+						>
 							Open in Chrome
 						</OpenChrome>
 					</NotificationModal>

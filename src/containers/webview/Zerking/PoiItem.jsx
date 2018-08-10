@@ -131,18 +131,7 @@ export class PoiItem extends Component {
 	};
 
 	render() {
-		const Wrapper =
-			(this.props.distance === null&&window.AbsoluteOrientationSensor)
-				? props => 
-						<a
-							href="intent://webview.festbot.com/navigator#Intent;scheme=https;action=android.intent.action.VIEW;end;"
-							target="_blank"
-							{...props}
-						>
-							{props.children}
-						</a>
-				  
-				: props => <div {...props}>{props.children}</div>;
+		const Wrapper = props => <div {...props}>{props.children}</div>;
 		const { poi } = this.props;
 		const NavigationWithHeading = this.NavigationMarker;
 		const iconType = poi.category;
