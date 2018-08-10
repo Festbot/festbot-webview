@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-
+import * as Ramda from 'ramda';
 import { Helmet } from 'react-helmet';
 
 import geolocationWrapper from '../Zerking/setGeolocation.js';
@@ -20,6 +20,7 @@ import {
 } from '../../../store/actions';
 
 const PoiFilter = withFilteredPoiTypes(PoiSelector);
+import StageFilter from '../Navigator/StageFilter.jsx'
 
 const Title = styled.div`
 text-align:center;
@@ -69,9 +70,28 @@ export class NavigatorContainer extends Component {
 	};
 
 	render() {
-		if (!this.props.activeFestivalData) {
+		if (!this.props.stages) {
 			return <div>Waiting for active festival data...</div>;
 		}
+
+		const renderStages = this.props.stages.filter(stage=>{
+			return stage.coordinates.lat!==null
+		})
+
+		const pagedRenderStages = Ramda.splitEvery(15,renderStages)
+
+		const RenderStagePages = pagedRenderStages.map((StagePage,index)=>{
+			return <CarouselPage key={index}>
+			<Title>{`Stages - ${
+				this.props.activeFestivalData.name
+			} `}</Title>
+			<StageFilter stages={StagePage}/>
+			</CarouselPage>
+		})
+
+		console.log("[filtered stages",this.props.filteredStages)
+		
+
 		return (
 			<Container>
 			<PoiFilterContainer
@@ -113,11 +133,21 @@ export class NavigatorContainer extends Component {
 					festival={this.props.activeFestival}
 				/>
 				</CarouselPage>
+				
+		
+				{RenderStagePages}
 				</CarouselContainer>
 				</PoiFilterContainer>
 
 				
-
+				{this.props.filteredStages.length>0&&
+					<PoiContaier
+						readOnly
+						limit={10}
+						pois={this.props.filteredStages}
+						festival={this.props.activeFestival}
+						pos={this.props.pos}
+					/>}
 
 				<PoiContaier
 					readOnly
@@ -126,7 +156,7 @@ export class NavigatorContainer extends Component {
 					festival={this.props.activeFestival}
 					pos={this.props.pos}
 				/>
-
+				
 				
 			</Container>
 		);
@@ -140,6 +170,7 @@ const mapStateToProps = ({ festbot, zerking }) => {
 		stages: zerking.stages,
 		pois: zerking.pois,
 		filteredPois: zerking.filteredPois,
+		filteredStages: zerking.stagesToFiltering,
 		activeFestivalData: zerking.activeFestivalData,
 		filterItems: zerking.filterItems,
 		pos: zerking.pos,

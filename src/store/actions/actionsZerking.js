@@ -12,6 +12,10 @@ import {
   SET_ITEM_TO_ZERKING,
   ADD_ITEM_TO_SELECTOR,
   SET_HEADING,
+  ADD_STAGE_TO_FILTERING,
+  REMOVE_STAGE_TO_FILTERING,
+  SET_FESTIVAL_FILTERED_STAGES,
+
 } from './actionTypes.js'
 
 
@@ -100,6 +104,26 @@ export const setHeading=(heading)=>{
   return {
     type: SET_HEADING,
     payload:heading
+  }
+}
+
+export const addStageToFiltering=(id)=>{
+  return {
+    type: ADD_STAGE_TO_FILTERING,
+    payload:id
+  }
+}
+export const removeStageFromFilter=(id)=>{
+  return {
+    type: REMOVE_STAGE_TO_FILTERING,
+    payload:id
+  }
+}
+
+export const setFestivalFilteredStages=(pois)=>{
+  return {
+    type: SET_FESTIVAL_FILTERED_STAGES,
+    payload:pois
   }
 }
 

@@ -32,7 +32,9 @@ import {
 	setUserActiveFestivalData,
 	setMyPosition,
 	setFestivalPois,
-	setFestivalFilteredPois
+	setFestivalFilteredPois,
+	setFestivalFilteredStages
+
 } from '../actions';
 
 export default store => next => async action => {
@@ -111,6 +113,29 @@ export default store => next => async action => {
 				})
 			store.dispatch(setFestivalFilteredPois(orderedPois));
 	
+	
+			const stagesWithDistance = store.getState().zerking.stagesToFiltering.map(stage => {
+					return {
+						...stage,
+						distance: getDistance(
+							action.payload.lat,
+							action.payload.lng,
+							stage.coordinates.lat,
+							stage.coordinates.lng
+						)
+					};
+				});
+				const orderedStages= stagesWithDistance.sort((a,b)=>{
+					return a.distance-b.distance;
+				})
+			store.dispatch(setFestivalFilteredStages(orderedStages));
+	
+
+
+
+
+			setFestivalFilteredStages
+
 			break;
 	}
 

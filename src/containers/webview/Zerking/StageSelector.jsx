@@ -13,6 +13,9 @@ import { setItemToZerking,getFestivalStages} from '../../../store/actions';
 
 import { addItemToVenues } from '../../../helpers/festivalApiHelper.js';
 
+import headingWrapper from '../../../hoc/headingWrapper.jsx';
+
+
 const StageItem = styled.div`
 position:relative;
 margin: 50px;
@@ -61,7 +64,11 @@ right:10px;
 `
 
 export class StageSelector extends Component {
+constructor(props){
+  super(props)
+  this.NavigationMarker = headingWrapper(Navigation);
 
+}
   state={
     selectedItem:''
   }
@@ -101,14 +108,15 @@ export class StageSelector extends Component {
   }
 
   renderStages = (stage) =>{
+    const NavigationWithHeading = this.NavigationMarker;
     if (stage.coordinates.lat) {
       return(<StageItem isZerked key={stage.name} >
 
         
-        <LocationInfo>{this.distance(getDistance(this.props.pos.lat,this.props.pos.lng,stage.coordinates.lat, stage.coordinates.lng))}</LocationInfo>
+        {this.props.pos&&<LocationInfo>{this.distance(getDistance(this.props.pos.lat,this.props.pos.lng,stage.coordinates.lat, stage.coordinates.lng))}</LocationInfo>}
         <PoiTitle>{stage.name}</PoiTitle>
         <ResetButton onClick={()=>this.resetStageLocation(stage)}>X</ResetButton>
-        <Navigation  poi={stage} pos={this.props.pos} />
+        {this.props.pos&&<NavigationWithHeading  poi={stage} pos={this.props.pos} />}
         </StageItem>
         )
     }
@@ -122,6 +130,7 @@ export class StageSelector extends Component {
 
 
   render() {
+    
     const {stages} = this.props
     let stageRender=''
     if (this.props.stages) {

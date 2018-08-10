@@ -8,12 +8,16 @@ import {
 	UPDATE_ZERKING_ITEM_ARRAY_REMOVE,
 	SET_ITEM_TO_ZERKING,
 	UPDATE_MY_POSITION,
-	SET_HEADING
+	SET_HEADING,
+	ADD_STAGE_TO_FILTERING,
+	REMOVE_STAGE_TO_FILTERING,
+	SET_FESTIVAL_FILTERED_STAGES
 } from '../actions/actionTypes.js';
 
 const initialState = {
 	itemsToZerking: [],
-	filterItems: []
+	filterItems: [],
+	stagesToFiltering:[]
 };
 
 const reducer = (state = initialState, action) => {
@@ -77,6 +81,32 @@ const reducer = (state = initialState, action) => {
 				itemsToZerking: action.payload
 			};
 			break;
+
+			case ADD_STAGE_TO_FILTERING:
+			return {
+				...state,
+				stagesToFiltering: state.stagesToFiltering.concat(action.payload),
+			};
+			break;
+
+			case REMOVE_STAGE_TO_FILTERING:
+			const updatedFilterStages = state.stagesToFiltering.filter(
+				item => item._id !== action.payload
+			);
+			return {
+				...state,
+				stagesToFiltering: updatedFilterStages
+			};
+			break;
+
+			case SET_FESTIVAL_FILTERED_STAGES:
+			return {
+				...state,
+				stagesToFiltering: action.payload
+			};
+			break;
+
+
 		case UPDATE_MY_POSITION:
 			return {
 				...state,
