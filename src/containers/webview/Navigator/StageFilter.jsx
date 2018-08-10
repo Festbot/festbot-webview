@@ -25,6 +25,7 @@ margin:0 auto;
 width:80px;
 overflow-x:scroll;
 
+
 `
 
 const PoiItem = styled.div`
@@ -91,7 +92,7 @@ export class StageFilter extends Component {
     return (
       <PoiItem isToggledForFiltering={this.isToggledForFiltering(stage._id)} onClick={(e)=>this.setStageToFilter(e,stage)} key={stage._id}>
       <MapIcon src={iconUrl}/><MapIconTitle>{stage.name}</MapIconTitle>
-      
+
       </PoiItem>)
   }
 

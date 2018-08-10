@@ -1,4 +1,6 @@
 import md5 from 'md5';
+import store from '../store/store.js'
+import {setIsWebview} from '../store/actions'
 
 export default function getUserId() {
 	return new Promise((complete, reject) => {
@@ -10,6 +12,8 @@ export default function getUserId() {
 						
 						console.warn("[PSID OK]",psid)
 						complete(md5(psid))
+						store.dispatch(setIsWebview())
+						
 					} catch (error) {
 						console.warn('get user data error', error);
 						alert('Network Error');

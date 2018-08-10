@@ -12,6 +12,7 @@ const initialState ={
   activeStage:'HELYSZÍNEK',
   detailsPanelHeight:0,
   userId:'fbad78af5e115963b0ad97aa3da436c0',
+  isWebview:false,
 }
 
 const reducer = (state = initialState,action) => {
@@ -31,6 +32,11 @@ const reducer = (state = initialState,action) => {
     return {
       ...state,
       activeFestival: action.value,
+    }
+    case 'SET_IS_WEBVIEW':
+    return {
+      ...state,
+      isWebview: true
     }
     case 'UPD_MENU':
     return {

@@ -7,7 +7,7 @@ import {
   INIT_MATCHING_ARTIST_OF_USER,
   SET_LIST_OF_PERSONAL_PREFERENCES,
   UPDATE_MY_POSITION,
-
+  SET_IS_WEBVIEW,
 
 
 } from './actionTypes.js'
@@ -18,6 +18,11 @@ import {
 export const initUserData=()=>{
   return {
     type: INIT_USER_DATA
+  }
+}
+export const setIsWebview=()=>{
+  return {
+    type: SET_IS_WEBVIEW
   }
 }
 
