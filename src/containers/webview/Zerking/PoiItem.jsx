@@ -132,10 +132,10 @@ export class PoiItem extends Component {
 
 	render() {
 		const Wrapper =
-			this.props.distance === null
+			(this.props.distance === null&&window.AbsoluteOrientationSensor)
 				? props => 
 						<a
-							href="https://index.hu"
+							href="intent://webview.festbot.com/navigator#Intent;scheme=https;action=android.intent.action.VIEW;end;"
 							target="_blank"
 							{...props}
 						>

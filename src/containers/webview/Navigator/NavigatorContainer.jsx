@@ -88,9 +88,7 @@ export class NavigatorContainer extends Component {
 			<StageFilter stages={StagePage}/>
 			</CarouselPage>
 		})
-
-		console.log("[filtered stages",this.props.filteredStages)
-		
+	
 
 		return (
 			<Container>
