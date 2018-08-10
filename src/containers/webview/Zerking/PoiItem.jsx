@@ -131,7 +131,18 @@ export class PoiItem extends Component {
 	};
 
 	render() {
-	
+		const Wrapper =
+			this.props.distance === null
+				? props => 
+						<a
+							href="https://index.hu"
+							target="_blank"
+							{...props}
+						>
+							{props.children}
+						</a>
+				  
+				: props => <div {...props}>{props.children}</div>;
 		const { poi } = this.props;
 		const NavigationWithHeading = this.NavigationMarker;
 		const iconType = poi.category;
@@ -159,7 +170,7 @@ export class PoiItem extends Component {
 		}
 
 		return (
-			<div style={{ position: 'relative' }}>
+			<Wrapper style={{ position: 'relative', display: 'block' }}>
 				{!this.props.readOnly && (
 					<DeleteButton
 						onClick={() =>
@@ -181,7 +192,7 @@ export class PoiItem extends Component {
 						)}
 					</Flexbox>
 				</Poi>
-			</div>
+			</Wrapper>
 		);
 	}
 }
