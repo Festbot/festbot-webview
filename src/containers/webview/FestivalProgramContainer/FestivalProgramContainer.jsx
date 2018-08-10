@@ -15,7 +15,8 @@ import FestivalProgramListItem from './FestivalProgramListItem.jsx';
 import ScrollToTop from 'react-scroll-up';
 import FilterSwitchers from '../../../containers/webview/FestivalProgramContainer/FilterSwitchers.jsx';
 import DaySwitcher from '../../../components/DaySwitcher';
-
+import debounce from 'lodash.debounce'
+import _ from 'lodash'
 import {getEventsByFestivalId} from '../../../helpers/eventApiHelper.js'
 
 export class festivalProgramContainer extends Component {
@@ -225,6 +226,8 @@ export class festivalProgramContainer extends Component {
 		}
 	};
 
+
+
 	showMore = () => {
 		this.setState(function(prevState) {
 			return {
@@ -233,9 +236,14 @@ export class festivalProgramContainer extends Component {
 		});
 	};
 	
+	onDetailsOpenAnimationStateChange=(e)=>{
+		this.detailsOpenAnimationInProgress=e
+	}
+
 	onScrollLazyLoad=()=>{
-		this.setState({scrollPosition:window.scrollY})
-		//if (this.state.activeDetails!=='') {this.setState({ activeDetails: ''})}
+	
+		if (!this.detailsOpenAnimationInProgress) {this.setState({scrollPosition:window.scrollY})}
+		
 	}
 
 	render() {
@@ -264,7 +272,7 @@ export class festivalProgramContainer extends Component {
 
 		const Programs = this.festivalEventFilter();
 
-		const sliceOfPrograms = Programs.slice(this.state.yListOffset, this.state.yListOffset + 100);
+		const sliceOfPrograms = Programs.slice(this.state.yListOffset, this.state.yListOffset + 200);
 		const grouppedFestivalPrograms = this.groupByDays(sliceOfPrograms);
 
 		const eventDays = Object.keys(grouppedFestivalPrograms).sort();
@@ -280,6 +288,7 @@ export class festivalProgramContainer extends Component {
 					{grouppedFestivalPrograms[day].map((event, index) => {
 						return (
 							<FestivalProgramListItem
+							onDetailsOpenAnimationStateChange={this.onDetailsOpenAnimationStateChange}
 								scrollPosition={this.state.scrollPosition}
 								key={daysIndex * 1000 + index}
 								index={daysIndex * 1000 + index}

@@ -68,6 +68,7 @@ class FestivalProgramListItem extends Component {
 
 	smoothScroll = el => {
 		this.scrollingInProgress=true
+		this.props.onDetailsOpenAnimationStateChange(true)
 		let fromTop = el.getBoundingClientRect();
 		fromTop = el.getBoundingClientRect().top;
 
@@ -75,6 +76,7 @@ class FestivalProgramListItem extends Component {
 			const cardHeight = el.getBoundingClientRect().height;
 			this.props.setLastOpenedDetailsHeight(cardHeight - 120);
 			this.scrollingInProgress=false
+			this.props.onDetailsOpenAnimationStateChange(false)
 			return;
 		}
 
