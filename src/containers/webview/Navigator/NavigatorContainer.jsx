@@ -95,7 +95,7 @@ export class NavigatorContainer extends Component {
 		let showOpenChromeOverlay =
 			this.props.isWebview && window.AbsoluteOrientationSensor;
 
-		if (!this.props.stages) {
+		if (!this.props.stages || !this.props.activeFestivalData) {
 			return <div>Waiting for active festival data...</div>;
 		}
 
