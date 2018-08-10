@@ -63,6 +63,7 @@ export class NavigatorContainer extends Component {
 		this.props.setMenu('hide');
 		this.props.initUserActiveFestivalStages();
 		this.props.initUserActiveFestivalPois();
+
 	}
 
 	changeHander = e => {
@@ -70,6 +71,7 @@ export class NavigatorContainer extends Component {
 	};
 
 	render() {
+
 		if (!this.props.stages) {
 			return <div>Waiting for active festival data...</div>;
 		}

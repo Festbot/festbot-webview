@@ -74,7 +74,12 @@ export class PoiSelector extends Component {
       }
     }
     this.props.addItemToZerking([item])
-
+    setTimeout(()=>window.scrollBy({
+			top: 150, 
+			left: 0, 
+			behavior: 'smooth' 
+		}),50)
+		
     return
   }
 
