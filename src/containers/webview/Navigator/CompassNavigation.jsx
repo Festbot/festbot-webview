@@ -32,24 +32,37 @@ const Ring = styled.div`
 position: absolute;
 left: 50%;
 top: 50%;
-	width: 70vw;
-	height: 70vw;
-	border: 1px solid rgb(70,220,150);
+	width: 90vw;
+	height: 90vw;
+	border: 1px solid rgba(70,220,150,0.7);
 	border-radius: 50%;
 	display: flex;
   justify-content: center;
   transform: translate(-50%,-50%) rotate(${props=>props.direction}deg);
+
 `;
 
 const InnerRing = styled.div`
 position: absolute;
-top: 25%;
 
-	width: 35vw;
-	height: 35vw;
+  top:22vw;
+	width: 46vw;
+	height: 46vw;
 	border: 1px solid #555;
 	border-radius: 50%;
-  transform: translate(-50%,-50%) rotate(${props=>props.direction}deg);
+
+
+`;
+const OuterRing = styled.div`
+position: absolute;
+top: -25vw;;
+
+	width: 140vw;
+	height: 140vw;
+	border: 1px solid #555;
+	border-radius: 50%;
+
+
 `;
 
 const Info = styled.div`
@@ -71,20 +84,22 @@ line-height:140%;
 `
 const VerticalLine = styled.div`
 position:absolute;
-	height: 70vw;
+  height: 250vw;
+  top:-100%
 	width: 1px;
   background-color: rgba(120, 120, 120, 0.6);
-  
+  box-shadow: 0px 1px 12px rgba(70,220,150, 0.5);
 	margin: 0 auto;
 `;
 
 const HorizontalLine = styled.div`
 	position: absolute;
-	top: 35vw;
+	top: 45vw;
 	height: 1px;
-	width: 70vw;
+	width: 150vw;
 	background-color: rgba(120, 120, 120, 0.6);
-	margin: auto 0;
+  margin: auto 0;
+  box-shadow: 0px 1px 12px rgba(70,220,150, 0.5);
 `;
 
 export class CompassNavigation extends Component {
@@ -146,6 +161,7 @@ export class CompassNavigation extends Component {
             <VerticalLine/>
             <HorizontalLine/>
             <InnerRing/>
+            <OuterRing/>
 					</Ring>
 				</NotificationModal>
 			</div>
