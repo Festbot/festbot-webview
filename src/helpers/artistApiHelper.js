@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../helpers/cachedAxios.js';
 import 'babel-polyfill';
 
 const ROOT_URL='api.festbot.com'

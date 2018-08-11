@@ -106,7 +106,7 @@ export const icons = {
 		icon: festbot + 'dd0fcc82-2aa3-457d-a95a-4f5eb2e7cadd' + iconSize
 	},	
 	stage: {
-		icon: festbot + '669ecb31-4cc0-48e4-9c06-47ad02b3f6b6' + iconSize
+		icon: festbot + '064b6da4-0454-46d0-b66b-f0b6ccec2706' + iconSize
 	},	
 	glutenfree: {
 		icon: festbot + '71d7ebbe-15cd-4b6e-a50f-348f29c35a18' + iconSize

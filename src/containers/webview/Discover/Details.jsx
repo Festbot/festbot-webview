@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classes from './DiscoverContainer.css';
 import * as colors from 'material-ui/styles/colors';
-import axios from 'axios';
 
 import { saveFavouriteEvent, removeFavouriteEvent } from '../../../helpers/apiHelper';
 

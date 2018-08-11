@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import axios from 'axios';
+import axios from '../../../helpers/cachedAxios.js';
 import 'babel-polyfill';
 
 import { getUserData } from '../../../helpers/apiHelper.js';

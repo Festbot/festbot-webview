@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classes from './FestivalProgramContainer.css';
-import axios from 'axios';
+import axios from '../../../helpers/cachedAxios.js';
 import 'babel-polyfill';
 import * as Ramda from 'ramda';
 import moment from 'moment';

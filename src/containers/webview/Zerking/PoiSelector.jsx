@@ -11,17 +11,20 @@ import { addItemToZerking, removeItemToZerking, getFestivalPois} from '../../../
 
 import { addItemToVenues } from '../../../helpers/festivalApiHelper.js';
 
+import { goToAnchor } from 'react-scrollable-anchor'
+import { configureAnchors } from 'react-scrollable-anchor'
+
+
 const  MapIcon = styled.img`
 position: relative;
- padding-left:5px;
  width:32px;
  height:32px;
  margin:0 auto;
 `
 
 const MapIconTitle = styled.div`
-padding:5px;
-font-size:80%;
+padding-top:5px;
+font-size:90%;
 
 `
 
@@ -31,10 +34,8 @@ background-color:  ${props => props.isToggledForZerkig ? 'rgb(80,100,0)' : 'rgba
 color: rgb(59, 40, 78);
 color:#ddd;
 
-margin:10px;
-padding: 10px 10px;
-font-size: 110%;
-
+margin:8px 10px;
+padding: 8px 8px;
 box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.5);
 border-radius: 3px;
 font-weight: 100;
@@ -56,6 +57,9 @@ align-content:stretch;
 
 export class PoiSelector extends Component {
 
+  componentDidMount() {
+    configureAnchors({offset: -250, scrollDuration: 500})
+  }
 
   setItemToZerking=  (e,poiType)=>{
     e.stopPropagation()
@@ -74,11 +78,12 @@ export class PoiSelector extends Component {
       }
     }
     this.props.addItemToZerking([item])
-    setTimeout(()=>window.scrollBy({
-			top: 150, 
-			left: 0, 
-			behavior: 'smooth' 
-		}),50)
+    goToAnchor('poiList')
+    // setTimeout(()=>window.scrollTo({
+		// 	top: 300, 
+		// 	left: 0, 
+		// 	behavior: 'smooth' 
+		// }),50)
 		
     return
   }

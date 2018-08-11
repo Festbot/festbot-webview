@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import ScrollableAnchor from 'react-scrollable-anchor';
 import PoiItem from './PoiItem.jsx';
 import { getFestivalPois } from '../../../store/actions';
+import CompassNavigation from '../Navigator/CompassNavigation.jsx';
+import headingWrapper from '../../../hoc/headingWrapper.jsx';
+
+const CompassNavigationWithHeading = headingWrapper(CompassNavigation)
 
 export class PoiContaier extends Component {
 	state = {
@@ -22,10 +27,22 @@ export class PoiContaier extends Component {
 		this.setState({ scrollPosition: window.scrollY });
 	};
 
+	openCompassNavigation = poi => {
+		console.log(poi);
+		if (poi.distance) {
+			this.setState({ poiForCompass: poi });
+		}
+	};
+
+	compassNavigationClose = () => {
+		this.setState({ poiForCompass: '' });
+	};
+
 	render() {
 		if (!this.props.pois) {
 			return <div />;
 		}
+
 		const {
 			pois,
 			pos,
@@ -33,6 +50,19 @@ export class PoiContaier extends Component {
 			readOnly = false,
 			limit = false
 		} = this.props;
+
+		let compassNavigatorRender = '';
+		if (this.state.poiForCompass) {
+			compassNavigatorRender = (
+				<CompassNavigation
+					compassNavigationClose={this.compassNavigationClose}
+					poi={this.state.poiForCompass}
+					pos={pos}
+				/>
+			);
+		}
+
+		
 		let poiRender = '';
 		let sliceOfPois = '';
 		if (pois) {
@@ -43,6 +73,7 @@ export class PoiContaier extends Component {
 			}
 			poiRender = sliceOfPois.map((poi, index) => (
 				<PoiItem
+					openCompassNavigation={this.openCompassNavigation}
 					scrollPosition={this.state.scrollPosition}
 					readOnly={readOnly}
 					poi={poi}
@@ -57,7 +88,15 @@ export class PoiContaier extends Component {
 			));
 		}
 
-		return <div style={{ paddingBottom: '20px' }}>{poiRender}</div>;
+		return (
+			<div style={{ paddingBottom: '20px' }}>
+				<ScrollableAnchor id={'poiList'}>
+					<div />
+				</ScrollableAnchor>
+				{poiRender}
+				{compassNavigatorRender}
+			</div>
+		);
 	}
 }
 

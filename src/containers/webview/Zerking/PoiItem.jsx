@@ -46,10 +46,10 @@ const Poi = styled.div`
 	width: 90%;
 	margin: 10px auto;
 	padding: 15px 10px;
-	font-size: 120%;
+	font-size: 100%;
 
 	border-radius: 3px;
-	font-weight: 100;
+	font-weight: 110;
 	cursor: pointer;
 	transition: all 0.3s ease-out;
 
@@ -173,7 +173,7 @@ export class PoiItem extends Component {
 				<Poi innerRef={this.itemRef} swiped={isSwiped} id={poi._id}>
 					<NavigationWithHeading poi={poi} pos={this.props.pos} />
 
-					<Flexbox>
+					<Flexbox onClick={()=>this.props.openCompassNavigation(poi)}>
 						<MapIcon src={iconUrl} />
 						<PoiTitle>{poi.name || poi.category}</PoiTitle>
 						{this.props.distance !== null && (

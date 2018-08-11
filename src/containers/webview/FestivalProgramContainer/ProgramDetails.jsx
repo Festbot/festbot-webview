@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import classes from './FestivalProgramListItem.css';
 import * as colors from 'material-ui/styles/colors';
-import axios from 'axios';
+import axios from '../../../helpers/cachedAxios.js';
 
 import IconMap from 'material-ui/svg-icons/maps/near-me';
 import IconHeadset from 'material-ui/svg-icons/hardware/headset';

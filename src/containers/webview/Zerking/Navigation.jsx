@@ -55,6 +55,7 @@ export class Navigation extends Component {
 
 
   render() {
+
     const {poi,pos} = this.props
 
     if (!poi) {return}

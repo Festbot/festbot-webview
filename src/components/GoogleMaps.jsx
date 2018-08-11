@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import querystring from 'querystring'
 import classes from './GoogleMaps.css'
-import axios from 'axios';
+import axios from '../helpers/cachedAxios.js';
 export class GoogleMaps extends Component {
   state={
     stage:''
