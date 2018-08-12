@@ -9,6 +9,7 @@ import Divider from 'material-ui/Divider';
 import countries from '../../../helpers/countries.json';
 import emojiFlags from 'emoji-flags';
 import ConfirmationDialog from './ConfirmationDialog.jsx';
+import querystring from 'querystring'
 
 class FestivalListBuilder extends Component {
 	state = {
@@ -39,6 +40,12 @@ class FestivalListBuilder extends Component {
 			await saveActiveFestbot(userId, this.state.selectedItem);
 			
 			this.props.setActiveFestival(this.state.selectedItem);
+
+			if (querystring.parse(location.search)["?redirect"]) {
+
+				window.location.href=querystring.parse(location.search)["?redirect"]
+			}
+
 		} catch (error) {
 			alert('Network Error');
 		}

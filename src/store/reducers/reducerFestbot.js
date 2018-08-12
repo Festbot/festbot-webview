@@ -11,7 +11,7 @@ const initialState ={
   eventStages:['Main Stage','Telekom Arena','Colosseum','Magic Mirror'],
   activeStage:'HELYSZÍNEK',
   detailsPanelHeight:0,
-  userId:'fbad78af5e115963b0ad97aa3da436c0',
+ 
   isWebview:false,
 }
 

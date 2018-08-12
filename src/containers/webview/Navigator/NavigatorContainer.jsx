@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import * as Ramda from 'ramda';
 
@@ -77,6 +78,16 @@ const OpenChrome = styled.a`
 	background-color: rgb(22, 155, 90);
 	color: #ddd;
 `;
+const FestivalActivation = styled(Link)`
+text-align: center;
+text-decoration: none;
+padding: 10px 20px;
+border-radius: 50px;
+width: 80%;
+font-size: 200%;
+background-color: rgb(22, 155, 90);
+color: #ddd;
+`;
 
 export class NavigatorContainer extends Component {
 	state = {
@@ -101,12 +112,19 @@ export class NavigatorContainer extends Component {
 			(!this.props.pos && !isAndroid) ||
 			(!this.props.pos && isAndroid && !this.props.isWebview);
 
-		if (!this.props.stages || !this.props.activeFestivalData) {
-			return <div>Waiting for active festival data...</div>;
+		if (!this.props.stages) {
+			return <div>Loading...</div>
 		}
 
-		console.log(noGpsData)
-		console.log(this.props.pos, isAndroid , this.props.isWebview)
+
+		if (this.props.activeFestival==null) {
+			return <NotificationModal>
+			<FestivalActivation to="/?redirect=/navigator" >
+				Válassz aktív fesztivált
+			</FestivalActivation>
+		</NotificationModal>;
+		}
+
 		const renderStages = this.props.stages.filter(stage => {
 			return stage.coordinates.lat !== null;
 		});
