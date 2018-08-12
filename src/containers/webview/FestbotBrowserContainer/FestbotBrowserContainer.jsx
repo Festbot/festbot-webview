@@ -21,6 +21,9 @@ import FestivalListBuilder from '../FestivalBrowser/FestivalListBuilder.jsx';
 
 import { Helmet } from 'react-helmet';
 
+import {initUserData} from '../../../store/actions'
+
+
 import md5 from 'md5';
 
 const styles = {
@@ -46,25 +49,7 @@ export class FestivalBrowserContainer extends Component {
 
 		this.setState({ searchResults: data, data: data });
 
-		MessengerExtensions.getContext(
-			'817793415088295',
-			async ({ psid }) => {
-				//console.log('psid', psid);
-				try {
-					const userId = md5(psid);
-					const data = await getUserData(userId);
-					this.props.setUser(data);
-				} catch (error) {
-					//	console.warn('get user data error', error);
-					alert('Network Error');
-				}
-			},
-			async err => {
-				//console.warn('no psid :(');
-				const data = await getUserData(this.props.userData.userId);
-				this.props.setUser(data);
-			}
-		);
+		this.props.initUserData()
 	}
 
 	festivalListFilter = keyword => {
@@ -137,7 +122,8 @@ const mapDispatchToProps = dispatch => {
 		setMenu: actualViewMenu => dispatch({ type: 'UPD_MENU', value: actualViewMenu }),
 		setUser: userData => dispatch({ type: 'SET_USER', value: userData }),
 		setActiveDay: day => dispatch({ type: 'UPD_ACTIVEDAY', value: day }),
-		setActiveStage: stage => dispatch({ type: 'UPD_ACTIVESTAGE', value: stage })
+		setActiveStage: stage => dispatch({ type: 'UPD_ACTIVESTAGE', value: stage }),
+		initUserData:()=>dispatch(initUserData())
 	};
 };
 

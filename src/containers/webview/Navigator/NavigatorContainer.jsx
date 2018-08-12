@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import * as Ramda from 'ramda';
-import { Helmet } from 'react-helmet';
 
 import geolocationWrapper from '../Zerking/setGeolocation.js';
-import Map from '../Zerking/Map.jsx';
-import Marker from '../Zerking/Marker.jsx';
-import StageSelector from '../Zerking/StageSelector.jsx';
-import VisibilityControl from '../../../hoc/VisibilityControl/VisibilityControl.jsx'
+
 import PoiContaier from '../Zerking/PoiContaier.jsx';
 import PoiFilterContainer from './PoiFilterContainer.jsx';
 import withFilteredPoiTypes from './withFilteredPoiTypes.jsx';
@@ -64,12 +60,12 @@ const NotificationModal = styled.div`
 	align-items: center;
 	background-color: rgba(11, 11, 11, 0.7);
 	z-index: 20;
-	flex-direction:column;
-	text-align:center;
-	color:#ddd;
-	p{
-		font-size:100%;
-	};
+	flex-direction: column;
+	text-align: center;
+	color: #ddd;
+	p {
+		font-size: 100%;
+	}
 `;
 const OpenChrome = styled.a`
 	text-align: center;
@@ -80,7 +76,6 @@ const OpenChrome = styled.a`
 	font-size: 200%;
 	background-color: rgb(22, 155, 90);
 	color: #ddd;
-
 `;
 
 export class NavigatorContainer extends Component {
@@ -99,15 +94,19 @@ export class NavigatorContainer extends Component {
 	};
 
 	render() {
-		let showOpenChromeOverlay =
-			this.props.isWebview && window.AbsoluteOrientationSensor;
+		let isAndroid = !!window.AbsoluteOrientationSensor;
+		let showOpenChromeOverlay = this.props.isWebview && isAndroid;
 
-		let noGpsData = !this.props.pos;
+		let noGpsData =
+			(!this.props.pos && !isAndroid) ||
+			(!this.props.pos && isAndroid && !this.props.isWebview);
 
 		if (!this.props.stages || !this.props.activeFestivalData) {
 			return <div>Waiting for active festival data...</div>;
 		}
 
+		console.log(noGpsData)
+		console.log(this.props.pos, isAndroid , this.props.isWebview)
 		const renderStages = this.props.stages.filter(stage => {
 			return stage.coordinates.lat !== null;
 		});
@@ -128,7 +127,7 @@ export class NavigatorContainer extends Component {
 		return (
 			<Container
 				style={
-					showOpenChromeOverlay||noGpsData
+					showOpenChromeOverlay || noGpsData
 						? { height: '100vh', overflow: 'hidden' }
 						: {}
 				}
@@ -195,29 +194,25 @@ export class NavigatorContainer extends Component {
 				/>
 
 				{showOpenChromeOverlay && (
-					<VisibilityControl>
-					<NotificationModal>
-					<OpenChrome
-						href="intent://webview.festbot.com/navigator#Intent;scheme=https;action=android.intent.action.VIEW;end;"
-						target="_blank"
-					>
-						Open in Chrome
-					</OpenChrome>
-				</NotificationModal>
-					</VisibilityControl>
+
+						<NotificationModal>
+							<OpenChrome
+								href="intent://webview.festbot.com/navigator#Intent;scheme=https;action=android.intent.action.VIEW;end;"
+								target="_blank"
+							>
+								Open in Chrome
+							</OpenChrome>
+						</NotificationModal>
+
 				)}
 
 				{noGpsData && (
-					<VisibilityControl>
-					<NotificationModal>
-						<OpenChrome>
-							Waiting for GPS signal
-						</OpenChrome>
+
+						<NotificationModal>
+							<OpenChrome>Waiting for GPS signal</OpenChrome>
 							<p>Please walk a few steps outdoor.</p>
-	
-					</NotificationModal>
-					</VisibilityControl>
-					
+						</NotificationModal>
+
 				)}
 			</Container>
 		);
