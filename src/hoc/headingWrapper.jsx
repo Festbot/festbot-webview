@@ -10,18 +10,23 @@ export const getHeadingWrapper = WrappedComponent => {
 		isListening = true;
 
 		if (window.AbsoluteOrientationSensor) {
-			const sensor = new AbsoluteOrientationSensor({ frequency: 10 });
-			sensor.onreading = () =>{
-        console.log(calculateHeading(...sensor.quaternion))
-        store.dispatch(setHeading(calculateHeading(...sensor.quaternion).toFixed(0)));
-      }
-        
-			sensor.onerror = event => {
-				if (event.error.name == 'NotReadableError') {
-					console.log('Sensor is not available.');
+			try{
+				const sensor = new AbsoluteOrientationSensor({ frequency: 10 });
+				sensor.onreading = () =>{
+					console.log(calculateHeading(...sensor.quaternion))
+					store.dispatch(setHeading(calculateHeading(...sensor.quaternion).toFixed(0)));
 				}
-			};
-			sensor.start();
+					
+				sensor.onerror = event => {
+					if (event.error.name == 'NotReadableError') {
+						console.log('Sensor is not available.');
+					}
+				};
+				sensor.start();
+			} catch(error){
+				console.log(error)
+			}
+			
 		} else {
 			window.addEventListener(
 				'deviceorientation',
