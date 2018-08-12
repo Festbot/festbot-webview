@@ -68,8 +68,10 @@ top: -25vw;;
 const Info = styled.div`
 position: absolute;
 top: 50%;
-transform:  translate(0px,-50%);
+
+transform:  translate(0%,-50%);
 font-size:180%
+width:80vw;
 font-weight:bold;
 text-align center;
 text-shadow: 1px 1px 15px rgba(70, 220, 180, 1);
@@ -125,6 +127,7 @@ export class CompassNavigation extends Component {
 
 
 	render() {
+    if (!this.props.heading){return<div></div>}
     const { poi,pos } = this.props;
     
 		const iconType = poi.category;
@@ -153,8 +156,8 @@ export class CompassNavigation extends Component {
 		return (
 			<div>
 				<NotificationModal onClick={this.props.compassNavigationClose}>
+        <Info><Title>{poi.name}</Title>{distance}</Info>
           
-          <Info><Title>{poi.name}</Title>{distance}</Info>
 					<Ring direction={this.calculateDirection(pos.lat,pos.lng,poi.coordinates.lat, poi.coordinates.lng)}>
             <MapIcon src={iconUrl} />
             <VerticalLine/>

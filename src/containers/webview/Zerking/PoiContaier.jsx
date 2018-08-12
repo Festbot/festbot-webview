@@ -6,6 +6,7 @@ import PoiItem from './PoiItem.jsx';
 import { getFestivalPois } from '../../../store/actions';
 import CompassNavigation from '../Navigator/CompassNavigation.jsx';
 import headingWrapper from '../../../hoc/headingWrapper.jsx';
+import VisibilityControl from '../../../hoc/VisibilityControl/VisibilityControl.jsx'
 
 const CompassNavigationWithHeading = headingWrapper(CompassNavigation)
 
@@ -41,6 +42,10 @@ export class PoiContaier extends Component {
 	render() {
 		if (!this.props.pois) {
 			return <div />;
+		}
+
+		if (!this.props.pos) {
+
 		}
 
 		const {
