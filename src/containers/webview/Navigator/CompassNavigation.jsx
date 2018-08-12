@@ -9,8 +9,8 @@ const MapIcon = styled.img`
 	position: relative;
 	width: 32px;
 	height: 32px;
-  top: -16px;
-  z-index:2;
+  top: -2vw;
+  z-index:4;
 `;
 
 const NotificationModal = styled.div`
@@ -22,7 +22,7 @@ const NotificationModal = styled.div`
 	display: flex;
 
 	align-items: center;
-	background-color: rgba(11, 11, 11, 0.8);
+	background-color: rgba(0, 0, 91, 0.8);
 	z-index: 20;
 	color: #ddd;
 	flex-direction: column;
@@ -34,7 +34,7 @@ left: 50%;
 top: 50%;
 	width: 90vw;
 	height: 90vw;
-	border: 1px solid rgba(70,220,150,0.7);
+	border: 1px solid rgba(70,220,180,0.7);
 	border-radius: 50%;
 	display: flex;
   justify-content: center;
@@ -67,15 +67,14 @@ top: -25vw;;
 
 const Info = styled.div`
 position: absolute;
-left: 50%;
 top: 50%;
-transform:  translate(-50%,-50%);
-font-size:200%
+transform:  translate(0px,-50%);
+font-size:180%
 font-weight:bold;
 text-align center;
-text-shadow: 3px 3px 12px rgba(110, 110, 110, 1);
+text-shadow: 1px 1px 15px rgba(70, 220, 180, 1);
 z-index:2;
-color: rgb(70,220,150);
+color: rgb(70,220,180);
 `
 const Title = styled.div`
 display:block;
@@ -88,7 +87,7 @@ position:absolute;
   top:-100%
 	width: 1px;
   background-color: rgba(120, 120, 120, 0.6);
-  box-shadow: 0px 1px 12px rgba(70,220,150, 0.5);
+  box-shadow: 0px 1px 12px rgba(70,220,180, 0.5);
 	margin: 0 auto;
 `;
 
@@ -99,7 +98,7 @@ const HorizontalLine = styled.div`
 	width: 150vw;
 	background-color: rgba(120, 120, 120, 0.6);
   margin: auto 0;
-  box-shadow: 0px 1px 12px rgba(70,220,150, 0.5);
+  box-shadow: 0px 1px 12px rgba(70,220,180, 0.5);
 `;
 
 export class CompassNavigation extends Component {

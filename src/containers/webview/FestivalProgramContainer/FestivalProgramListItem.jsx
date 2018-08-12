@@ -44,20 +44,20 @@ class FestivalProgramListItem extends Component {
 	}
 
 
-	componentDidMount(){
-		document.body.addEventListener("touchmove", this.onTouchMove)
-	}
+	// componentDidMount(){
+	// 	document.body.addEventListener("touchmove", this.onTouchMove)
+	// }
 
-	componentWillUnmount(){
-		document.body.removeEventListener("touchmove", this.onTouchMove)
-	}
+	// componentWillUnmount(){
+	// 	document.body.removeEventListener("touchmove", this.onTouchMove)
+	// }
 
-	onTouchMove=(e)=>{
-		if (this.scrollingInProgress){
-			e.preventDefault()
-		}
+	// onTouchMove=(e)=>{
+	// 	if (this.scrollingInProgress){
+	// 		e.preventDefault()
+	// 	}
 
-	}
+	// }
 
 	offset(el) {
 		var rect = el.getBoundingClientRect(),

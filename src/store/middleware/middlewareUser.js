@@ -78,7 +78,9 @@ export default store => next => async action => {
 
 		case INIT_MATCHING_ARTIST_OF_USER:
 			 userId = await getUserId();
+
 			userData = await getUserData(userId);
+			
 			store.dispatch(setUserData(userData));
 			const exceptTopArtists = await getTopGenresArtistOfUser(userData);
 			const topArtists = await getTopArtistOfUser(userData);

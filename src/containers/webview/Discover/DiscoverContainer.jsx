@@ -36,7 +36,7 @@ export class DiscoverContainer extends Component {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
 
-		if (this.props.topArtists.length>0) {
+		if (this.props.topArtists.length>0||!this.props.userDataReceived) {
 			this.props.initMatchingArtistsOfUser()
 		} else {
 			this.artistKeywordFilter()
@@ -130,6 +130,7 @@ export class DiscoverContainer extends Component {
 	};
 
 	render() {
+
 		if (!this.props.searchResults) {return <div>Connect streaming service</div>}
 		const sliceOfArtist = this.props.searchResults.slice(this.state.yListOffset, this.state.yListOffset + 400);
 
