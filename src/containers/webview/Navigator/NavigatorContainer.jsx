@@ -112,7 +112,7 @@ export class NavigatorContainer extends Component {
 			(!this.props.pos && !isAndroid) ||
 			(!this.props.pos && isAndroid && !this.props.isWebview);
 
-		if (!this.props.stages) {
+		if (!this.props.stages || this.props.activeFestivalData) {
 			return <div>Loading...</div>
 		}
 
