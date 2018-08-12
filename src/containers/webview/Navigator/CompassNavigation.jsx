@@ -22,7 +22,7 @@ const NotificationModal = styled.div`
 	display: flex;
 
 	align-items: center;
-	background-color: rgba(0, 0, 91, 0.8);
+	background-color: rgba(0, 0, 65, 0.8);
 	z-index: 20;
 	color: #ddd;
 	flex-direction: column;
@@ -34,7 +34,7 @@ left: 50%;
 top: 50%;
 	width: 90vw;
 	height: 90vw;
-	border: 1px solid rgba(70,220,180,0.7);
+	border: 1px solid rgba(60, 200, 170,0.7);
 	border-radius: 50%;
 	display: flex;
   justify-content: center;
@@ -74,9 +74,9 @@ font-size:180%
 width:80vw;
 font-weight:bold;
 text-align center;
-text-shadow: 1px 1px 15px rgba(70, 220, 180, 1);
+text-shadow: 1px 1px 15px rgba(50, 200, 160, 1);
 z-index:2;
-color: rgb(70,220,180);
+color: rgb(60, 200, 170);
 `
 const Title = styled.div`
 display:block;
