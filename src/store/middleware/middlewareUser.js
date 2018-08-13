@@ -8,7 +8,8 @@ import {
 
 import {
 	getTopGenresArtistOfUser,
-	getTopArtistOfUser
+	getTopArtistOfUser,
+	getArtistsByNameGenre,
 } from '../../helpers/artistApiHelper.js';
 
 import {
@@ -33,7 +34,8 @@ import {
 	setMyPosition,
 	setFestivalPois,
 	setFestivalFilteredPois,
-	setFestivalFilteredStages
+	setFestivalFilteredStages,
+	updateSearchResults
 
 } from '../actions';
 
@@ -89,6 +91,9 @@ export default store => next => async action => {
 				store.dispatch(
 					setListOfPersonalPreferences(listOfPersonalPreferences)
 				);
+			} else {
+				const filteredResults= await getArtistsByNameGenre()
+				store.dispatch(updateSearchResults(filteredResults))
 			}
 		
 			break;

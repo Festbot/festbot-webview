@@ -36,13 +36,8 @@ export class DiscoverContainer extends Component {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
 
-		if (this.props.topArtists.length>0||!this.props.userData.userDataReceived) {
-			this.props.initMatchingArtistsOfUser()
-		} else {
-			this.artistKeywordFilter()
-		}
 
-		
+		this.props.initMatchingArtistsOfUser()
 		
 		if (this.props.userData.userDataReceived) {
 			this.setState({
@@ -131,7 +126,8 @@ export class DiscoverContainer extends Component {
 
 	render() {
 
-		if (!this.props.searchResults) {return <div>Connect streaming service</div>}
+		if (!this.props.searchResults) {return <div>Loading...</div>}
+
 		const sliceOfArtist = this.props.searchResults.slice(this.state.yListOffset, this.state.yListOffset + 400);
 
 		const artistList = sliceOfArtist.map((artist, index) => {
