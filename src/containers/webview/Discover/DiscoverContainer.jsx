@@ -36,7 +36,7 @@ export class DiscoverContainer extends Component {
 			this.artistKeywordFilter(this.props.match.params.artist_name);
 		}
 
-		if (this.props.topArtists.length>0||!this.props.userDataReceived) {
+		if (this.props.topArtists.length>0||!this.props.userData.userDataReceived) {
 			this.props.initMatchingArtistsOfUser()
 		} else {
 			this.artistKeywordFilter()

@@ -75,9 +75,9 @@ export class FestivalBrowserContainer extends Component {
 			return <Redirect to={`/festival/${this.props.userData.activeFestival}`} />;
 		}
 
-		if (this.props.match.path == '/festivals') {
-			return <div></div>
-		}
+		// if (this.props.match.path == '/festivals') {
+		// 	return <div>Please select active festival</div>
+		// }
 		
 		return (
 			<div style={{ paddingBottom: '80px'}}>

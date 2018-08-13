@@ -1,35 +1,12 @@
 import axios from 'axios'
+import setupCache from 'axios-local-storage-cache'
 
-const axiosInstance = axios.create()
+let adapter=setupCache({
+  ttl:4*60*60*1000
+})
+const axiosInstance = axios.create({
+  adapter,
+})
+ 
+
 export default axiosInstance
-// const cachios = require('cachios');
-
-// const axiosInstance = axios.create({
-//   stdTTL: 1*24*60 * 60,
-// });
-
-// const cachiosInstance = cachios.create(axiosInstance);
- 
-// export default cachiosInstance
-
-
-
-
-
-
-
-
-
-// all requests will now use this axios instance
-
-// import { setupCache } from 'axios-cache-adapter'
- 
-// const cache = setupCache({
-//   maxAge: 1*24*60 * 60 * 1000,
-//   debug:true
-// })
- 
-// const api = axios.create({
-//   adapter: cache.adapter
-// })
-//  export default api
