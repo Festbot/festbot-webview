@@ -8,6 +8,8 @@ import {
   SET_LIST_OF_PERSONAL_PREFERENCES,
   UPDATE_MY_POSITION,
   SET_IS_WEBVIEW,
+  INIT_PROGRAM_LIST_BY_FESTIVAL_ID,
+  SHOULD_REDIRECT,
 
 
 } from './actionTypes.js'
@@ -70,6 +72,20 @@ export function updateMyPosition(position){
   return{
     type:UPDATE_MY_POSITION,
     payload: position
+  }
+}
+
+export function initProgramListByFestivalId(festivalId){
+  return{
+    type:INIT_PROGRAM_LIST_BY_FESTIVAL_ID,
+    payload: festivalId
+  }
+}
+
+export function shouldRedirect(){
+  return{
+    type:SHOULD_REDIRECT,
+
   }
 }
 

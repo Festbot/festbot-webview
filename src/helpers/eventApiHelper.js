@@ -1,5 +1,6 @@
 import axios from '../helpers/cachedAxios.js';
 import 'babel-polyfill';
+import moment from 'moment';
 
 const ROOT_URL='api.festbot.com'
 
@@ -19,4 +20,12 @@ export const getEventsByFestivalId = async function(festivalId=''){
 
   return eventData
 
+}
+
+
+export const filterPastEvents = function(data){
+  const most = moment(new Date()).subtract(19, 'minutes');
+		return data.filter(({ endDate = event.startDate }) => {
+			return most < moment(endDate);
+		});
 }

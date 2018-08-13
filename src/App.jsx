@@ -44,7 +44,7 @@ class App extends Component {
 							<MusicFestivalWebViewLayout className={classes.App}>
 							<Switch>
 								<Route path="/" exact component={FestbotBrowserContainer} />
-								<Route path="/festivals" exact component={FestbotBrowserContainer} />
+								<Route path="/festivals" exact component={FestivalProgramContainer} />
 								<Route path="/festival-list" exact component={FestbotBrowserContainer} />
 								<Route path="/festival/:festival_id" exact component={FestivalProgramContainer} />
 								<Route

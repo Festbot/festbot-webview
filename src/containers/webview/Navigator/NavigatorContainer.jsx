@@ -230,7 +230,7 @@ export class NavigatorContainer extends Component {
 						<NotificationModal>
 							<OpenChrome>Waiting for GPS signal</OpenChrome>
 							<p>Please walk a few steps outdoor.</p>
-							<p>Győződj meg róla, hogy engedélyezted a GPS használatát a Messenger használata közben.</p>
+							<p>Győződj meg róla, hogy engedélyezted a GPS-t a Messenger használata közben.</p>
 							<p>Beállítások &rarr; Adatvédelem &rarr; Helymeghatározás &rarr; Messenger &rarr; Az alakalmazás használata közben.</p>
 						</NotificationModal>
 

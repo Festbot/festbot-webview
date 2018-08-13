@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import classes from './FestivalProgramContainer.css';
-import axios from '../../../helpers/cachedAxios.js';
+
 import 'babel-polyfill';
 import * as Ramda from 'ramda';
 import moment from 'moment';
-import { saveFavouriteEvent, removeFavouriteEvent } from '../../../helpers/apiHelper.js';
+import {
+	saveFavouriteEvent,
+	removeFavouriteEvent
+} from '../../../helpers/apiHelper.js';
 import { Helmet } from 'react-helmet';
 import SearchBar from '../../../ui/SearchBar.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -15,10 +19,9 @@ import FestivalProgramListItem from './FestivalProgramListItem.jsx';
 import ScrollToTop from 'react-scroll-up';
 import FilterSwitchers from '../../../containers/webview/FestivalProgramContainer/FilterSwitchers.jsx';
 import DaySwitcher from '../../../components/DaySwitcher';
-import debounce from 'lodash.debounce'
-import _ from 'lodash'
-import {getEventsByFestivalId} from '../../../helpers/eventApiHelper.js'
 
+import { filterPastEvents} from '../../../helpers/eventApiHelper.js';
+import {initProgramListByFestivalId,  updatePrograms,initPrograms} from '../../../store/actions'
 export class festivalProgramContainer extends Component {
 	constructor(props) {
 		super(props);
@@ -37,69 +40,50 @@ export class festivalProgramContainer extends Component {
 			lastOpenedDetailsHeight: 0,
 			lastOpenedDetailsKey: 0,
 			isEventListExist: true,
-			isEventExpired:false,
+			isEventExpired: false,
 			festival: '',
-			scrollPosition:0,
+			scrollPosition: 0,
+			activeFestival:this.props.activeFestival
 		};
 	}
 
 	async componentDidMount() {
 		this.props.onViewChange('program_list');
 
-		const { data: festival } = await axios.get(`https://api.festbot.com/festivals/${this.props.match.params.festival_id}`);
 
-		this.setState({ festival: festival });
+		let activeFestival = this.props.match.params.festival_id;
 
-		const data = await getEventsByFestivalId(this.props.match.params.festival_id)
-		
-		const festivalProgramResults= data.map(event=>{
-			if (!event.endDate) { const endDate = moment(event.startDate).add(3,'hours').format()
-			return {...event,endDate}
-		}
-			return event
-		}).filter(event =>{
-			return moment(event.startDate)>moment(event.endDate).subtract(6,'hours') 
-		})
-	
+		this.props.initProgramListByFestivalId(activeFestival)
 
-		if (festivalProgramResults.length == 0) {
-			this.setState({ isEventListExist: false });
-		}
-
-		if ((this.filterPastEvents(festivalProgramResults).length == 0)&&(!festivalProgramResults.length == 0)) {
-			this.setState({ isEventExpired: true });
-		}
-
-		this.setState({ searchResults: this.filterPastEvents(festivalProgramResults), data: festivalProgramResults });
-		this.updateEventDays(this.state.searchResults);
-		this.updateEventLocations(this.state.searchResults);
-
-		//this.initEventDay(); ha azt akarjuk hogy ugorjon bele az aktualis napba, de amiota szurjuk az almult napokat ennek nincs sok ertelme
 
 		this.timer = setInterval(() => {
-			this.setState({ now: new Date() });
-			this.setState({ searchResults: this.filterPastEvents(festivalProgramResults), data: festivalProgramResults });
-			this.updateEventDays(this.state.searchResults);
-			this.updateEventLocations(this.state.searchResults);
+			if(!this.props.data) {return}
+			this.setState({ now: new Date() }); 
+			this.props.updatePrograms(filterPastEvents(this.props.searchResults))
+			this.props.initPrograms(this.props.searchResults)
+
+			this.updateEventDays(this.props.searchResults);
+			this.updateEventLocations(this.props.searchResults);
 		}, 1000 * 60);
 
-		window.addEventListener("scroll", this.onScrollLazyLoad)
+		window.addEventListener('scroll', this.onScrollLazyLoad);
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener("scroll", this.onScrollLazyLoad)
+		window.removeEventListener('scroll', this.onScrollLazyLoad);
 		clearInterval(this.timer);
 	}
 
 	initEventDay = () => {
 		const today = moment(new Date()).format('L');
 		//const today = "06/30/2018"
-		const todayIsFestivalDay = this.props.storedEventDays.filter(day => day == today);
+		const todayIsFestivalDay = this.props.storedEventDays.filter(
+			day => day == today
+		);
 		if (todayIsFestivalDay.length > 0) {
 			this.props.setFilterToday(todayIsFestivalDay[0]);
 		}
 	};
-
 
 	updateEventDays = data => {
 		let Programs = data;
@@ -133,38 +117,51 @@ export class festivalProgramContainer extends Component {
 	};
 
 	festivalEventKeywordFilter = keyword => {
-		const eventListWithoutPastEvents = this.filterPastEvents(this.state.data)
+		const eventListWithoutPastEvents = this.filterPastEvents(
+			this.props.data
+		);
 		const filteredResults = eventListWithoutPastEvents.filter(event => {
-			return event.artist.toLowerCase().indexOf(keyword.toLowerCase()) > -1 || event.stage.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
+			return (
+				event.artist.toLowerCase().indexOf(keyword.toLowerCase()) >
+					-1 ||
+				event.stage.toLowerCase().indexOf(keyword.toLowerCase()) > -1
+			);
 		});
 
 		if (filteredResults.length == 0) return;
 		this.setState({ searchResults: filteredResults });
 	};
 
-	filterPastEvents = data => {
-		const most = moment(this.state.now).subtract(19, 'minutes');
-		return data.filter(({endDate=event.startDate}) => {
-			return most < moment(endDate);
-		});
-	};
+	// filterPastEvents = data => {
+	// 	const most = moment(this.state.now).subtract(19, 'minutes');
+	// 	return data.filter(({ endDate = event.startDate }) => {
+	// 		return most < moment(endDate);
+	// 	});
+	// };
 
 	festivalEventFilter = () => {
 		if (this.props.isActive.Favourite) {
-			return this.state.searchResults.filter(event => {
-				return !this.props.isActive.Favourite || this.isActiveFavouriteItem(event._id);
+			return this.props.searchResults.filter(event => {
+				return (
+					!this.props.isActive.Favourite ||
+					this.isActiveFavouriteItem(event._id)
+				);
 			});
 		}
 
-		return this.state.searchResults.filter(event => {
+		return this.props.searchResults.filter(event => {
 			return (
 				(this.props.activeDay == 'ALL' ||
 					moment(event.startDate)
 						.format('L')
 						.toLowerCase()
 						.indexOf(this.props.activeDay.toLowerCase()) > -1) &&
-				(this.props.activeStage == 'HELYSZÍNEK' || event.stage.toLowerCase().indexOf(this.props.activeStage.toLowerCase()) > -1) &&
-				(!this.props.isActive.Favourite || this.isActiveFavouriteItem(event._id))
+				(this.props.activeStage == 'HELYSZÍNEK' ||
+					event.stage
+						.toLowerCase()
+						.indexOf(this.props.activeStage.toLowerCase()) > -1) &&
+				(!this.props.isActive.Favourite ||
+					this.isActiveFavouriteItem(event._id))
 			);
 		});
 	};
@@ -188,8 +185,13 @@ export class festivalProgramContainer extends Component {
 			this.setState({ activeDetails: '', lastOpenedDetailsHeight: 0 });
 		} else {
 			this.setState({ activeDetails: e.currentTarget.id });
-			const lastOpenedDetaisWasBeforeThis = Number(this.state.lastOpenedDetailsKey) < Number(e.currentTarget.title);
-			this.initLastOpenedDetailsHeight(this.state.lastOpenedDetailsHeight, lastOpenedDetaisWasBeforeThis);
+			const lastOpenedDetaisWasBeforeThis =
+				Number(this.state.lastOpenedDetailsKey) <
+				Number(e.currentTarget.title);
+			this.initLastOpenedDetailsHeight(
+				this.state.lastOpenedDetailsHeight,
+				lastOpenedDetaisWasBeforeThis
+			);
 			this.setState({ lastOpenedDetailsKey: e.currentTarget.title });
 		}
 	};
@@ -198,7 +200,10 @@ export class festivalProgramContainer extends Component {
 		this.setState({ lastOpenedDetailsHeight: e });
 	};
 
-	initLastOpenedDetailsHeight = (lastOpenedDetailsHeight, lastOpenedDetaisWasBeforeThis) => {
+	initLastOpenedDetailsHeight = (
+		lastOpenedDetailsHeight,
+		lastOpenedDetaisWasBeforeThis
+	) => {
 		if (lastOpenedDetailsHeight > 0 && lastOpenedDetaisWasBeforeThis) {
 			window.scrollBy(0, -lastOpenedDetailsHeight);
 			this.setState({ lastOpenedDetailsHeight: 0 });
@@ -226,8 +231,6 @@ export class festivalProgramContainer extends Component {
 		}
 	};
 
-
-
 	showMore = () => {
 		this.setState(function(prevState) {
 			return {
@@ -235,44 +238,85 @@ export class festivalProgramContainer extends Component {
 			};
 		});
 	};
-	
-	onDetailsOpenAnimationStateChange=(e)=>{
-		this.detailsOpenAnimationInProgress=e
-	}
 
-	onScrollLazyLoad=()=>{
-	
-		if (!this.detailsOpenAnimationInProgress) {this.setState({scrollPosition:window.scrollY})}
-		
-	}
+	onDetailsOpenAnimationStateChange = e => {
+		this.detailsOpenAnimationInProgress = e;
+	};
+
+	onScrollLazyLoad = () => {
+		if (!this.detailsOpenAnimationInProgress) {
+			this.setState({ scrollPosition: window.scrollY });
+		}
+	};
 
 	render() {
-		if (this.state.isEventExpired){
-			return (
-				<div className={classes.center}>
-				<div style={{ margin: 'auto', fontSize: '150%', textAlign: 'center' }}>
-							Az összes program véget ért!<br /> 
-						</div></div>
-			)
+	
+		if (
+			this.props.match.path == '/festivals' &&
+			this.props.shouldRedirect
+		) {
+			return <Redirect to={`/festival-list`} />;
 		}
 
-		if (this.state.data.length === 0) {
+		if (!this.props.data||!this.props.searchResults){return <CircularProgress
+			style={{ margin: 'auto' }}
+			size={80}
+			thickness={5}
+		/>}
+
+		if (this.props.isEventExpired) {
 			return (
 				<div className={classes.center}>
-					{this.state.isEventListExist ? (
-						<CircularProgress style={{ margin: 'auto' }} size={80} thickness={5} />
+					<div
+						style={{
+							margin: 'auto',
+							fontSize: '150%',
+							textAlign: 'center'
+						}}
+					>
+						Az összes program véget ért!<br />
+					</div>
+				</div>
+			);
+		}
+
+		if (this.props.data.length === 0) {
+			return (
+				<div className={classes.center}>
+					{this.props.isEventListExist ? (
+						<CircularProgress
+							style={{ margin: 'auto' }}
+							size={80}
+							thickness={5}
+						/>
 					) : (
-						<div style={{ margin: 'auto', fontSize: '150%', textAlign: 'center' }}>
-							A fesztivál programok feltöltése folyamatban van!<br /> Kérlek nézz vissza később!
+						<div
+							style={{
+								margin: 'auto',
+								fontSize: '150%',
+								textAlign: 'center'
+							}}
+						>
+							A fesztivál programok feltöltése folyamatban van!<br />{' '}
+							Kérlek nézz vissza később!
 						</div>
 					)}
 				</div>
 			);
 		}
+		if (!this.state.initFilters){
+		this.updateEventDays(this.props.searchResults);
+		this.updateEventLocations(this.props.searchResults);
+		this.setState({initFilters:true})
+		}
+
 
 		const Programs = this.festivalEventFilter();
 
-		const sliceOfPrograms = Programs.slice(this.state.yListOffset, this.state.yListOffset + 200);
+		const sliceOfPrograms = Programs.slice(
+			this.state.yListOffset,
+			this.state.yListOffset + 200
+		);
 		const grouppedFestivalPrograms = this.groupByDays(sliceOfPrograms);
 
 		const eventDays = Object.keys(grouppedFestivalPrograms).sort();
@@ -281,14 +325,18 @@ export class festivalProgramContainer extends Component {
 			return (
 				<div key={daysIndex} style={{ paddingBottom: '40px' }}>
 					<Subheader className={classes.subheader}>
-						<h1 className={classes.listHeader}>{moment(day).format('LL')}</h1>
+						<h1 className={classes.listHeader}>
+							{moment(day).format('LL')}
+						</h1>
 					</Subheader>
 					<Divider />
 					<Divider />
 					{grouppedFestivalPrograms[day].map((event, index) => {
 						return (
 							<FestivalProgramListItem
-							onDetailsOpenAnimationStateChange={this.onDetailsOpenAnimationStateChange}
+								onDetailsOpenAnimationStateChange={
+									this.onDetailsOpenAnimationStateChange
+								}
 								scrollPosition={this.state.scrollPosition}
 								key={daysIndex * 1000 + index}
 								index={daysIndex * 1000 + index}
@@ -296,11 +344,16 @@ export class festivalProgramContainer extends Component {
 								webviewMenuChange={this.props.onViewChange}
 								event={event}
 								addToFavourite={this.favouriteItemToggle}
-								isActiveItem={this.isActiveFavouriteItem(event._id)}
-								isOpenDetails={this.state.activeDetails === event._id}
-								setLastOpenedDetailsHeight={this.setLastOpenedDetailsHeight}
+								isActiveItem={this.isActiveFavouriteItem(
+									event._id
+								)}
+								isOpenDetails={
+									this.state.activeDetails === event._id
+								}
+								setLastOpenedDetailsHeight={
+									this.setLastOpenedDetailsHeight
+								}
 								now={this.state.now}
-								
 							/>
 						);
 					})}
@@ -311,18 +364,40 @@ export class festivalProgramContainer extends Component {
 		return (
 			<div className={classes.container}>
 				<Helmet>
-					<title>{this.state.festival.name}</title>
+					<title>{this.props.activeFestivalData.name}</title>
 				</Helmet>
 
-				<FilterSwitchers activeDayClicked={this.festivalEventDayFilterHandler} activeStageClicked={this.festivalEventStageFilterHandler} isActiveFilter={this.props.isActive.Filter} />
+				<FilterSwitchers
+					activeDayClicked={this.festivalEventDayFilterHandler}
+					activeStageClicked={this.festivalEventStageFilterHandler}
+					isActiveFilter={this.props.isActive.Filter}
+				/>
 
-				<div className={classes.cover} style={{ backgroundImage: this.state.festival.coverPhoto ? 'url(https://ucarecdn.com/' + this.state.festival.coverPhoto + '/)' : 'none' }}>
-					<SearchBar searchQueryChanged={this.festivalEventKeywordFilter} />
+				<div
+					className={classes.cover}
+					style={{
+						backgroundImage: this.props.activeFestivalData.coverPhoto
+							? 'url(https://ucarecdn.com/' +
+							  this.props.activeFestivalData.coverPhoto +
+							  '/)'
+							: 'none'
+					}}
+				>
+					<SearchBar
+						searchQueryChanged={this.festivalEventKeywordFilter}
+					/>
 				</div>
 
 				<DaySwitcher />
 
-				<div style={{ paddingBottom: '100px', paddingTop: this.state.paddingTop + 'px' }}>{programListByDay}</div>
+				<div
+					style={{
+						paddingBottom: '100px',
+						paddingTop: this.state.paddingTop + 'px'
+					}}
+				>
+					{programListByDay}
+				</div>
 				<ScrollToTop showUnder={1000}>
 					<span className={classes.scrollToTopButton}>UP</span>
 				</ScrollToTop>
@@ -331,9 +406,16 @@ export class festivalProgramContainer extends Component {
 	}
 }
 
-const mapStateToProps = ({festbot}) => {
+const mapStateToProps = ({ festbot,zerking }) => {
 	return {
 		userId: festbot.userId,
+		activeFestival: festbot.activeFestival,
+		shouldRedirect:festbot.shouldRedirect,
+		isEventListExist:festbot.isEventListExist,
+		isEventExpired:festbot.isEventExpired,
+		searchResults:festbot.searchResults,
+		data:festbot.data,
+		activeFestivalData: zerking.activeFestivalData,
 		eventStages: festbot.eventStages,
 		activeStage: festbot.activeStage,
 		activeDay: festbot.activeDay,
@@ -350,15 +432,23 @@ const mapStateToProps = ({festbot}) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
+		initProgramListByFestivalId:festivalId=>dispatch(initProgramListByFestivalId(festivalId)),
+		updatePrograms:(data)=>dispatch(updatePrograms(data)),
+		initPrograms:(data)=>dispatch(initPrograms(data)),
 		setFilterToday: day => dispatch({ type: 'UPD_ACTIVEDAY', value: day }),
 		onTrendingToggle: () => dispatch({ type: 'UPD_TRENDING' }),
 		onFilterToggle: () => dispatch({ type: 'UPD_FILTER' }),
 		onFavouriteToggle: () => dispatch({ type: 'UPD_FAVOURITE' }),
-		onViewChange: actualViewMenu => dispatch({ type: 'UPD_MENU', value: actualViewMenu }),
-		addToFavourites: event => dispatch({ type: 'ADD_FAVOURITE', value: event }),
-		removeFromFavourites: event => dispatch({ type: 'REMOVE_FAVOURITE', value: event }),
-		eventDays: daysArray => dispatch({ type: 'UPD_EVENTDAYS', value: daysArray }),
-		eventStages: stagesArray => dispatch({ type: 'UPD_EVENTSTAGES', value: stagesArray })
+		onViewChange: actualViewMenu =>
+			dispatch({ type: 'UPD_MENU', value: actualViewMenu }),
+		addToFavourites: event =>
+			dispatch({ type: 'ADD_FAVOURITE', value: event }),
+		removeFromFavourites: event =>
+			dispatch({ type: 'REMOVE_FAVOURITE', value: event }),
+		eventDays: daysArray =>
+			dispatch({ type: 'UPD_EVENTDAYS', value: daysArray }),
+		eventStages: stagesArray =>
+			dispatch({ type: 'UPD_EVENTSTAGES', value: stagesArray })
 	};
 };
 

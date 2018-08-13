@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+
 import axios from '../../../helpers/cachedAxios.js';
 import 'babel-polyfill';
 
@@ -71,12 +71,10 @@ export class FestivalBrowserContainer extends Component {
 			);
 		}
 
-		if (this.props.match.path == '/festivals' && this.props.userData.activeFestival) {
-			return <Redirect to={`/festival/${this.props.userData.activeFestival}`} />;
-		}
-
-		// if (this.props.match.path == '/festivals') {
-		// 	return <div>Please select active festival</div>
+		
+		
+		// if (this.props.match.path == '/festivals'&&this.props.userDataReceived) {
+		// 	return <div></div>
 		// }
 		
 		return (
@@ -110,7 +108,8 @@ const mapStateToProps = ({festbot}) => {
 			savedArtists: festbot.savedArtists,
 			savedShows: festbot.savedShows,
 			topArtists: festbot.topArtists,
-			topGenres: festbot.topGenres
+			topGenres: festbot.topGenres,
+			userDataReceived:festbot.userDataReceived
 		}
 	};
 };

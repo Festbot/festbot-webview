@@ -11,8 +11,9 @@ const initialState ={
   eventStages:['Main Stage','Telekom Arena','Colosseum','Magic Mirror'],
   activeStage:'HELYSZÍNEK',
   detailsPanelHeight:0,
- 
   isWebview:false,
+  isEventListExist:true,
+  isEventExpired: false,
 }
 
 const reducer = (state = initialState,action) => {
@@ -98,7 +99,39 @@ const reducer = (state = initialState,action) => {
     return {
       ...state,
       detailsPanelHeight: action.value
+    }  
+    case 'SHOULD_REDIRECT':
+    return {
+      ...state,
+      shouldRedirect: true
     }
+    case 'UPDATE_PROGRAMS':
+    return {
+      ...state,
+      searchResults: action.payload
+    }
+    case 'INIT_PROGRAMS':
+    return {
+      ...state,
+      data: action.payload
+    }
+    case 'EVENT_LIST_NOT_EXIST':
+    return {
+      ...state,
+      isEventListExist: false
+    }
+    case 'EVENT_EXPIRED':
+    return {
+      ...state,
+      isEventExpired: true
+    }
+    case 'INIT_EVENT_FLAGS':
+      return {
+        ...state,
+        isEventListExist:true,
+        isEventExpired: false,
+      }
+
   }
   return state;
 }
