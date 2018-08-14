@@ -31,16 +31,17 @@ export default store => next => async action => {
 
 	switch (action.type) {
 		case INIT_PROGRAM_LIST_BY_FESTIVAL_ID:
+		for (let i=0; i<10;i++){
 			try {
 				userId = await getUserId();
 			} catch (error) {
-				try {
-					userId = await getUserId();
-				} catch (error) {
+				if (i === 9) {
 					store.dispatch(shouldReload());
-					return;
 				}
 			}
+		}
+			
+			
 
 			let festivalId;
 
