@@ -25,6 +25,7 @@ import { filterPastEvents,eventDays,eventLocations} from '../../../helpers/event
 import {initProgramListByFestivalId,  updatePrograms,initPrograms,initEventFlags} from '../../../store/actions'
 
 const NotificationModal = styled.div`
+overflow:hidden;
 	position: fixed;
 	top: 0;
 	bottom: 0;

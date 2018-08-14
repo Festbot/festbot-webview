@@ -51,6 +51,7 @@ const CarouselPage = styled.div`
 `;
 
 const NotificationModal = styled.div`
+overflow:hidden;
 	position: fixed;
 	top: 0;
 	bottom: 0;
