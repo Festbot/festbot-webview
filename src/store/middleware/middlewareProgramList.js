@@ -20,7 +20,7 @@ import {
   eventListNotExist,
   updatePrograms,
   initPrograms,
-  initEventFlags,
+	shouldReload,
 } from '../actions';
 
 export default store => next => async action => {
@@ -31,6 +31,7 @@ export default store => next => async action => {
 
 	switch (action.type) {
 		case INIT_PROGRAM_LIST_BY_FESTIVAL_ID:
+		try{
 			let festivalId;
 			userId = await getUserId();
 			userData = await getUserData(userId);
@@ -73,7 +74,6 @@ export default store => next => async action => {
 					);
 				});
 
-
         // error handling
 
         if (festivalProgramResults.length == 0) {
@@ -88,8 +88,12 @@ export default store => next => async action => {
         }
         const filteredPastEvents=filterPastEvents(festivalProgramResults)
         store.dispatch(updatePrograms(filteredPastEvents))
-        store.dispatch(initPrograms(festivalProgramResults))
+				store.dispatch(initPrograms(festivalProgramResults))
 
+			//ha veletlenul teszt usert kapna webviewban a user, akkor reloadot eroltetunk	
+			} catch (error) {
+				store.dispatch(shouldReload())
+			}
 
 			break;
 	}

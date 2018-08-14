@@ -113,6 +113,17 @@ export class NavigatorContainer extends Component {
 			(!this.props.pos && !isAndroid) ||
 			(!this.props.pos && isAndroid && !this.props.isWebview);
 
+			if (this.props.shouldReload) {
+				return <NotificationModal>
+						<OpenChrome
+							onClick={()=>location.reload()}
+						>
+							Reload the page
+						</OpenChrome>
+						<p>Something went wrong, click the button to reload the page.</p>
+					</NotificationModal>
+			}
+
 		if (!this.props.stages || !this.props.activeFestivalData) {
 			return <div>Loading...</div>
 		}
@@ -252,7 +263,8 @@ const mapStateToProps = ({ festbot, zerking }) => {
 		filterItems: zerking.filterItems,
 		pos: zerking.pos,
 		webviewMenu: festbot.webviewMenu,
-		isWebview: festbot.isWebview
+		isWebview: festbot.isWebview,
+		shouldReload:festbot.shouldReload,
 	};
 };
 

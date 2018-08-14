@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import classes from './DiscoverContainer.css';
+import styled from 'styled-components';
 
 import 'babel-polyfill';
 
@@ -15,6 +16,37 @@ import ScrollToTop from 'react-scroll-up';
 import {initMatchingArtistsOfUser,updateSearchResults} from '../../../store/actions'
 import {getArtistsByNameGenre} from '../../../helpers/artistApiHelper.js'
  
+
+const NotificationModal = styled.div`
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(11, 11, 11, 0.9);
+	z-index: 20;
+	flex-direction: column;
+	text-align: center;
+	color: #ddd;
+	p {
+		font-size: 100%;
+		padding:0 10px;
+	}
+`;
+const OpenChrome = styled.a`
+	text-align: center;
+	text-decoration: none;
+	padding: 10px 20px;
+	border-radius: 50px;
+	width: 80%;
+	font-size: 200%;
+	background-color: rgb(22, 155, 90);
+	color: #ddd;
+`;
+
 
 export class DiscoverContainer extends Component {
 	state = {
@@ -128,6 +160,18 @@ export class DiscoverContainer extends Component {
 
 		if (!this.props.searchResults) {return <div>Loading...</div>}
 
+		if (this.props.shouldReload) {
+			return <NotificationModal>
+					<OpenChrome
+						onClick={()=>location.reload()}
+					>
+						Reload the page
+					</OpenChrome>
+					<p>Something went wrong, click the button to reload the page.</p>
+				</NotificationModal>
+		}
+
+
 		const sliceOfArtist = this.props.searchResults.slice(this.state.yListOffset, this.state.yListOffset + 400);
 
 		const artistList = sliceOfArtist.map((artist, index) => {
@@ -167,6 +211,7 @@ export class DiscoverContainer extends Component {
 const mapStateToProps = ({festbot,discover}) => {
 	return {
 		detailsPanelHeight: festbot.detailsPanelHeight,
+		shouldReload:festbot.shouldReload,
 		userData: {
 			userId: festbot.userId,
 			activeFestival: festbot.activeFestival,

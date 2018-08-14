@@ -1,30 +1,52 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import styled from 'styled-components';
 import axios from '../../../helpers/cachedAxios.js';
 import 'babel-polyfill';
 
-import { getUserData } from '../../../helpers/apiHelper.js';
-
-
 import classes from './FestbotBrowserContainer.css';
 
-import { List, ListItem } from 'material-ui/List';
+import { List } from 'material-ui/List';
 
 import CircularProgress from 'material-ui/CircularProgress';
-
-
 import SearchBar from '../../../ui/SearchBar.jsx';
 import ScrollToTop from 'react-scroll-up';
-
 import FestivalListBuilder from '../FestivalBrowser/FestivalListBuilder.jsx';
-
 import { Helmet } from 'react-helmet';
 
 import {initUserData} from '../../../store/actions'
 
 
-import md5 from 'md5';
+const NotificationModal = styled.div`
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(11, 11, 11, 0.9);
+	z-index: 20;
+	flex-direction: column;
+	text-align: center;
+	color: #ddd;
+	p {
+		font-size: 100%;
+		padding:0 10px;
+	}
+`;
+const OpenChrome = styled.a`
+	text-align: center;
+	text-decoration: none;
+	padding: 10px 20px;
+	border-radius: 50px;
+	width: 80%;
+	font-size: 200%;
+	background-color: rgb(22, 155, 90);
+	color: #ddd;
+`;
+
 
 const styles = {
 	button: {
@@ -70,6 +92,16 @@ export class FestivalBrowserContainer extends Component {
 				</div>
 			);
 		}
+		if (this.props.shouldReload) {
+			return <NotificationModal>
+					<OpenChrome
+						onClick={()=>location.reload()}
+					>
+						Reload the page
+					</OpenChrome>
+					<p>Something went wrong, click the button to reload the page.</p>
+				</NotificationModal>
+		}
 
 	
 		
@@ -93,6 +125,7 @@ export class FestivalBrowserContainer extends Component {
 const mapStateToProps = ({festbot}) => {
 	return {
 		webviewMenu: festbot.webviewMenu,
+		shouldReload:festbot.shouldReload,
 		isActive: {
 			Trending: festbot.isActiveTrending,
 			Filter: festbot.isActiveFilter,

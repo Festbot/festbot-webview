@@ -10,6 +10,7 @@ import {
   SET_IS_WEBVIEW,
   INIT_PROGRAM_LIST_BY_FESTIVAL_ID,
   SHOULD_REDIRECT,
+  SHOULD_RELOAD,
 
 
 } from './actionTypes.js'
@@ -85,6 +86,12 @@ export function initProgramListByFestivalId(festivalId){
 export function shouldRedirect(){
   return{
     type:SHOULD_REDIRECT,
+
+  }
+}
+export function shouldReload(){
+  return{
+    type:SHOULD_RELOAD,
 
   }
 }

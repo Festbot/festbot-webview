@@ -105,6 +105,11 @@ const reducer = (state = initialState,action) => {
       ...state,
       shouldRedirect: true
     }
+    case 'SHOULD_RELOAD':
+    return {
+      ...state,
+      shouldReload: true
+    }
     case 'UPDATE_PROGRAMS':
     return {
       ...state,
