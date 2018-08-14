@@ -23,6 +23,11 @@ import {
 	shouldReload
 } from '../actions';
 
+const sleep = timeout =>
+	new Promise(resolve => {
+		setTimeout(resolve, timeout);
+	});
+
 export default store => next => async action => {
 	let activeFestivalData;
 	let activeFestival;
@@ -31,17 +36,16 @@ export default store => next => async action => {
 
 	switch (action.type) {
 		case INIT_PROGRAM_LIST_BY_FESTIVAL_ID:
-		for (let i=0; i<10;i++){
-			try {
-				userId = await getUserId();
-			} catch (error) {
-				if (i === 9) {
-					store.dispatch(shouldReload());
+			for (let i = 0; i < 10; i++) {
+				try {
+					userId = await getUserId();
+					await sleep(500);
+				} catch (error) {
+					if (i === 9) {
+						store.dispatch(shouldReload());
+					}
 				}
 			}
-		}
-			
-			
 
 			let festivalId;
 
