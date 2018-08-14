@@ -47,14 +47,14 @@ export default store => next => async action => {
 			}
 			//fesztival adatok bekuldese a storeba, coverfotohoz meg ilyenek
 			activeFestivalData = await getFestivalDataById(
-				userData.activeFestival
+				festivalId
 			);
 			store.dispatch(setUserActiveFestivalData(activeFestivalData));
-      store.dispatch(initEventFlags())
+
 			//fesztival program elokeszitese
 			//program lekeres
-			const data = await getEventsByFestivalId(festivalId);
-
+      const data = await getEventsByFestivalId(festivalId);
+      
 			// endDate hozzaadasa, ha nincs, a hosszu programok kiszurese
 			const festivalProgramResults = data
 				.map(event => {

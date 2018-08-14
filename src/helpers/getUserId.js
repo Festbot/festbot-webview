@@ -22,7 +22,7 @@ export default function getUserId() {
 				},
 				err => {
 					console.warn('no psid :(');
-					complete('fbad78af5e115963b0ad97aa3da436c0');
+					complete('4842567782cdf2aa620f1060e1dcbcd7');
 					
 				}
 			);

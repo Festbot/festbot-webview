@@ -58,7 +58,7 @@ export class StageFilter extends Component {
 
 
   setStageToFilter=  (e,stage)=>{
-    console.log("[POI ITEM]",stage)
+
     e.stopPropagation()
     if (this.isToggledForFiltering(stage._id)){
       this.props.removeStageFromFilter(stage._id)

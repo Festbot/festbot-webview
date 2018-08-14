@@ -71,11 +71,7 @@ export class FestivalBrowserContainer extends Component {
 			);
 		}
 
-		
-		
-		// if (this.props.match.path == '/festivals'&&this.props.userDataReceived) {
-		// 	return <div></div>
-		// }
+	
 		
 		return (
 			<div style={{ paddingBottom: '80px'}}>

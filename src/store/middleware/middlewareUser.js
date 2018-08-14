@@ -1,15 +1,17 @@
+import * as Ramda from 'ramda';
+
 import {
 	INIT_USER_DATA,
 	INIT_USER_ACTIVE_FESTIVAL_POIS,
 	INIT_USER_ACTIVE_FESTIVAL_STAGES,
 	INIT_MATCHING_ARTIST_OF_USER,
-	UPDATE_MY_POSITION,
+	UPDATE_MY_POSITION
 } from '../actions/actionTypes.js';
 
 import {
 	getTopGenresArtistOfUser,
 	getTopArtistOfUser,
-	getArtistsByNameGenre,
+	getArtistsByNameGenre
 } from '../../helpers/artistApiHelper.js';
 
 import {
@@ -35,8 +37,8 @@ import {
 	setFestivalPois,
 	setFestivalFilteredPois,
 	setFestivalFilteredStages,
-	updateSearchResults
-
+	updateSearchResults,
+	setFestivalGroupedPois
 } from '../actions';
 
 export default store => next => async action => {
@@ -44,31 +46,30 @@ export default store => next => async action => {
 	let activeFestival;
 	let userData;
 	let userId;
-	
 
 	switch (action.type) {
 		case INIT_USER_DATA:
-		 userId = await getUserId();
-		userData = await getUserData(userId);
+			userId = await getUserId();
+			userData = await getUserData(userId);
 			store.dispatch(setUserData(userData));
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_POIS:
-			 userId = await getUserId();
+			userId = await getUserId();
 			userData = await getUserData(userId);
 			activeFestival = store.getState().festbot.activeFestival;
 			if (!activeFestival) {
 				activeFestival = userData.activeFestival;
 				store.dispatch(setUserData(userData));
 			}
-				activeFestivalData = await getFestivalDataById(
-					userData.activeFestival
-				);
-				store.dispatch(setUserActiveFestivalData(activeFestivalData));
-			
+			activeFestivalData = await getFestivalDataById(
+				userData.activeFestival
+			);
+			store.dispatch(setUserActiveFestivalData(activeFestivalData));
+
 			store.dispatch(getFestivalPois(activeFestival));
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_STAGES:
-			 userId = await getUserId();
+			userId = await getUserId();
 			userData = await getUserData(userId);
 			activeFestival = store.getState().festbot.activeFestival;
 			if (!activeFestival) {
@@ -79,7 +80,7 @@ export default store => next => async action => {
 			break;
 
 		case INIT_MATCHING_ARTIST_OF_USER:
-			 userId = await getUserId();
+			userId = await getUserId();
 			userData = await getUserData(userId);
 			store.dispatch(setUserData(userData));
 			const exceptTopArtists = await getTopGenresArtistOfUser(userData);
@@ -87,22 +88,25 @@ export default store => next => async action => {
 			const listOfPersonalPreferences = topArtists.concat(
 				exceptTopArtists
 			);
-			if (listOfPersonalPreferences!==[]) {
+			if (listOfPersonalPreferences !== []) {
 				store.dispatch(
 					setListOfPersonalPreferences(listOfPersonalPreferences)
 				);
 			} else {
-				const filteredResults= await getArtistsByNameGenre()
-				store.dispatch(updateSearchResults(filteredResults))
+				const filteredResults = await getArtistsByNameGenre();
+				store.dispatch(updateSearchResults(filteredResults));
 			}
-		
+
 			break;
 
 		case UPDATE_MY_POSITION:
+			if (!store.getState().zerking.filteredPois) {
+				return;
+			}
 
-			if (!store.getState().zerking.filteredPois){return}
-
-			const poisWithDistance = store.getState().zerking.filteredPois.map(poi => {
+			const poisWithDistance = store
+				.getState()
+				.zerking.filteredPois.map(poi => {
 					return {
 						...poi,
 						distance: getDistance(
@@ -113,13 +117,15 @@ export default store => next => async action => {
 						)
 					};
 				});
-				const orderedPois= poisWithDistance.sort((a,b)=>{
-					return a.distance-b.distance;
-				})
+			const orderedPois = poisWithDistance.sort((a, b) => {
+				return a.distance - b.distance;
+			});
+			//distance szerint rendezett poik
 			store.dispatch(setFestivalFilteredPois(orderedPois));
-	
-	
-			const stagesWithDistance = store.getState().zerking.stagesToFiltering.map(stage => {
+
+			const stagesWithDistance = store
+				.getState()
+				.zerking.stagesToFiltering.map(stage => {
 					return {
 						...stage,
 						distance: getDistance(
@@ -130,10 +136,16 @@ export default store => next => async action => {
 						)
 					};
 				});
-				const orderedStages= stagesWithDistance.sort((a,b)=>{
-					return a.distance-b.distance;
-				})
+			const orderedStages = stagesWithDistance.sort((a, b) => {
+				return a.distance - b.distance;
+			});
 			store.dispatch(setFestivalFilteredStages(orderedStages));
+
+			//kell a compasshoz, id szerint rtendezett osszes poi,stage kombinalt tomb
+			const allOrderedPois = orderedPois.concat(orderedStages);
+			const groupByPoiId = Ramda.groupBy(poi => poi._id);
+			const groupedPois = groupByPoiId(allOrderedPois);
+			store.dispatch(setFestivalGroupedPois(groupedPois));
 
 			break;
 	}

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import classes from './FestivalProgramContainer.css';
-
-import 'babel-polyfill';
 import * as Ramda from 'ramda';
+import 'babel-polyfill';
+
 import moment from 'moment';
 import {
 	saveFavouriteEvent,
@@ -20,8 +20,8 @@ import ScrollToTop from 'react-scroll-up';
 import FilterSwitchers from '../../../containers/webview/FestivalProgramContainer/FilterSwitchers.jsx';
 import DaySwitcher from '../../../components/DaySwitcher';
 
-import { filterPastEvents} from '../../../helpers/eventApiHelper.js';
-import {initProgramListByFestivalId,  updatePrograms,initPrograms} from '../../../store/actions'
+import { filterPastEvents,eventDays,eventLocations} from '../../../helpers/eventApiHelper.js';
+import {initProgramListByFestivalId,  updatePrograms,initPrograms,initEventFlags} from '../../../store/actions'
 export class festivalProgramContainer extends Component {
 	constructor(props) {
 		super(props);
@@ -62,8 +62,8 @@ export class festivalProgramContainer extends Component {
 			this.props.updatePrograms(filterPastEvents(this.props.searchResults))
 			this.props.initPrograms(this.props.searchResults)
 
-			this.updateEventDays(this.props.searchResults);
-			this.updateEventLocations(this.props.searchResults);
+			this.props.updateEventDays(eventDays(this.props.searchResults));
+			this.props.updateEventLocations(eventLocations(this.props.searchResults));
 		}, 1000 * 60);
 
 		window.addEventListener('scroll', this.onScrollLazyLoad);
@@ -72,6 +72,8 @@ export class festivalProgramContainer extends Component {
 	componentWillUnmount() {
 		window.removeEventListener('scroll', this.onScrollLazyLoad);
 		clearInterval(this.timer);
+		this.props.initEventFlags();
+
 	}
 
 	initEventDay = () => {
@@ -85,20 +87,20 @@ export class festivalProgramContainer extends Component {
 		}
 	};
 
-	updateEventDays = data => {
-		let Programs = data;
-		let grouppedFestivalPrograms = this.groupByDays(Programs);
-		let eventDays = Object.keys(grouppedFestivalPrograms).sort();
+	// updateEventDays = data => {
+	// 	let Programs = data;
+	// 	let grouppedFestivalPrograms = this.groupByDays(Programs);
+	// 	let eventDays = Object.keys(grouppedFestivalPrograms).sort();
 
-		this.props.eventDays(eventDays);
-	};
+	// 	this.props.eventDays(eventDays);
+	// };
 
-	updateEventLocations = data => {
-		let Programs = data;
-		let grouppedFestivalPrograms = this.groupByStages(Programs);
-		let eventStages = Object.keys(grouppedFestivalPrograms).sort();
-		this.props.eventStages(eventStages);
-	};
+	// updateEventLocations = data => {
+	// 	let Programs = data;
+	// 	let grouppedFestivalPrograms = this.groupByStages(Programs);
+	// 	let eventStages = Object.keys(grouppedFestivalPrograms).sort();
+	// 	this.props.eventStages(eventStages);
+	// };
 
 	addToFavourite = e => {
 		this.setState({
@@ -132,12 +134,7 @@ export class festivalProgramContainer extends Component {
 		this.setState({ searchResults: filteredResults });
 	};
 
-	// filterPastEvents = data => {
-	// 	const most = moment(this.state.now).subtract(19, 'minutes');
-	// 	return data.filter(({ endDate = event.startDate }) => {
-	// 		return most < moment(endDate);
-	// 	});
-	// };
+
 
 	festivalEventFilter = () => {
 		if (this.props.isActive.Favourite) {
@@ -173,12 +170,12 @@ export class festivalProgramContainer extends Component {
 		return days(events);
 	};
 
-	groupByStages = events => {
-		const Stages = Ramda.groupBy(events => {
-			return events.stage;
-		});
-		return Stages(events);
-	};
+	// groupByStages = events => {
+	// 	const Stages = Ramda.groupBy(events => {
+	// 		return events.stage;
+	// 	});
+	// 	return Stages(events);
+	// };
 
 	detailsIsOpenHandler = e => {
 		if (this.state.activeDetails === e.currentTarget.id) {
@@ -258,11 +255,15 @@ export class festivalProgramContainer extends Component {
 			return <Redirect to={`/festival-list`} />;
 		}
 
-		if (!this.props.data||!this.props.searchResults){return <CircularProgress
-			style={{ margin: 'auto' }}
-			size={80}
-			thickness={5}
-		/>}
+		if (!this.props.data||!this.props.searchResults){
+			return <div className={classes.center}>
+			
+				<CircularProgress
+					style={{ margin: 'auto' }}
+					size={80}
+					thickness={5}
+				/></div>
+		}
 
 		if (this.props.isEventExpired) {
 			return (
@@ -305,8 +306,8 @@ export class festivalProgramContainer extends Component {
 			);
 		}
 		if (!this.state.initFilters){
-		this.updateEventDays(this.props.searchResults);
-		this.updateEventLocations(this.props.searchResults);
+		this.props.updateEventDays(eventDays(this.props.searchResults));
+		this.props.updateEventLocations(eventLocations(this.props.searchResults));
 		this.setState({initFilters:true})
 		}
 
@@ -317,11 +318,11 @@ export class festivalProgramContainer extends Component {
 			this.state.yListOffset,
 			this.state.yListOffset + 200
 		);
+
+		const daysOfEvent = eventDays(sliceOfPrograms)
 		const grouppedFestivalPrograms = this.groupByDays(sliceOfPrograms);
 
-		const eventDays = Object.keys(grouppedFestivalPrograms).sort();
-
-		const programListByDay = eventDays.map((day, daysIndex) => {
+		const programListByDay = daysOfEvent.map((day, daysIndex) => {
 			return (
 				<div key={daysIndex} style={{ paddingBottom: '40px' }}>
 					<Subheader className={classes.subheader}>
@@ -435,6 +436,7 @@ const mapDispatchToProps = dispatch => {
 		initProgramListByFestivalId:festivalId=>dispatch(initProgramListByFestivalId(festivalId)),
 		updatePrograms:(data)=>dispatch(updatePrograms(data)),
 		initPrograms:(data)=>dispatch(initPrograms(data)),
+		initEventFlags:()=>dispatch(initEventFlags()),
 		setFilterToday: day => dispatch({ type: 'UPD_ACTIVEDAY', value: day }),
 		onTrendingToggle: () => dispatch({ type: 'UPD_TRENDING' }),
 		onFilterToggle: () => dispatch({ type: 'UPD_FILTER' }),
@@ -445,9 +447,9 @@ const mapDispatchToProps = dispatch => {
 			dispatch({ type: 'ADD_FAVOURITE', value: event }),
 		removeFromFavourites: event =>
 			dispatch({ type: 'REMOVE_FAVOURITE', value: event }),
-		eventDays: daysArray =>
+		updateEventDays: daysArray =>
 			dispatch({ type: 'UPD_EVENTDAYS', value: daysArray }),
-		eventStages: stagesArray =>
+			updateEventLocations: stagesArray =>
 			dispatch({ type: 'UPD_EVENTSTAGES', value: stagesArray })
 	};
 };

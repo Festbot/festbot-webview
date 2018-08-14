@@ -1,6 +1,7 @@
 import axios from '../helpers/cachedAxios.js';
 import 'babel-polyfill';
 import moment from 'moment';
+import * as Ramda from 'ramda';
 
 const ROOT_URL='api.festbot.com'
 
@@ -29,3 +30,39 @@ export const filterPastEvents = function(data){
 			return most < moment(endDate);
 		});
 }
+
+
+export const eventDays = function(data) {
+  const Programs = data;
+  let grouppedFestivalPrograms = groupByDays(Programs);
+  let eventDays = Object.keys(grouppedFestivalPrograms).sort();
+  return eventDays
+
+  //this.props.eventDays(eventDays);
+};
+
+export const eventLocations = function(data) {
+  const Programs = data;
+  let grouppedFestivalPrograms = groupByStages(Programs);
+  let eventStages = Object.keys(grouppedFestivalPrograms).sort();
+  return eventStages
+
+  //this.props.eventStages(eventStages);
+};
+
+
+
+
+	function groupByDays(events){
+		const days = Ramda.groupBy(events => {
+			return moment(events.startDate).format('L');
+		});
+		return days(events);
+	};
+
+	function groupByStages(events){
+		const stages = Ramda.groupBy(events => {
+			return events.stage;
+		});
+		return stages(events);
+	};

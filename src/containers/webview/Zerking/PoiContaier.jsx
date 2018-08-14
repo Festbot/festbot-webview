@@ -5,10 +5,7 @@ import ScrollableAnchor from 'react-scrollable-anchor';
 import PoiItem from './PoiItem.jsx';
 import { getFestivalPois } from '../../../store/actions';
 import CompassNavigation from '../Navigator/CompassNavigation.jsx';
-import headingWrapper from '../../../hoc/headingWrapper.jsx';
-import VisibilityControl from '../../../hoc/VisibilityControl/VisibilityControl.jsx'
 
-const CompassNavigationWithHeading = headingWrapper(CompassNavigation)
 
 export class PoiContaier extends Component {
 	state = {
@@ -29,14 +26,13 @@ export class PoiContaier extends Component {
 	};
 
 	openCompassNavigation = poi => {
-		console.log(poi);
 		if (poi.distance) {
-			this.setState({ poiForCompass: poi });
+			this.setState({ poiIdForCompass: poi._id });
 		}
 	};
 
 	compassNavigationClose = () => {
-		this.setState({ poiForCompass: '' });
+		this.setState({ poiIdForCompass: '' });
 	};
 
 	render() {
@@ -57,11 +53,11 @@ export class PoiContaier extends Component {
 		} = this.props;
 
 		let compassNavigatorRender = '';
-		if (this.state.poiForCompass) {
+		if (this.state.poiIdForCompass) {
 			compassNavigatorRender = (
 				<CompassNavigation
 					compassNavigationClose={this.compassNavigationClose}
-					poi={this.state.poiForCompass}
+					poiId={this.state.poiIdForCompass}
 					pos={pos}
 				/>
 			);

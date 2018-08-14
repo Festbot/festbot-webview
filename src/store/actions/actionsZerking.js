@@ -15,6 +15,7 @@ import {
   ADD_STAGE_TO_FILTERING,
   REMOVE_STAGE_TO_FILTERING,
   SET_FESTIVAL_FILTERED_STAGES,
+  SET_FESTIVAL_GROUPED_POIS,
 
 } from './actionTypes.js'
 
@@ -126,4 +127,13 @@ export const setFestivalFilteredStages=(pois)=>{
     payload:pois
   }
 }
+
+export const setFestivalGroupedPois=(pois)=>{
+  return {
+    type: SET_FESTIVAL_GROUPED_POIS,
+    payload:pois
+  }
+}
+
+
 

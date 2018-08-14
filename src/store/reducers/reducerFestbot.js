@@ -130,6 +130,13 @@ const reducer = (state = initialState,action) => {
         ...state,
         isEventListExist:true,
         isEventExpired: false,
+        isActiveTrending: false,
+        isActiveFilter: false,
+        isActiveFavourite: false,
+        activeDay:'ALL',
+        activeStage:'HELYSZÍNEK',
+        searchResults:[],
+        data:[],
       }
 
   }

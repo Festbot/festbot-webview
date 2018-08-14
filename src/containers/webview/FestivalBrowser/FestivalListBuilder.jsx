@@ -149,7 +149,8 @@ const mapStateToProps = ({festbot}) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		setActiveFestival: festivalId => dispatch({ type: 'SET_ACTIVEFESTIVAL', value: festivalId })
+		setActiveFestival: festivalId => dispatch({ type: 'SET_ACTIVEFESTIVAL', value: festivalId }),
+		
 	};
 };
 

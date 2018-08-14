@@ -11,7 +11,8 @@ import {
 	SET_HEADING,
 	ADD_STAGE_TO_FILTERING,
 	REMOVE_STAGE_TO_FILTERING,
-	SET_FESTIVAL_FILTERED_STAGES
+	SET_FESTIVAL_FILTERED_STAGES,
+	SET_FESTIVAL_GROUPED_POIS
 } from '../actions/actionTypes.js';
 
 const initialState = {
@@ -47,6 +48,12 @@ const reducer = (state = initialState, action) => {
 				filteredPois: action.payload
 			};
 			break;
+			case SET_FESTIVAL_GROUPED_POIS:
+			return {
+				...state,
+				groupedPoisById: action.payload
+			};
+
 		case SET_USER_ACTIVE_FESTIVAL_DATA:
 			return {
 				...state,
