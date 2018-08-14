@@ -18,7 +18,7 @@ export default function getUserId() {
 					if (isDev) {
 						complete('4842567782cdf2aa620f1060e1dcbcd7');
 					} else {
-						reject();
+						reject(); //amugy it miert kell rejectelni, miert nem dispatch elhettem store ba
 					}
 				}
 			);

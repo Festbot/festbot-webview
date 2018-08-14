@@ -1,6 +1,4 @@
-import {
-	INIT_PROGRAM_LIST_BY_FESTIVAL_ID
-} from '../actions/actionTypes.js';
+import { INIT_PROGRAM_LIST_BY_FESTIVAL_ID } from '../actions/actionTypes.js';
 
 import moment from 'moment';
 
@@ -9,18 +7,20 @@ import getUserId from '../../helpers/getUserId.js';
 import { getUserData } from '../../helpers/apiHelper.js';
 
 import { getFestivalDataById } from '../../helpers/festivalApiHelper.js';
-import { getEventsByFestivalId,filterPastEvents } from '../../helpers/eventApiHelper.js';
-
+import {
+	getEventsByFestivalId,
+	filterPastEvents
+} from '../../helpers/eventApiHelper.js';
 
 import {
 	setUserData,
 	shouldRedirect,
-  setUserActiveFestivalData,
-  eventExpired,
-  eventListNotExist,
-  updatePrograms,
-  initPrograms,
-	shouldReload,
+	setUserActiveFestivalData,
+	eventExpired,
+	eventListNotExist,
+	updatePrograms,
+	initPrograms,
+	shouldReload
 } from '../actions';
 
 export default store => next => async action => {
@@ -31,9 +31,19 @@ export default store => next => async action => {
 
 	switch (action.type) {
 		case INIT_PROGRAM_LIST_BY_FESTIVAL_ID:
-		try{
+			try {
+				userId = await getUserId();
+			} catch (error) {
+				try {
+					userId = await getUserId();
+				} catch (error) {
+					store.dispatch(shouldReload());
+					return;
+				}
+			}
+
 			let festivalId;
-			userId = await getUserId();
+
 			userData = await getUserData(userId);
 			store.dispatch(setUserData(userData));
 			//festival id vagy url parameterbol, vagy user activ festivalbol
@@ -47,15 +57,13 @@ export default store => next => async action => {
 				store.dispatch(shouldRedirect());
 			}
 			//fesztival adatok bekuldese a storeba, coverfotohoz meg ilyenek
-			activeFestivalData = await getFestivalDataById(
-				festivalId
-			);
+			activeFestivalData = await getFestivalDataById(festivalId);
 			store.dispatch(setUserActiveFestivalData(activeFestivalData));
 
 			//fesztival program elokeszitese
 			//program lekeres
-      const data = await getEventsByFestivalId(festivalId);
-      
+			const data = await getEventsByFestivalId(festivalId);
+
 			// endDate hozzaadasa, ha nincs, a hosszu programok kiszurese
 			const festivalProgramResults = data
 				.map(event => {
@@ -74,27 +82,23 @@ export default store => next => async action => {
 					);
 				});
 
-        // error handling
+			// error handling
 
-        if (festivalProgramResults.length == 0) {
-          store.dispatch(eventListNotExist());
-        }
-    
-        if (
-          filterPastEvents(festivalProgramResults).length == 0 &&
-          !festivalProgramResults.length == 0
-        ) {
-          store.dispatch(eventExpired());
-        }
-        const filteredPastEvents=filterPastEvents(festivalProgramResults)
-        store.dispatch(updatePrograms(filteredPastEvents))
-				store.dispatch(initPrograms(festivalProgramResults))
-
-			//ha veletlenul teszt usert kapna webviewban a user, akkor reloadot eroltetunk	
-			} catch (error) {
-				store.dispatch(shouldReload())
-				console.log("[REJECT]")
+			if (festivalProgramResults.length == 0) {
+				store.dispatch(eventListNotExist());
 			}
+
+			if (
+				filterPastEvents(festivalProgramResults).length == 0 &&
+				!festivalProgramResults.length == 0
+			) {
+				store.dispatch(eventExpired());
+			}
+			const filteredPastEvents = filterPastEvents(festivalProgramResults);
+			store.dispatch(updatePrograms(filteredPastEvents));
+			store.dispatch(initPrograms(festivalProgramResults));
+
+			//ha veletlenul teszt usert kapna webviewban a user, akkor reloadot eroltetunk
 
 			break;
 	}
