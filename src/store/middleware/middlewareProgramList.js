@@ -93,6 +93,7 @@ export default store => next => async action => {
 			//ha veletlenul teszt usert kapna webviewban a user, akkor reloadot eroltetunk	
 			} catch (error) {
 				store.dispatch(shouldReload())
+				console.log("[REJECT]")
 			}
 
 			break;

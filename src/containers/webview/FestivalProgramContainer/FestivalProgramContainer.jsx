@@ -288,16 +288,6 @@ export class festivalProgramContainer extends Component {
 			return <Redirect to={`/festival-list`} />;
 		}
 
-		if (!this.props.data||!this.props.searchResults){
-			return <div className={classes.center}>
-			
-				<CircularProgress
-					style={{ margin: 'auto' }}
-					size={80}
-					thickness={5}
-				/></div>
-		}
-
 		if (this.props.shouldReload) {
 			return <NotificationModal>
 					<OpenChrome
@@ -308,6 +298,18 @@ export class festivalProgramContainer extends Component {
 					<p>Something went wrong, click the button to reload the page.</p>
 				</NotificationModal>
 		}
+
+		if (!this.props.data||!this.props.searchResults){
+			return <div className={classes.center}>
+			
+				<CircularProgress
+					style={{ margin: 'auto' }}
+					size={80}
+					thickness={5}
+				/></div>
+		}
+
+		
 		
 
 		if (this.props.isEventExpired) {
