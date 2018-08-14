@@ -16,8 +16,10 @@ export default function getUserId() {
 					console.warn('no psid :(');
 					const isDev = document.cookie.indexOf("festbotDebug")
 					if (isDev) {
+						alert("User data error, please reload the page, teszt user dev")
 						complete('4842567782cdf2aa620f1060e1dcbcd7');
 					} else {
+						alert("User data error, please reload the page,teszt user")
 						reject()
 					}
 				}
