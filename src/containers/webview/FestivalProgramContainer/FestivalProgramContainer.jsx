@@ -22,7 +22,7 @@ import FilterSwitchers from '../../../containers/webview/FestivalProgramContaine
 import DaySwitcher from '../../../components/DaySwitcher';
 
 import { filterPastEvents,eventDays,eventLocations} from '../../../helpers/eventApiHelper.js';
-import {initProgramListByFestivalId,  updatePrograms,initPrograms,initEventFlags} from '../../../store/actions'
+import {initProgramListByFestivalId,  updatePrograms,initPrograms,initEventFlags,updateEventDays,updateEventLocations} from '../../../store/actions'
 
 const NotificationModal = styled.div`
 overflow:hidden;
@@ -121,20 +121,6 @@ export class festivalProgramContainer extends Component {
 		}
 	};
 
-	// updateEventDays = data => {
-	// 	let Programs = data;
-	// 	let grouppedFestivalPrograms = this.groupByDays(Programs);
-	// 	let eventDays = Object.keys(grouppedFestivalPrograms).sort();
-
-	// 	this.props.eventDays(eventDays);
-	// };
-
-	// updateEventLocations = data => {
-	// 	let Programs = data;
-	// 	let grouppedFestivalPrograms = this.groupByStages(Programs);
-	// 	let eventStages = Object.keys(grouppedFestivalPrograms).sort();
-	// 	this.props.eventStages(eventStages);
-	// };
 
 	addToFavourite = e => {
 		this.setState({
@@ -165,7 +151,7 @@ export class festivalProgramContainer extends Component {
 		});
 
 		if (filteredResults.length == 0) return;
-		this.setState({ searchResults: filteredResults });
+		this.props.updatePrograms(filteredResults);
 	};
 
 
@@ -204,12 +190,6 @@ export class festivalProgramContainer extends Component {
 		return days(events);
 	};
 
-	// groupByStages = events => {
-	// 	const Stages = Ramda.groupBy(events => {
-	// 		return events.stage;
-	// 	});
-	// 	return Stages(events);
-	// };
 
 	detailsIsOpenHandler = e => {
 		if (this.state.activeDetails === e.currentTarget.id) {
@@ -310,9 +290,6 @@ export class festivalProgramContainer extends Component {
 				/></div>
 		}
 
-		
-		
-
 		if (this.props.isEventExpired) {
 			return (
 				<div className={classes.center}>
@@ -353,12 +330,6 @@ export class festivalProgramContainer extends Component {
 				</div>
 			);
 		}
-		if (!this.state.initFilters){
-		this.props.updateEventDays(eventDays(this.props.searchResults));
-		this.props.updateEventLocations(eventLocations(this.props.searchResults));
-		this.setState({initFilters:true})
-		}
-
 
 		const Programs = this.festivalEventFilter();
 
@@ -497,9 +468,9 @@ const mapDispatchToProps = dispatch => {
 		removeFromFavourites: event =>
 			dispatch({ type: 'REMOVE_FAVOURITE', value: event }),
 		updateEventDays: daysArray =>
-			dispatch({ type: 'UPD_EVENTDAYS', value: daysArray }),
-			updateEventLocations: stagesArray =>
-			dispatch({ type: 'UPD_EVENTSTAGES', value: stagesArray })
+			dispatch(updateEventDays( daysArray) ),
+		updateEventLocations: stagesArray =>
+			dispatch(updateEventLocations( stagesArray ))
 	};
 };
 

@@ -9,7 +9,9 @@ import { getUserData } from '../../helpers/apiHelper.js';
 import { getFestivalDataById } from '../../helpers/festivalApiHelper.js';
 import {
 	getEventsByFestivalId,
-	filterPastEvents
+	filterPastEvents,
+	eventDays,
+	eventLocations,
 } from '../../helpers/eventApiHelper.js';
 
 import {
@@ -20,7 +22,10 @@ import {
 	eventListNotExist,
 	updatePrograms,
 	initPrograms,
-	shouldReload
+	shouldReload,
+	updateEventDays,
+	updateEventLocations
+
 } from '../actions';
 
 const sleep = timeout =>
@@ -85,6 +90,10 @@ export default store => next => async action => {
 						moment(event.endDate).subtract(6, 'hours')
 					);
 				});
+
+			//dayfilter stage filter elemek inicializalasa
+			store.dispatch(updateEventDays(eventDays(data)));
+			store.dispatch(updateEventLocations(eventLocations(data)));
 
 			// error handling
 
