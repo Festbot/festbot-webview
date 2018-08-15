@@ -139,7 +139,7 @@ export class festivalProgramContainer extends Component {
 	};
 
 	festivalEventKeywordFilter = keyword => {
-		const eventListWithoutPastEvents = this.filterPastEvents(
+		const eventListWithoutPastEvents = filterPastEvents(
 			this.props.data
 		);
 		const filteredResults = eventListWithoutPastEvents.filter(event => {
