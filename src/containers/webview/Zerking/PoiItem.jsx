@@ -74,11 +74,7 @@ const LocationInfo = styled.div`
 	font-size: 90%;
 `;
 
-const ResetButton = styled.div`
-	display: inline-block;
-	position: relative;
-	right: 10px;
-`;
+
 
 export class PoiItem extends Component {
 	constructor(props) {
@@ -99,21 +95,29 @@ export class PoiItem extends Component {
 		}
 		this.mc = new Hammer(this.itemRef.current);
 
-		this.mc.on('swipeleft', () => {
-			this.setState({ swiped: this.itemRef.current.id });
-		});
-		this.mc.on('swiperight', () => {
-			this.setState({ swiped: 0 });
-		});
+		this.mc.on('swipeleft', this.swipeLeft);
+		this.mc.on('swiperight', this.swipeRight);
+
 	}
 
 	componentWillUnmount() {
 		if (this.props.readOnly) {
 			return;
 		}
-		this.mc.off('swipeleft');
-		this.mc.off('swiperight');
+		
+		this.mc.off('swipeleft',this.swipeLeft);
+		this.mc.off('swiperight',this.swipeRight);
 	}
+
+	swipeLeft=()=>{
+		console.log("[swiped]")
+		this.setState({ swiped: this.itemRef.current.id })
+	}
+
+	swipeRight=()=>{
+		this.setState({ swiped: 0 })
+	}
+
 
 	addSwipe = e => {
 		const mc = new Hammer(e);
@@ -167,7 +171,7 @@ export class PoiItem extends Component {
 						}
 						swiped={isSwiped}
 					>
-						Delete
+						
 					</DeleteButton>
 				)}
 				<Poi innerRef={this.itemRef} swiped={isSwiped} id={poi._id}>

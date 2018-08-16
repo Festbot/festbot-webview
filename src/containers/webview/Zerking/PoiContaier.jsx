@@ -48,7 +48,6 @@ export class PoiContaier extends Component {
 			pois,
 			pos,
 			festival,
-			readOnly = false,
 			limit = false
 		} = this.props;
 
@@ -76,7 +75,7 @@ export class PoiContaier extends Component {
 				<PoiItem
 					openCompassNavigation={this.openCompassNavigation}
 					scrollPosition={this.state.scrollPosition}
-					readOnly={readOnly}
+					readOnly={this.props.readOnly}
 					poi={poi}
 					index={index}
 					distance={poi.distance}

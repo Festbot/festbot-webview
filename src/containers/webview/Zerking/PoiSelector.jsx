@@ -62,7 +62,6 @@ export class PoiSelector extends Component {
   }
 
   setItemToZerking=  (e,poiType)=>{
-    e.stopPropagation()
     if (this.isToggledForZerkig(poiType.key)){
       this.props.removeItemToZerking(poiType.key)
       return
@@ -78,7 +77,8 @@ export class PoiSelector extends Component {
       }
     }
     this.props.addItemToZerking([item])
-    goToAnchor('poiList')
+
+    if(this.props.noscroll) {goToAnchor('poiList')}
     // setTimeout(()=>window.scrollTo({
 		// 	top: 300, 
 		// 	left: 0, 

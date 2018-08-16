@@ -208,7 +208,7 @@ export class NavigatorContainer extends Component {
 
 				{this.props.filteredStages.length > 0 && (
 					<PoiContaier
-						readOnly
+						readOnly={true}
 						limit={10}
 						pois={this.props.filteredStages}
 						festival={this.props.activeFestival}
@@ -217,7 +217,7 @@ export class NavigatorContainer extends Component {
 				)}
 
 				<PoiContaier
-					readOnly
+					readOnly={true}
 					limit={10}
 					pois={this.props.filteredPois}
 					festival={this.props.activeFestival}
