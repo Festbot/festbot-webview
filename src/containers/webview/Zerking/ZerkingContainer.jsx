@@ -78,9 +78,6 @@ export class ZerkingContainer extends Component {
 
 	render() {
 		let renderFixedAddPoiButton = '';
-		console.log(this.props.itemsToZerking)
-		console.log(this.props.pois)
-		console.log(this.props.activeFestival)
 		return (
 			<div>
 				<Helmet>

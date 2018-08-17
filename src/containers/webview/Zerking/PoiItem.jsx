@@ -74,7 +74,7 @@ const LocationInfo = styled.div`
 	font-size: 90%;
 `;
 
-
+const Wrapper = props => <div {...props}>{props.children}</div>;
 
 export class PoiItem extends Component {
 	constructor(props) {
@@ -110,7 +110,6 @@ export class PoiItem extends Component {
 	}
 
 	swipeLeft=()=>{
-		console.log("[swiped]")
 		this.setState({ swiped: this.itemRef.current.id })
 	}
 
@@ -119,15 +118,15 @@ export class PoiItem extends Component {
 	}
 
 
-	addSwipe = e => {
-		const mc = new Hammer(e);
-		mc.on('swipeleft', () => {
-			this.setState({ swiped: mc.element.id });
-		});
-		mc.on('swiperight', () => {
-			this.setState({ swiped: 0 });
-		});
-	};
+	// addSwipe = e => {
+	// 	const mc = new Hammer(e);
+	// 	mc.on('swipeleft', () => {
+	// 		this.setState({ swiped: mc.element.id });
+	// 	});
+	// 	mc.on('swiperight', () => {
+	// 		this.setState({ swiped: 0 });
+	// 	});
+	// };
 
 	deletePoi = async item => {
 		await deleteItemFromPois(item);
@@ -135,7 +134,7 @@ export class PoiItem extends Component {
 	};
 
 	render() {
-		const Wrapper = props => <div {...props}>{props.children}</div>;
+		
 		const { poi } = this.props;
 		const NavigationWithHeading = this.NavigationMarker;
 		const iconType = poi.category;
@@ -171,7 +170,7 @@ export class PoiItem extends Component {
 						}
 						swiped={isSwiped}
 					>
-						
+						Delete
 					</DeleteButton>
 				)}
 				<Poi innerRef={this.itemRef} swiped={isSwiped} id={poi._id}>
