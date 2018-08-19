@@ -28,17 +28,17 @@ const NotificationModal = styled.div`
 `;
 
 const FormItem = styled.div`
-	padding: 10px ;
+	padding: 10px;
 	display: flex;
 	justify-content: space-between;
-	align-items:center;
+	align-items: center;
 `;
 
 const SubmitItem = styled.div`
-	padding: 10px ;
+	padding: 10px;
 	display: flex;
 	justify-content: space-evenly;
-	align-items:center;
+	align-items: center;
 `;
 
 const InputField = styled(Field)`
@@ -67,44 +67,43 @@ const Cancel = styled.button`
 
 const Image = styled.div`
 	width: 95vw;
-	margin:10px auto;
-    height: 250px;
-  background-color: black;
-  position: relative;
-  background-size: cover;
-  background-position: center center;
+	margin: 10px auto;
+	height: 250px;
+	background-color: black;
+	position: relative;
+	background-size: cover;
+	background-position: center center;
 `;
 
 const Backdrop = styled.div`
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background-color: rgba(179,22,22,0.7);
-`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(179, 22, 22, 0.7);
+`;
 const DeleteIcon = styled.img`
-position:absolute;
-right:25px;
-bottom:25px;
-width:25px;
-`
+	position: absolute;
+	right: 25px;
+	bottom: 25px;
+	width: 25px;
+`;
 
 class EditPoi extends Component {
-    state={
-        activeImages:[]
-    }
+	state = {
+		activeImages: []
+	};
 
 	async componentWillMount() {
-		this.initPoiValues()
+		this.initPoiValues();
 	}
 
-
-    initPoiValues= async ()=>{
-        const { poiId } = this.props;
+	initPoiValues = async () => {
+		const { poiId } = this.props;
 		this.poi = await getPoiById(poiId);
 		this.props.initialize({
-            name: this.poi.name,
+			name: this.poi.name,
 			email: this.poi.email ? this.poi.email : '',
 			contact: this.poi.contact ? this.poi.contact : '',
 			phone: this.poi.phone ? this.poi.phone : '',
@@ -118,45 +117,56 @@ class EditPoi extends Component {
 			festivalId: this.poi.festivalId ? this.poi.festivalId : '',
 			_rev: this.poi._rev
 		});
-    }
+	};
 
-    deleteImageHandler=(image)=>{
+	deleteImageHandler = image => {
+		const updatedImages = this.poi.images.filter(
+			imageId => imageId !== image
+		);
+		this.poi.images = updatedImages;
+		this.setState({ activeImages: updatedImages });
+	};
 
-        const updatedImages = this.poi.images.filter(imageId=>imageId!==image)
-        this.poi.images=updatedImages
-        this.setState({activeImages:updatedImages})
-    }
-
-	 submitForm = async values => {
-        let updatedValues = {...values}
-		if (values.images&&!this.poi.images==[]) {
-            const updatedImages = values.images.concat(this.poi.images)
-            updatedValues = { ...values, images: updatedImages }
-        };
-        if (!values.images&&!this.poi.images==[]) {
-            const updatedImages = this.poi.images
-            updatedValues = { ...values, images: updatedImages }
+	submitForm = async values => {
+		let updatedValues = { ...values };
+		if (values.images && !this.poi.images == []) {
+			const updatedImages = values.images.concat(this.poi.images);
+			updatedValues = { ...values, images: updatedImages };
 		}
-		console.log(updatedValues)
+		if (!values.images && !this.poi.images == []) {
+			const updatedImages = this.poi.images;
+			updatedValues = { ...values, images: updatedImages };
+		}
+		console.log(updatedValues);
 
-        await updatePoiItem(this.props.poiId, updatedValues);
-        this.props.onClose()
+		await updatePoiItem(this.props.poiId, updatedValues);
+		this.props.onClose();
 	};
 
 	render() {
 		const { handleSubmit } = this.props;
-        
+
 		let renderImages;
 		console.log(this.poi);
 		if (this.poi && !this.poi.images == '') {
 			renderImages = this.poi.images.map(image => {
-                const isDelete = this.state.activeImages.length==0?this.state.activeImages.indexOf(image)>-1:false
+				const isDelete =
+					this.state.activeImages.length == 0
+						? this.state.activeImages.indexOf(image) > -1
+						: false;
 				return (
 					<div key={image}>
-						<Image  style={{backgroundImage: `url(https://ucarecdn.com/${image}/-/resize/600/)`}}>
-                        {isDelete&&<Backdrop/>}
-                        <DeleteIcon onClick={()=>this.deleteImageHandler(image)} src={`https://ucarecdn.com/0b417ab2-6f4b-48ca-a2da-a76257cf5f59/-/resize/32/`} />
-                        </Image>
+						<Image
+							style={{
+								backgroundImage: `url(https://ucarecdn.com/${image}/-/resize/600/)`
+							}}
+						>
+							{isDelete && <Backdrop />}
+							<DeleteIcon
+								onClick={() => this.deleteImageHandler(image)}
+								src={`https://ucarecdn.com/0b417ab2-6f4b-48ca-a2da-a76257cf5f59/-/resize/32/`}
+							/>
+						</Image>
 					</div>
 				);
 			});
@@ -208,8 +218,8 @@ class EditPoi extends Component {
 						<InputField name="url" component="input" type="url" />
 					</FormItem>
 					<SubmitItem>
+						<Submit type="submit">Submit</Submit>
 						<Cancel onClick={this.props.onClose}>Cancel</Cancel>
-						<Submit type="submit">Submit</Submit>{' '}
 					</SubmitItem>
 				</form>
 				{renderImages}
