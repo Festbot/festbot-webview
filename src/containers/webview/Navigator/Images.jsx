@@ -19,6 +19,9 @@ const ImageItem = styled.div`
 	width: ${props => props.isZoom?'80vw':'100px'};
 	margin: 10px;
 	z-index:5;
+	position: relative;
+  background-size: cover;
+  background-position: center center;
 `;
 
 export class Images extends Component {
