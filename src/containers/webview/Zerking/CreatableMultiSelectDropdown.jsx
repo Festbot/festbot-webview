@@ -18,19 +18,29 @@ const tagsStyles = {
 
 
 class CreatableMultiSelectDropdown extends Component {
-
+	state={
+		newItem:[]
+	}
 	changeHandler = item => {
 		const arrayOfTags = item.map(result => result.value);
 		this.props.input.onChange(arrayOfTags);
+
+		const newItem = item.filter(item=>item.__isNew__)
+		
+		this.setState({newItem:newItem})
 		
 	};
 
 
 	render (){
-		const initialValue = poiTypeOptions().filter(tag=> {
+		let initialValue = poiTypeOptions().filter(tag=> {
 			return this.props.input.value.indexOf(tag.value)>-1
 		})
-	
+		
+
+		if (this.state.newItem.length>0){
+			initialValue = initialValue.concat(this.state.newItem)
+		}
 		return (
 			<Creatable
 				isMulti

@@ -9,7 +9,7 @@ const Container = styled.div`
 	position: absolute;
 	bottom: 0;
     right: 0;
-    -webkit-overflow-scrolling: touch
+    -webkit-overflow-scrolling: touch;
 
 `;
 
@@ -18,6 +18,7 @@ const ImageItem = styled.div`
 	height: ${props => props.isZoom?'80vw':'100px'};
 	width: ${props => props.isZoom?'80vw':'100px'};
 	margin: 10px;
+	z-index:5;
 `;
 
 export class Images extends Component {

@@ -18,19 +18,20 @@ const NotificationModal = styled.div`
 	left: 0;
 	right: 0;
 	display: flex;
+	-webkit-overflow-scrolling: touch;
 
-	align-items: center;
 	background-color: rgb(22, 22, 22);
 	z-index: 20;
 	color: #ddd;
 	flex-direction: column;
-	colour: white;
+	color: white;
 `;
 
 const FormItem = styled.div`
 	padding: 10px;
 	display: flex;
 	justify-content: space-between;
+	align-items:center;
 `;
 
 const InputField = styled(Field)`
@@ -58,7 +59,8 @@ const Cancel = styled.button`
 `;
 
 const Image = styled.div`
-    width: 85vw;
+	width: 90vw;
+	margin:10px auto;
     height: 250px;
   background-color: black;
   position: relative;
@@ -127,7 +129,8 @@ class EditPoi extends Component {
         if (!values.images&&!this.poi.images==[]) {
             const updatedImages = this.poi.images
             updatedValues = { ...values, images: updatedImages }
-        }
+		}
+		console.log(updatedValues)
 
         await updatePoiItem(this.props.poiId, updatedValues);
         this.props.onClose()
