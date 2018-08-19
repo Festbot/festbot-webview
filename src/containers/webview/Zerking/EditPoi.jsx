@@ -28,9 +28,16 @@ const NotificationModal = styled.div`
 `;
 
 const FormItem = styled.div`
-	padding: 10px;
+	padding: 10px ;
 	display: flex;
 	justify-content: space-between;
+	align-items:center;
+`;
+
+const SubmitItem = styled.div`
+	padding: 10px ;
+	display: flex;
+	justify-content: space-evenly;
 	align-items:center;
 `;
 
@@ -59,7 +66,7 @@ const Cancel = styled.button`
 `;
 
 const Image = styled.div`
-	width: 90vw;
+	width: 95vw;
 	margin:10px auto;
     height: 250px;
   background-color: black;
@@ -200,10 +207,10 @@ class EditPoi extends Component {
 						<label htmlFor="url">Web</label>
 						<InputField name="url" component="input" type="url" />
 					</FormItem>
-					<FormItem>
-						<Submit type="submit">Submit</Submit>{' '}
+					<SubmitItem>
 						<Cancel onClick={this.props.onClose}>Cancel</Cancel>
-					</FormItem>
+						<Submit type="submit">Submit</Submit>{' '}
+					</SubmitItem>
 				</form>
 				{renderImages}
 			</NotificationModal>
