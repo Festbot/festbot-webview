@@ -20,9 +20,9 @@ const StageItem = styled.div`
 position:relative;
 margin: 50px;
 
-background-color:  ${props => props.isZerked ? 'rgb(210,220,210)' : 'white'};  ;
+background-color:  ${props => props.isZerked ? 'rgb(22,22,22)' : 'rgb(150,22,22)'};  ;
 
-color: rgb(59, 40, 78);
+color: #ddd;
 
 
 text-align: center;
@@ -38,10 +38,6 @@ cursor: pointer;
 display:flex;
 justify-content:space-between;
 align-items:center;
-
-&:hover {
-  background-color: rgb(219, 209, 208);
-}
 `
 const PoiTitle = styled.div`
 width:70%;

@@ -18,7 +18,7 @@ const FestivalSelectorContainer = styled.div`
 `;
 const FestivalItem = styled.div`
 	margin: 50px;
-	background-color: rgb(59, 40, 78);
+	background-color: rgb(79, 60, 98);
 	text-align: center;
 	width: 90%;
 	margin: 10px auto;
@@ -30,16 +30,14 @@ const FestivalItem = styled.div`
 	font-weight: 100;
 	cursor: pointer;
 
-	&:hover {
-		background-color: rgb(189, 0, 08);
-	}
+
 `;
 
 
 const FixedAddButton = styled.div`
 
 
-background-color: rgb(0, 199, 88);
+background-color: rgb(22, 180, 88);
 text-align: center;
 width: 100%;
 
@@ -55,10 +53,6 @@ position:fixed;
 bottom:0;
 z-index:5;
 
-
-&:hover {
-	background-color: rgb(189, 0, 08);
-}
 `;
 
 
@@ -144,7 +138,7 @@ export class FestivalSelector extends Component {
 
 			<VisibilityControl  always={true} visibilityActionHandler={this.visibilityActionHandler}>
 					
-				<FestivalItem onClick={this.props.onClick} style={{ backgroundColor: 'rgb(0, 199, 88)' }}>
+				<FestivalItem onClick={this.props.onClick} style={{ backgroundColor: 'rgb(22, 180, 88)' }}>
 				{this.props.itemsToZerking.length?`Add ${this.props.itemsToZerking.length} here ${this.props.festival.name}`:`${this.props.festival.name}`}
 					<Dots onClick={() => this.setActiveFestival()}>
 						<Dot />

@@ -5,6 +5,7 @@ import ScrollableAnchor from 'react-scrollable-anchor';
 import PoiItem from './PoiItem.jsx';
 import { getFestivalPois } from '../../../store/actions';
 import CompassNavigation from '../Navigator/CompassNavigation.jsx';
+import EditPoi from './EditPoi.jsx'
 
 
 export class PoiContaier extends Component {
@@ -31,9 +32,15 @@ export class PoiContaier extends Component {
 		}
 	};
 
-	compassNavigationClose = () => {
-		this.setState({ poiIdForCompass: '' });
+	modalClose = () => {
+		this.setState({ poiIdForCompass: '', poiIdForEdit:''});
 	};
+
+
+	openPoiEditForm=poi=>{
+		this.setState({ poiIdForEdit: poi._id })
+	}
+
 
 	render() {
 		if (!this.props.pois) {
@@ -51,11 +58,24 @@ export class PoiContaier extends Component {
 			limit = false
 		} = this.props;
 
+		
+
+		let rendereditPoi = '';
+		if (this.state.poiIdForEdit) {
+			rendereditPoi = (
+				<EditPoi
+					onClose={this.modalClose}
+					poiId={this.state.poiIdForEdit}
+				/>
+			);
+		}
+
+
 		let compassNavigatorRender = '';
 		if (this.state.poiIdForCompass) {
 			compassNavigatorRender = (
 				<CompassNavigation
-					compassNavigationClose={this.compassNavigationClose}
+					compassNavigationClose={this.modalClose}
 					poiId={this.state.poiIdForCompass}
 					pos={pos}
 				/>
@@ -73,7 +93,7 @@ export class PoiContaier extends Component {
 			}
 			poiRender = sliceOfPois.map((poi, index) => (
 				<PoiItem
-					openCompassNavigation={this.openCompassNavigation}
+					onClickHandler={this.props.isZerking?this.openPoiEditForm:this.openCompassNavigation}
 					scrollPosition={this.state.scrollPosition}
 					readOnly={this.props.readOnly}
 					poi={poi}
@@ -94,6 +114,7 @@ export class PoiContaier extends Component {
 					<div />
 				</ScrollableAnchor>
 				{poiRender}
+				{rendereditPoi}
 				{compassNavigatorRender}
 			</div>
 		);

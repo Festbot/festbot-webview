@@ -51,7 +51,7 @@ const CarouselPage = styled.div`
 `;
 
 const NotificationModal = styled.div`
-overflow:hidden;
+	overflow: hidden;
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -60,14 +60,14 @@ overflow:hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: rgba(11, 11, 11, 0.7);
+	background-color: rgba(11, 11, 11, 0.8);
 	z-index: 20;
 	flex-direction: column;
 	text-align: center;
 	color: #ddd;
 	p {
 		font-size: 100%;
-		padding:0 10px;
+		padding: 0 10px;
 	}
 `;
 const OpenChrome = styled.a`
@@ -81,14 +81,14 @@ const OpenChrome = styled.a`
 	color: #ddd;
 `;
 const FestivalActivation = styled(Link)`
-text-align: center;
-text-decoration: none;
-padding: 10px 20px;
-border-radius: 50px;
-width: 80%;
-font-size: 200%;
-background-color: rgb(22, 155, 90);
-color: #ddd;
+	text-align: center;
+	text-decoration: none;
+	padding: 10px 20px;
+	border-radius: 50px;
+	width: 80%;
+	font-size: 200%;
+	background-color: rgb(22, 155, 90);
+	color: #ddd;
 `;
 
 export class NavigatorContainer extends Component {
@@ -114,28 +114,44 @@ export class NavigatorContainer extends Component {
 			(!this.props.pos && !isAndroid) ||
 			(!this.props.pos && isAndroid && !this.props.isWebview);
 
-			if (this.props.shouldReload) {
-				return <NotificationModal>
-						<OpenChrome
-							onClick={()=>location.reload()}
-						>
-							Reload the page
-						</OpenChrome>
-						<p>Something went wrong, click the button to reload the page.</p>
-					</NotificationModal>
-			}
-
-		if (!this.props.stages || !this.props.activeFestivalData) {
-			return <div>Loading...</div>
+		if (this.props.shouldReload) {
+			return (
+				<NotificationModal>
+					<OpenChrome onClick={() => location.reload()}>
+						Reload the page
+					</OpenChrome>
+					<p>
+						Something went wrong, click the button to reload the
+						page.
+					</p>
+				</NotificationModal>
+			);
 		}
 
+		if (!this.props.stages || !this.props.activeFestivalData) {
+			return <div>Loading...</div>;
+		}
 
-		if (this.props.activeFestival==null) {
-			return <NotificationModal>
-			<FestivalActivation to="/?redirect=/navigator" >
-				Válassz aktív fesztivált
-			</FestivalActivation>
-		</NotificationModal>;
+		if (this.props.activeFestival == null) {
+			return (
+				<NotificationModal>
+					<FestivalActivation to="/?redirect=/navigator">
+						Válassz aktív fesztivált
+					</FestivalActivation>
+				</NotificationModal>
+			);
+		}
+
+		if (this.props.pois&& this.props.pois.length ==0&&this.props.activeFestival) {
+			return (
+				<NotificationModal>
+					<OpenChrome>No POI data</OpenChrome>
+					<p>
+						A fesztivál szolgáltatásainak listája a fesztivál
+						építését követően válik elérhetővé.
+					</p>
+				</NotificationModal>
+			);
 		}
 
 		const renderStages = this.props.stages.filter(stage => {
@@ -163,44 +179,34 @@ export class NavigatorContainer extends Component {
 						: {}
 				}
 			>
-				<PoiFilterContainer
-					pois={this.props.pois}
-					coverPhoto={this.props.activeFestivalData.coverPhoto}
-				>
+				<PoiFilterContainer pois={this.props.pois}>
 					<CarouselContainer>
-						<CarouselPage>
-							<Title>{`Services - ${
-								this.props.activeFestivalData.name
-							} `}</Title>
-							<PoiFilter
-								pois={this.props.pois}
-								poiTypes={serviceTypes}
-								pos={{ lat: 0, lng: 0 }}
-								festival={this.props.activeFestival}
-							/>
-						</CarouselPage>
-						<CarouselPage>
-							<Title>{`Drinks - ${
-								this.props.activeFestivalData.name
-							} `}</Title>
-							<PoiFilter
-								pois={this.props.pois}
-								poiTypes={drinkTypes}
-								pos={{ lat: 0, lng: 0 }}
-								festival={this.props.activeFestival}
-							/>
-						</CarouselPage>
-						<CarouselPage>
-							<Title>{`Food - ${
-								this.props.activeFestivalData.name
-							} `}</Title>
-							<PoiFilter
-								pois={this.props.pois}
-								poiTypes={foodTypes}
-								pos={{ lat: 0, lng: 0 }}
-								festival={this.props.activeFestival}
-							/>
-						</CarouselPage>
+						<PoiFilter
+							activeFestivalData={this.props.activeFestivalData}
+							pois={this.props.pois}
+							type="Services"
+							poiTypes={serviceTypes}
+							pos={{ lat: 0, lng: 0 }}
+							festival={this.props.activeFestival}
+						/>
+
+						<PoiFilter
+							activeFestivalData={this.props.activeFestivalData}
+							pois={this.props.pois}
+							type="Drinks"
+							poiTypes={drinkTypes}
+							pos={{ lat: 0, lng: 0 }}
+							festival={this.props.activeFestival}
+						/>
+
+						<PoiFilter
+							activeFestivalData={this.props.activeFestivalData}
+							pois={this.props.pois}
+							type="Food"
+							poiTypes={foodTypes}
+							pos={{ lat: 0, lng: 0 }}
+							festival={this.props.activeFestival}
+						/>
 
 						{RenderStagePages}
 					</CarouselContainer>
@@ -208,6 +214,7 @@ export class NavigatorContainer extends Component {
 
 				{this.props.filteredStages.length > 0 && (
 					<PoiContaier
+						isZerking={false}
 						readOnly={true}
 						limit={10}
 						pois={this.props.filteredStages}
@@ -217,6 +224,7 @@ export class NavigatorContainer extends Component {
 				)}
 
 				<PoiContaier
+					isZerking={false}
 					readOnly={true}
 					limit={10}
 					pois={this.props.filteredPois}
@@ -225,27 +233,30 @@ export class NavigatorContainer extends Component {
 				/>
 
 				{showOpenChromeOverlay && (
-
-						<NotificationModal>
-							<OpenChrome
-								href="intent://webview.festbot.com/navigator#Intent;scheme=https;action=android.intent.action.VIEW;end;"
-								target="_blank"
-							>
-								Open in Chrome
-							</OpenChrome>
-						</NotificationModal>
-
+					<NotificationModal>
+						<OpenChrome
+							href="intent://webview.festbot.com/navigator#Intent;scheme=https;action=android.intent.action.VIEW;end;"
+							target="_blank"
+						>
+							Open in Chrome
+						</OpenChrome>
+					</NotificationModal>
 				)}
 
 				{noGpsData && (
-
-						<NotificationModal>
-							<OpenChrome>Waiting for GPS signal</OpenChrome>
-							<p>Please walk a few steps outdoor.</p>
-							<p>Győződj meg róla, hogy engedélyezted a GPS-t a Messenger használata közben.</p>
-							<p>Beállítások &rarr; Adatvédelem &rarr; Helymeghatározás &rarr; Messenger &rarr; Az alakalmazás használata közben.</p>
-						</NotificationModal>
-
+					<NotificationModal>
+						<OpenChrome>Waiting for GPS signal</OpenChrome>
+						<p>Please walk a few steps outdoor.</p>
+						<p>
+							Győződj meg róla, hogy engedélyezted a GPS-t a
+							Messenger használata közben.
+						</p>
+						<p>
+							Beállítások &rarr; Adatvédelem &rarr;
+							Helymeghatározás &rarr; Messenger &rarr; Az
+							alakalmazás használata közben.
+						</p>
+					</NotificationModal>
 				)}
 			</Container>
 		);
@@ -265,7 +276,7 @@ const mapStateToProps = ({ festbot, zerking }) => {
 		pos: zerking.pos,
 		webviewMenu: festbot.webviewMenu,
 		isWebview: festbot.isWebview,
-		shouldReload:festbot.shouldReload,
+		shouldReload: festbot.shouldReload
 	};
 };
 

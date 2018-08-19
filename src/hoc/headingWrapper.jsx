@@ -13,7 +13,7 @@ export const getHeadingWrapper = WrappedComponent => {
 			try{
 				const sensor = new AbsoluteOrientationSensor({ frequency: 10 });
 				sensor.onreading = () =>{
-					console.log(calculateHeading(...sensor.quaternion))
+				
 					store.dispatch(setHeading(calculateHeading(...sensor.quaternion).toFixed(0)));
 				}
 					

@@ -36,6 +36,13 @@ export const getPoisByFestivalId = async function(keyword = '') {
 	return festivalData;
 };
 
+export const getPoiById = async function(keyword = '') {
+	const 
+		{data: result }
+	 = await axiosNoCache.get(`https://${ROOT_URL}/pois/${keyword}`);
+	return result;
+};
+
 export const addItemToVenues = async function(item) {
 	await axiosNoCache.post(`https://${ROOT_URL}/venues/`, item);
 	return;
@@ -43,6 +50,11 @@ export const addItemToVenues = async function(item) {
 
 export const addItemToPois = async function(item) {
 	await axiosNoCache.post(`https://${ROOT_URL}/pois/`, item);
+	return;
+};
+
+export const updatePoiItem = async function(id,item) {
+	await axiosNoCache.put(`https://${ROOT_URL}/pois/${id}`, item);
 	return;
 };
 

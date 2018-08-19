@@ -176,7 +176,7 @@ export class PoiItem extends Component {
 				<Poi innerRef={this.itemRef} swiped={isSwiped} id={poi._id}>
 					<NavigationWithHeading poi={poi} pos={this.props.pos} />
 
-					<Flexbox onClick={()=>this.props.openCompassNavigation(poi)}>
+					<Flexbox onClick={()=>this.props.onClickHandler(poi)}>
 						<MapIcon src={iconUrl} />
 						<PoiTitle>{poi.name || poi.category}</PoiTitle>
 						{this.props.distance !== null && (

@@ -157,3 +157,14 @@ export const serviceTypes = [
 ] 
 
 
+export const poiTypeOptions = () => {
+	const poiTypes = foodTypes.concat(drinkTypes, serviceTypes);
+	const typeOptions = poiTypes.map(poi => {
+		return {
+			value: poi.key,
+			label: poi.name
+		};
+	});
+	return typeOptions;
+};
+

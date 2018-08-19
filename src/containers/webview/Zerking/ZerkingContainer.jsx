@@ -178,6 +178,7 @@ export class ZerkingContainer extends Component {
 								}`}</div>
 							)}
 							<PoiContaier
+								isZerking={true}
 								readOnly={false}
 								pois={this.props.pois}
 								festival={this.props.activeFestival}

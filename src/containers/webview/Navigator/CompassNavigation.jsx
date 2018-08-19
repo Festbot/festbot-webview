@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { icons } from '../Zerking/mapIcons.js';
 import { getDirection } from '../../../helpers/getDirection.js';
 import { connect } from 'react-redux';
+import Images from './Images.jsx';
 
 const MapIcon = styled.img`
 	position: relative;
@@ -27,6 +28,7 @@ const NotificationModal = styled.div`
 	color: #ddd;
 	flex-direction: column;
 `;
+
 
 const Ring = styled.div`
 	position: absolute;
@@ -97,6 +99,8 @@ const HorizontalLine = styled.div`
 	margin: auto 0;
 	box-shadow: 0px 1px 12px rgba(70, 220, 180, 0.5);
 `;
+
+
 
 export class CompassNavigation extends Component {
 	calculateDirection = (lat1, lng1, lat2, lng2) => {
@@ -171,6 +175,7 @@ export class CompassNavigation extends Component {
 						<InnerRing />
 						<OuterRing />
 					</Ring>
+					<Images poi={poi}/>
 				</NotificationModal>
 			</div>
 		);

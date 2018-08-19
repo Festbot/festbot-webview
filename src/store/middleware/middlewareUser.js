@@ -33,8 +33,6 @@ import {
 	getFestivalPois,
 	setListOfPersonalPreferences,
 	setUserActiveFestivalData,
-	setMyPosition,
-	setFestivalPois,
 	setFestivalFilteredPois,
 	setFestivalFilteredStages,
 	updateSearchResults,
