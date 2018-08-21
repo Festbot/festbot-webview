@@ -125,5 +125,23 @@ export const icons = {
 	},	
 	shisha: {
 		icon: festbot + 'e06d1f6a-7281-45f0-a9a2-5ff598a10e68' + iconSize
+	},	
+	sandwich: {
+		icon: festbot + '3a51041f-a3ff-4cc0-a795-daf7411f75f1' + iconSize
+	},	
+	crepe: {
+		icon: festbot + '9414d7aa-7a53-4690-bcc5-2fdb3042812d' + iconSize
+	},	
+	grill: {
+		icon: festbot + '45abd15a-2b00-4f7a-b922-3f2f5d52aac2' + iconSize
+	},	
+	sausage: {
+		icon: festbot + '1b93d310-9e90-44c4-88c0-35bf4d711d10' + iconSize
+	},	
+	waffle: {
+		icon: festbot + '3c9ae262-192e-4185-860e-5c3b110f3d5e' + iconSize
+	},	
+	french_fries: {
+		icon: festbot + 'a2269a24-11f0-456c-b6a0-d1106eda6de2' + iconSize
 	}
 };

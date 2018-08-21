@@ -107,7 +107,7 @@ export class FestivalBrowserContainer extends Component {
 	
 		
 		return (
-			<div style={{ paddingBottom: '80px'}}>
+			<div style={{ paddingBottom: '80px', backgroundColor: 'white'}}>
 				<Helmet>{this.props.match.path == '/' ? <title>Festbot - Activation</title> : <title>Festival browser</title>}</Helmet>
 				<div className={classes.searchBarBackground}>
 					<SearchBar searchQueryChanged={this.festivalListFilter} />

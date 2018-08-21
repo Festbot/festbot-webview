@@ -48,6 +48,30 @@ export const foodTypes = [
 		key:"bakery"
 	},
 	{
+		name:"Sandwich",
+		key:"sandwich"
+	},
+	{
+		name:"Crepe",
+		key:"crepe"
+	},
+	{
+		name:"Grill",
+		key:"grill"
+	},
+	{
+		name:"Sausage",
+		key:"sausage"
+	},
+	{
+		name:"Waffle",
+		key:"waffle"
+	},
+	{
+		name:"French fries",
+		key:"french_fries"
+	},
+	{
 		name:"Fruits",
 		key:"fruits"
 	}
