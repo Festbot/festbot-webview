@@ -26,13 +26,25 @@ export const withFilteredPoiTypes =(WrappedComponent) => {
       return filteredPoiTypes
     }
 
+    poiTags=(pois)=>{
+
+      let poiTagList=[]
+      pois.forEach(poi=>{
+        if (poi.tags) {poiTagList = poi.tags.concat(Ramda.difference(poiTagList,poi.tags))}
+      })
+      const lowercaseTagList = poiTagList.map(tag => tag.toLowerCase())
+
+      return lowercaseTagList
+    }
+
 
     filterByFestivalPoisZerked=(poiTypes)=>{
       const poiGroupByCategory = this.groupByCategory(this.props.pois)
       const ZerkedCategories = Object.keys(poiGroupByCategory)
-
+      const tags = Ramda.difference(this.poiTags(this.props.pois),ZerkedCategories)
+      const tagsAndZerkedCategories = ZerkedCategories.concat(tags)
       const filteredPoiTypes=poiTypes.filter(poiType=>{
-        return ZerkedCategories.indexOf(poiType.key)>-1
+        return tagsAndZerkedCategories.indexOf(poiType.key)>-1
       })
     
       return filteredPoiTypes

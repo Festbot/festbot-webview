@@ -74,6 +74,22 @@ export const foodTypes = [
 	{
 		name:"Fruits",
 		key:"fruits"
+	},
+	{
+		name:"Chicken",
+		key:"chicken"
+	},
+	{
+		name:"Salad",
+		key:"salad"
+	},
+	{
+		name:"Hot dog",
+		key:"hotdog"
+	},
+	{
+		name:"Candy",
+		key:"candy"
 	}
 ] 
 
@@ -111,7 +127,7 @@ export const drinkTypes = [
 
 export const serviceTypes = [
 	{
-		name:"Toilet",
+		name:"English Toilet",
 		key:"wc"
 	},
 	{
@@ -177,6 +193,10 @@ export const serviceTypes = [
 	{
 		name:"Shisha",
 		key:"shisha"
+	},
+	{
+		name:"Top-Up Point",
+		key:"topup"
 	}
 ] 
 

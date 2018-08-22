@@ -1,9 +1,10 @@
-import {
+import * as Ramda from 'ramda';
 
+import {
 	GET_FESTIVAL_STAGES,
 	GET_FESTIVAL_POIS,
 	ADD_ITEM_TO_ZERKING,
-  REMOVE_ITEM_TO_ZERKING,
+	REMOVE_ITEM_TO_ZERKING
 } from '../actions/actionTypes.js';
 
 import {
@@ -16,8 +17,6 @@ import {
 	getPoisByFestivalId
 } from '../../helpers/festivalApiHelper.js';
 
-
-
 import {
 	setFestivalStages,
 	setFestivalPois,
@@ -27,7 +26,6 @@ import {
 
 export default store => next => async action => {
 	switch (action.type) {
-
 		case GET_FESTIVAL_STAGES:
 			const stages = await getStagesByFestivalId(action.payload);
 			store.dispatch(setFestivalStages(stages));
@@ -42,14 +40,20 @@ export default store => next => async action => {
 				store.getState().zerking.filterItems
 			);
 
+			
 			const filteredPois = store.getState().zerking.pois.filter(poi => {
-				return updatedFilterItemArray.indexOf(poi.category) > -1;
+				let lowerCaseTags
+				if (poi.tags) {lowerCaseTags = poi.tags.map(tag => tag.toLowerCase())}
+				return (
+					updatedFilterItemArray.indexOf(poi.category) > -1 ||
+					(poi.tags &&
+						Ramda.intersection(updatedFilterItemArray, lowerCaseTags).length>0)
+				);
 			});
 
 			store.dispatch(setFestivalFilteredPois(filteredPois));
 			break;
 		case REMOVE_ITEM_TO_ZERKING:
-
 			if (store.getState().zerking.filterItems.length < 2) {
 				const allPois = store.getState().zerking.pois;
 				store.dispatch(setFestivalFilteredPois(allPois));
@@ -67,10 +71,12 @@ export default store => next => async action => {
 						return updatedFilterItem.indexOf(poi.category) > -1;
 					});
 
-				if (updatedPois.length>0) {store.dispatch(setFestivalFilteredPois(updatedPois));}
+				if (updatedPois.length > 0) {
+					store.dispatch(setFestivalFilteredPois(updatedPois));
+				}
 				store.dispatch(updateZerkingItemArrayRemove(action.payload));
 			}
-      break;
+			break;
 	}
 
 	const result = next(action);

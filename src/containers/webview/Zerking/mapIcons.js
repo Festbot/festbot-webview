@@ -143,5 +143,20 @@ export const icons = {
 	},	
 	french_fries: {
 		icon: festbot + 'a2269a24-11f0-456c-b6a0-d1106eda6de2' + iconSize
+	},	
+	chicken: {
+		icon: festbot + 'e22b5b2b-15c4-4ec6-a3ce-1034854e14e0' + iconSize
+	},	
+	salad: {
+		icon: festbot + '6d68f408-71f5-4068-a068-e0e76f59468e' + iconSize
+	},	
+	hotdog: {
+		icon: festbot + '2eb28e50-112f-41b3-86a4-57bdfbf10d9d' + iconSize
+	},	
+	candy: {
+		icon: festbot + '408fbf92-ceb3-4288-ac4c-03826c405cdb' + iconSize
+	},	
+	topup: {
+		icon: festbot + '65d9fb80-06ec-4759-adcd-0ef086fbf7e1' + iconSize
 	}
 };
