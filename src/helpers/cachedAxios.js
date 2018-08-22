@@ -1,12 +1,11 @@
-import axios from 'axios'
-import setupCache from 'axios-local-storage-cache'
+import axios from 'axios';
+import setupCache from 'axios-local-storage-cache';
 
-let adapter=setupCache({
-  ttl:4*60*60*1000
-})
+let adapter = setupCache({
+	ttl: 10 * 60 * 1000
+});
 const axiosInstance = axios.create({
-  adapter,
-})
- 
+	adapter
+});
 
-export default axiosInstance
+export default axiosInstance;
