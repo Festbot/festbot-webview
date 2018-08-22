@@ -158,5 +158,14 @@ export const icons = {
 	},	
 	topup: {
 		icon: festbot + '65d9fb80-06ec-4759-adcd-0ef086fbf7e1' + iconSize
+	},	
+	lost_and_found: {
+		icon: festbot + '2cd7745d-fc84-453c-8950-61e13316a562' + iconSize
+	},	
+	donut: {
+		icon: festbot + '780228dc-47b9-4e50-8b20-331e4a9e196a' + iconSize
+	},	
+	lemonade: {
+		icon: festbot + '0b70df08-1e30-4aa4-96bd-cd8378164edf' + iconSize
 	}
 };

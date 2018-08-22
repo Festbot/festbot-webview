@@ -90,6 +90,10 @@ export const foodTypes = [
 	{
 		name:"Candy",
 		key:"candy"
+	},
+	{
+		name:"Donut",
+		key:"donut"
 	}
 ] 
 
@@ -122,6 +126,10 @@ export const drinkTypes = [
 	{
 		name:"Smoothie",
 		key:"smoothie"
+	},
+	{
+		name:"Lemonade",
+		key:"lemonade"
 	}
 ] 
 
@@ -197,6 +205,10 @@ export const serviceTypes = [
 	{
 		name:"Top-Up Point",
 		key:"topup"
+	},
+	{
+		name:"Lost and Found",
+		key:"lost_and_found"
 	}
 ] 
 

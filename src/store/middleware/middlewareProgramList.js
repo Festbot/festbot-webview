@@ -87,7 +87,7 @@ export default store => next => async action => {
 				.filter(event => {
 					return (
 						moment(event.startDate) >
-						moment(event.endDate).subtract(6, 'hours')
+						moment(event.endDate).subtract(12, 'hours')
 					);
 				});
 
