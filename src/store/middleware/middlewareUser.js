@@ -48,19 +48,33 @@ export default store => next => async action => {
 
 	switch (action.type) {
 		case INIT_USER_DATA:
-			try {
-				userId = await getUserId();
-			} catch (error) {
-				return store.dispatch(shouldReload());
+			for (let i = 0; i < 10; i++) {
+				try {
+					await sleep(300);
+					userId = await getUserId();
+					break;
+				} catch (error) {
+					if (i === 9) {
+						alert(error);
+						return store.dispatch(shouldReload());
+					}
+				}
 			}
 			userData = await getUserData(userId);
 			store.dispatch(setUserData(userData));
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_POIS:
-			try {
-				userId = await getUserId();
-			} catch (error) {
-				return store.dispatch(shouldReload());
+			for (let i = 0; i < 10; i++) {
+				try {
+					await sleep(300);
+					userId = await getUserId();
+					break;
+				} catch (error) {
+					if (i === 9) {
+						alert(error);
+						return store.dispatch(shouldReload());
+					}
+				}
 			}
 			userData = await getUserData(userId);
 			activeFestival = store.getState().festbot.activeFestival;
@@ -76,10 +90,17 @@ export default store => next => async action => {
 
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_STAGES:
-			try {
-				userId = await getUserId();
-			} catch (error) {
-				return store.dispatch(shouldReload());
+			for (let i = 0; i < 10; i++) {
+				try {
+					await sleep(300);
+					userId = await getUserId();
+					break;
+				} catch (error) {
+					if (i === 9) {
+						alert(error);
+						return store.dispatch(shouldReload());
+					}
+				}
 			}
 			userData = await getUserData(userId);
 			activeFestival = store.getState().festbot.activeFestival;
@@ -91,10 +112,17 @@ export default store => next => async action => {
 			break;
 
 		case INIT_MATCHING_ARTIST_OF_USER:
-			try {
-				userId = await getUserId();
-			} catch (error) {
-				return store.dispatch(shouldReload());
+			for (let i = 0; i < 10; i++) {
+				try {
+					await sleep(300);
+					userId = await getUserId();
+					break;
+				} catch (error) {
+					if (i === 9) {
+						alert(error);
+						return store.dispatch(shouldReload());
+					}
+				}
 			}
 			userData = await getUserData(userId);
 			store.dispatch(setUserData(userData));

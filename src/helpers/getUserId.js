@@ -15,10 +15,10 @@ export default function getUserId() {
 				err => {
 					console.warn('no psid :(');
 					const isDev = document.cookie.indexOf('festbotDebug') > -1;
-					if (isDev) {
+					if (false) {
 						complete('4842567782cdf2aa620f1060e1dcbcd7');
 					} else {
-						reject(); //amugy it miert kell rejectelni, miert nem dispatch elhettem store ba
+						reject(err); //amugy it miert kell rejectelni, miert nem dispatch elhettem store ba
 					}
 				}
 			);

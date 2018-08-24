@@ -43,13 +43,14 @@ export default store => next => async action => {
 		case INIT_PROGRAM_LIST_BY_FESTIVAL_ID:
 			for (let i = 0; i < 10; i++) {
 				try {
-					await sleep(500);
+					await sleep(300);
 					userId = await getUserId();
 					break;
 					
 				} catch (error) {
+					
 					if (i === 9) {
-						alert('test')
+						alert(error)
 						return store.dispatch(shouldReload());
 					}
 				}
