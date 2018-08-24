@@ -37,7 +37,7 @@ import {
 	setFestivalFilteredStages,
 	updateSearchResults,
 	setFestivalGroupedPois,
-	shouldReload,
+	shouldReload
 } from '../actions';
 
 export default store => next => async action => {
@@ -48,36 +48,39 @@ export default store => next => async action => {
 
 	switch (action.type) {
 		case INIT_USER_DATA:
-		try {		
-			userId = await getUserId();
+			try {
+				userId = await getUserId();
+			} catch (error) {
+				return store.dispatch(shouldReload());
+			}
 			userData = await getUserData(userId);
 			store.dispatch(setUserData(userData));
-		} catch (error) {
-			store.dispatch(shouldReload())
-		}
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_POIS:
 			try {
 				userId = await getUserId();
-				userData = await getUserData(userId);
-				activeFestival = store.getState().festbot.activeFestival;
-				if (!activeFestival) {
-					activeFestival = userData.activeFestival;
-					store.dispatch(setUserData(userData));
-				}
-				activeFestivalData = await getFestivalDataById(
-					userData.activeFestival
-				);
-				store.dispatch(setUserActiveFestivalData(activeFestivalData));
-				store.dispatch(getFestivalPois(activeFestival));
 			} catch (error) {
-				store.dispatch(shouldReload())
+				return store.dispatch(shouldReload());
 			}
+			userData = await getUserData(userId);
+			activeFestival = store.getState().festbot.activeFestival;
+			if (!activeFestival) {
+				activeFestival = userData.activeFestival;
+				store.dispatch(setUserData(userData));
+			}
+			activeFestivalData = await getFestivalDataById(
+				userData.activeFestival
+			);
+			store.dispatch(setUserActiveFestivalData(activeFestivalData));
+			store.dispatch(getFestivalPois(activeFestival));
 
 			break;
 		case INIT_USER_ACTIVE_FESTIVAL_STAGES:
-		try{
-			userId = await getUserId();
+			try {
+				userId = await getUserId();
+			} catch (error) {
+				return store.dispatch(shouldReload());
+			}
 			userData = await getUserData(userId);
 			activeFestival = store.getState().festbot.activeFestival;
 			if (!activeFestival) {
@@ -85,14 +88,14 @@ export default store => next => async action => {
 				store.dispatch(setUserData(userData));
 			}
 			store.dispatch(getFestivalStages(activeFestival));
-		} catch (error) {
-			store.dispatch(shouldReload())
-		}
 			break;
 
 		case INIT_MATCHING_ARTIST_OF_USER:
-		try{
-			userId = await getUserId();
+			try {
+				userId = await getUserId();
+			} catch (error) {
+				return store.dispatch(shouldReload());
+			}
 			userData = await getUserData(userId);
 			store.dispatch(setUserData(userData));
 			const exceptTopArtists = await getTopGenresArtistOfUser(userData);
@@ -108,9 +111,6 @@ export default store => next => async action => {
 				const filteredResults = await getArtistsByNameGenre();
 				store.dispatch(updateSearchResults(filteredResults));
 			}
-		} catch (error) {
-			store.dispatch(shouldReload())
-		}
 			break;
 
 		case UPDATE_MY_POSITION:

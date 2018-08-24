@@ -44,9 +44,11 @@ export default store => next => async action => {
 			for (let i = 0; i < 10; i++) {
 				try {
 					userId = await getUserId();
+					sleep(500);
+					break;
 				} catch (error) {
 					if (i === 9) {
-						store.dispatch(shouldReload());
+						return store.dispatch(shouldReload());
 					}
 				}
 			}

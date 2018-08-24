@@ -137,6 +137,7 @@ export class PoiItem extends Component {
 		
 		const { poi } = this.props;
 		const NavigationWithHeading = this.NavigationMarker;
+
 		const iconType = poi.category;
 		let iconCategory = '';
 
@@ -146,7 +147,13 @@ export class PoiItem extends Component {
 			iconCategory = 'default';
 		}
 
-		const iconUrl = icons[iconCategory].icon;
+		let iconUrl
+		if (poi.logo) {
+			iconUrl = `https://ucarecdn.com/${poi.logo}/-/resize/64x64/`
+		} else {
+			iconUrl = icons[iconCategory].icon;
+		}
+
 		const isSwiped = this.state.swiped == poi._id;
 
 		let distance;
