@@ -21,11 +21,22 @@ import ScrollToTop from 'react-scroll-up';
 import FilterSwitchers from '../../../containers/webview/FestivalProgramContainer/FilterSwitchers.jsx';
 import DaySwitcher from '../../../components/DaySwitcher';
 
-import { filterPastEvents,eventDays,eventLocations} from '../../../helpers/eventApiHelper.js';
-import {initProgramListByFestivalId,  updatePrograms,initPrograms,initEventFlags,updateEventDays,updateEventLocations} from '../../../store/actions'
+import {
+	filterPastEvents,
+	eventDays,
+	eventLocations
+} from '../../../helpers/eventApiHelper.js';
+import {
+	initProgramListByFestivalId,
+	updatePrograms,
+	initPrograms,
+	initEventFlags,
+	updateEventDays,
+	updateEventLocations
+} from '../../../store/actions';
 
 const NotificationModal = styled.div`
-overflow:hidden;
+	overflow: hidden;
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -41,7 +52,7 @@ overflow:hidden;
 	color: #ddd;
 	p {
 		font-size: 100%;
-		padding:0 10px;
+		padding: 0 10px;
 	}
 `;
 const OpenChrome = styled.a`
@@ -54,7 +65,6 @@ const OpenChrome = styled.a`
 	background-color: rgb(22, 155, 90);
 	color: #ddd;
 `;
-
 
 export class festivalProgramContainer extends Component {
 	constructor(props) {
@@ -77,27 +87,31 @@ export class festivalProgramContainer extends Component {
 			isEventExpired: false,
 			festival: '',
 			scrollPosition: 0,
-			activeFestival:this.props.activeFestival
+			activeFestival: this.props.activeFestival
 		};
 	}
 
 	async componentDidMount() {
 		this.props.onViewChange('program_list');
 
-
 		let activeFestival = this.props.match.params.festival_id;
 
-		this.props.initProgramListByFestivalId(activeFestival)
-
+		this.props.initProgramListByFestivalId(activeFestival);
 
 		this.timer = setInterval(() => {
-			if(!this.props.data) {return}
-			this.setState({ now: new Date() }); 
-			this.props.updatePrograms(filterPastEvents(this.props.searchResults))
-			this.props.initPrograms(this.props.searchResults)
+			if (!this.props.data) {
+				return;
+			}
+			this.setState({ now: new Date() });
+			this.props.updatePrograms(
+				filterPastEvents(this.props.searchResults)
+			);
+			this.props.initPrograms(this.props.searchResults);
 
 			this.props.updateEventDays(eventDays(this.props.searchResults));
-			this.props.updateEventLocations(eventLocations(this.props.searchResults));
+			this.props.updateEventLocations(
+				eventLocations(this.props.searchResults)
+			);
 		}, 1000 * 60);
 
 		window.addEventListener('scroll', this.onScrollLazyLoad);
@@ -107,7 +121,6 @@ export class festivalProgramContainer extends Component {
 		window.removeEventListener('scroll', this.onScrollLazyLoad);
 		clearInterval(this.timer);
 		this.props.initEventFlags();
-
 	}
 
 	initEventDay = () => {
@@ -120,7 +133,6 @@ export class festivalProgramContainer extends Component {
 			this.props.setFilterToday(todayIsFestivalDay[0]);
 		}
 	};
-
 
 	addToFavourite = e => {
 		this.setState({
@@ -139,9 +151,7 @@ export class festivalProgramContainer extends Component {
 	};
 
 	festivalEventKeywordFilter = keyword => {
-		const eventListWithoutPastEvents = filterPastEvents(
-			this.props.data
-		);
+		const eventListWithoutPastEvents = filterPastEvents(this.props.data);
 		const filteredResults = eventListWithoutPastEvents.filter(event => {
 			return (
 				event.artist.toLowerCase().indexOf(keyword.toLowerCase()) >
@@ -153,8 +163,6 @@ export class festivalProgramContainer extends Component {
 		if (filteredResults.length == 0) return;
 		this.props.updatePrograms(filteredResults);
 	};
-
-
 
 	festivalEventFilter = () => {
 		if (this.props.isActive.Favourite) {
@@ -189,7 +197,6 @@ export class festivalProgramContainer extends Component {
 		});
 		return days(events);
 	};
-
 
 	detailsIsOpenHandler = e => {
 		if (this.state.activeDetails === e.currentTarget.id) {
@@ -261,7 +268,6 @@ export class festivalProgramContainer extends Component {
 	};
 
 	render() {
-	
 		if (
 			this.props.match.path == '/festivals' &&
 			this.props.shouldRedirect
@@ -270,24 +276,29 @@ export class festivalProgramContainer extends Component {
 		}
 
 		if (this.props.shouldReload) {
-			return <NotificationModal>
-					<OpenChrome
-						onClick={()=>location.reload()}
-					>
+			return (
+				<NotificationModal>
+					<OpenChrome onClick={() => location.reload()}>
 						Reload the page
 					</OpenChrome>
-					<p>Something went wrong, click the button to reload the page.</p>
+					<p>
+						Something went wrong, click the button to reload the
+						page.
+					</p>
 				</NotificationModal>
+			);
 		}
 
-		if (!this.props.data||!this.props.searchResults){
-			return <div className={classes.center}>
-			
-				<CircularProgress
-					style={{ margin: 'auto' }}
-					size={80}
-					thickness={5}
-				/></div>
+		if (!this.props.data || !this.props.searchResults) {
+			return (
+				<div className={classes.center}>
+					<CircularProgress
+						style={{ margin: 'auto' }}
+						size={80}
+						thickness={5}
+					/>
+				</div>
+			);
 		}
 
 		if (this.props.isEventExpired) {
@@ -300,7 +311,8 @@ export class festivalProgramContainer extends Component {
 							textAlign: 'center'
 						}}
 					>
-						Az összes program véget ért!<br />
+						Az összes program véget ért!
+						<br />
 					</div>
 				</div>
 			);
@@ -323,8 +335,8 @@ export class festivalProgramContainer extends Component {
 								textAlign: 'center'
 							}}
 						>
-							A fesztivál programok feltöltése folyamatban van!<br />{' '}
-							Kérlek nézz vissza később!
+							A fesztivál programok feltöltése folyamatban van!
+							<br /> Kérlek nézz vissza később!
 						</div>
 					)}
 				</div>
@@ -338,7 +350,7 @@ export class festivalProgramContainer extends Component {
 			this.state.yListOffset + 200
 		);
 
-		const daysOfEvent = eventDays(sliceOfPrograms)
+		const daysOfEvent = eventDays(sliceOfPrograms);
 		const grouppedFestivalPrograms = this.groupByDays(sliceOfPrograms);
 
 		const programListByDay = daysOfEvent.map((day, daysIndex) => {
@@ -396,7 +408,8 @@ export class festivalProgramContainer extends Component {
 				<div
 					className={classes.cover}
 					style={{
-						backgroundImage: this.props.activeFestivalData.coverPhoto
+						backgroundImage: this.props.activeFestivalData
+							.coverPhoto
 							? 'url(https://ucarecdn.com/' +
 							  this.props.activeFestivalData.coverPhoto +
 							  '/)'
@@ -426,16 +439,16 @@ export class festivalProgramContainer extends Component {
 	}
 }
 
-const mapStateToProps = ({ festbot,zerking }) => {
+const mapStateToProps = ({ festbot, zerking }) => {
 	return {
 		userId: festbot.userId,
 		activeFestival: festbot.activeFestival,
-		shouldRedirect:festbot.shouldRedirect,
-		shouldReload:festbot.shouldReload,
-		isEventListExist:festbot.isEventListExist,
-		isEventExpired:festbot.isEventExpired,
-		searchResults:festbot.searchResults,
-		data:festbot.data,
+		shouldRedirect: festbot.shouldRedirect,
+		shouldReload: festbot.shouldReload,
+		isEventListExist: festbot.isEventListExist,
+		isEventExpired: festbot.isEventExpired,
+		searchResults: festbot.searchResults,
+		data: festbot.data,
 		activeFestivalData: zerking.activeFestivalData,
 		eventStages: festbot.eventStages,
 		activeStage: festbot.activeStage,
@@ -453,10 +466,11 @@ const mapStateToProps = ({ festbot,zerking }) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		initProgramListByFestivalId:festivalId=>dispatch(initProgramListByFestivalId(festivalId)),
-		updatePrograms:(data)=>dispatch(updatePrograms(data)),
-		initPrograms:(data)=>dispatch(initPrograms(data)),
-		initEventFlags:()=>dispatch(initEventFlags()),
+		initProgramListByFestivalId: festivalId =>
+			dispatch(initProgramListByFestivalId(festivalId)),
+		updatePrograms: data => dispatch(updatePrograms(data)),
+		initPrograms: data => dispatch(initPrograms(data)),
+		initEventFlags: () => dispatch(initEventFlags()),
 		setFilterToday: day => dispatch({ type: 'UPD_ACTIVEDAY', value: day }),
 		onTrendingToggle: () => dispatch({ type: 'UPD_TRENDING' }),
 		onFilterToggle: () => dispatch({ type: 'UPD_FILTER' }),
@@ -467,10 +481,9 @@ const mapDispatchToProps = dispatch => {
 			dispatch({ type: 'ADD_FAVOURITE', value: event }),
 		removeFromFavourites: event =>
 			dispatch({ type: 'REMOVE_FAVOURITE', value: event }),
-		updateEventDays: daysArray =>
-			dispatch(updateEventDays( daysArray) ),
+		updateEventDays: daysArray => dispatch(updateEventDays(daysArray)),
 		updateEventLocations: stagesArray =>
-			dispatch(updateEventLocations( stagesArray ))
+			dispatch(updateEventLocations(stagesArray))
 	};
 };
 
