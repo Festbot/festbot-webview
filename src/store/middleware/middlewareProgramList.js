@@ -50,7 +50,6 @@ export default store => next => async action => {
 				} catch (error) {
 					
 					if (i === 9) {
-						alert(error)
 						return store.dispatch(shouldReload());
 					}
 				}

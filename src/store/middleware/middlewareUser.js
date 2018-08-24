@@ -40,6 +40,11 @@ import {
 	shouldReload
 } from '../actions';
 
+const sleep = timeout =>
+	new Promise(resolve => {
+		setTimeout(resolve, timeout);
+	});
+
 export default store => next => async action => {
 	let activeFestivalData;
 	let activeFestival;
@@ -55,7 +60,6 @@ export default store => next => async action => {
 					break;
 				} catch (error) {
 					if (i === 9) {
-						alert(error);
 						return store.dispatch(shouldReload());
 					}
 				}
@@ -71,7 +75,6 @@ export default store => next => async action => {
 					break;
 				} catch (error) {
 					if (i === 9) {
-						alert(error);
 						return store.dispatch(shouldReload());
 					}
 				}
@@ -97,7 +100,6 @@ export default store => next => async action => {
 					break;
 				} catch (error) {
 					if (i === 9) {
-						alert(error);
 						return store.dispatch(shouldReload());
 					}
 				}
@@ -119,7 +121,6 @@ export default store => next => async action => {
 					break;
 				} catch (error) {
 					if (i === 9) {
-						alert(error);
 						return store.dispatch(shouldReload());
 					}
 				}
