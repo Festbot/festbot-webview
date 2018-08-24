@@ -32,6 +32,7 @@ const Title = styled.div`
 
 const Container = styled.div`
 	background-color: #2c2c2c;
+	color:white;
 `;
 const CarouselContainer = styled.div`
 	width: 100%;

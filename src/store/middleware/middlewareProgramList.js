@@ -95,10 +95,7 @@ export default store => next => async action => {
 					);
 				});
 
-			//dayfilter stage filter elemek inicializalasa
-			store.dispatch(updateEventDays(eventDays(data)));
-			store.dispatch(updateEventLocations(eventLocations(data)));
-
+			
 			// error handling
 
 			if (festivalProgramResults.length == 0) {
@@ -112,8 +109,14 @@ export default store => next => async action => {
 				store.dispatch(eventExpired());
 			}
 			const filteredPastEvents = filterPastEvents(festivalProgramResults);
+			
 			store.dispatch(updatePrograms(filteredPastEvents));
 			store.dispatch(initPrograms(festivalProgramResults));
+
+			//dayfilter stage filter elemek inicializalasa
+			store.dispatch(updateEventDays(eventDays(filteredPastEvents)));
+			store.dispatch(updateEventLocations(eventLocations(filteredPastEvents)));
+
 
 			//ha veletlenul teszt usert kapna webviewban a user, akkor reloadot eroltetunk
 

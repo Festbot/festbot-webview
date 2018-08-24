@@ -139,7 +139,14 @@ export class CompassNavigation extends Component {
 		} else {
 			iconCategory = 'default';
 		}
-		const iconUrl = icons[iconCategory].icon;
+		
+		let iconUrl
+		if (poi.logo) {
+			iconUrl = `https://ucarecdn.com/${poi.logo}/-/resize/64x64/`
+		} else {
+			iconUrl = icons[iconCategory].icon;
+		}
+
 
 		let distance;
 		if (poi.distance !== null) {

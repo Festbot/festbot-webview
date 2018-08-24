@@ -308,7 +308,8 @@ export class festivalProgramContainer extends Component {
 						style={{
 							margin: 'auto',
 							fontSize: '150%',
-							textAlign: 'center'
+							textAlign: 'center',
+							color:'white'
 						}}
 					>
 						Az összes program véget ért!
@@ -332,7 +333,8 @@ export class festivalProgramContainer extends Component {
 							style={{
 								margin: 'auto',
 								fontSize: '150%',
-								textAlign: 'center'
+								textAlign: 'center',
+								color:'white'
 							}}
 						>
 							A fesztivál programok feltöltése folyamatban van!
