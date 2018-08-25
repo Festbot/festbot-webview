@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import store from '../store/store.js';
 import { setIsWebview } from '../store/actions';
-import cookie from 'cookie';
+import cookie from 'js-cookie';
 
 const sleep = timeout =>
 	new Promise(resolve => {
@@ -45,7 +45,7 @@ const waitUntilDocumentIsReady = () => {
 };
 
 const getUserIdFromCookie = () => {
-	return cookie.parse(document.cookie).userPsid;
+	return cookie.get('userPsid');
 };
 
 
@@ -60,7 +60,7 @@ export default async function getUserId() {
 			try {
 				await sleep(300);
 				userId = await getUserIdFromMessenger();
-				document.cookie = `userPsid=${userId}`
+				cookie.set('userPsid',userId,{expires:365}) 
 				break;
 			} catch (err) {
 				if (i === 9) {
