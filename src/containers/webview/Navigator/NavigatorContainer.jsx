@@ -130,7 +130,7 @@ export class NavigatorContainer extends Component {
 		}
 
 		if (!this.props.stages || !this.props.activeFestivalData) {
-			return <div>Loading...</div>;
+			return <Container>Loading...</Container>;
 		}
 
 		if (this.props.activeFestival == null) {
