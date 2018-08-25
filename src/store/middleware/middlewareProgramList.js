@@ -11,7 +11,7 @@ import {
 	getEventsByFestivalId,
 	filterPastEvents,
 	eventDays,
-	eventLocations,
+	eventLocations
 } from '../../helpers/eventApiHelper.js';
 
 import {
@@ -25,13 +25,7 @@ import {
 	shouldReload,
 	updateEventDays,
 	updateEventLocations
-
 } from '../actions';
-
-const sleep = timeout =>
-	new Promise(resolve => {
-		setTimeout(resolve, timeout);
-	});
 
 export default store => next => async action => {
 	let activeFestivalData;
@@ -41,18 +35,10 @@ export default store => next => async action => {
 
 	switch (action.type) {
 		case INIT_PROGRAM_LIST_BY_FESTIVAL_ID:
-			for (let i = 0; i < 10; i++) {
-				try {
-					await sleep(300);
-					userId = await getUserId();
-					break;
-					
-				} catch (error) {
-					
-					if (i === 9) {
-						return store.dispatch(shouldReload());
-					}
-				}
+			try {
+				userId = await getUserId();
+			} catch (error) {
+				return store.dispatch(shouldReload());
 			}
 
 			let festivalId;
@@ -95,7 +81,6 @@ export default store => next => async action => {
 					);
 				});
 
-			
 			// error handling
 
 			if (festivalProgramResults.length == 0) {
@@ -109,14 +94,15 @@ export default store => next => async action => {
 				store.dispatch(eventExpired());
 			}
 			const filteredPastEvents = filterPastEvents(festivalProgramResults);
-			
+
 			store.dispatch(updatePrograms(filteredPastEvents));
 			store.dispatch(initPrograms(festivalProgramResults));
 
 			//dayfilter stage filter elemek inicializalasa
 			store.dispatch(updateEventDays(eventDays(filteredPastEvents)));
-			store.dispatch(updateEventLocations(eventLocations(filteredPastEvents)));
-
+			store.dispatch(
+				updateEventLocations(eventLocations(filteredPastEvents))
+			);
 
 			//ha veletlenul teszt usert kapna webviewban a user, akkor reloadot eroltetunk
 
