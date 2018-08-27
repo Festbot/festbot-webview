@@ -104,6 +104,7 @@ class EditPoi extends Component {
 		this.poi = await getPoiById(poiId);
 		this.props.initialize({
 			name: this.poi.name,
+			logo: this.poi.logo ? this.poi.logo : undefined,
 			email: this.poi.email ? this.poi.email : '',
 			contact: this.poi.contact ? this.poi.contact : '',
 			phone: this.poi.phone ? this.poi.phone : '',
